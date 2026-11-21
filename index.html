@@ -4,13 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pop Stop h24 Casavatore – distributori automatici aperti 24 ore e consegna a domicilio</title>
-<meta name="description" content="Pop Stop h24: distributori automatici aperti 24 ore su 24, 7 giorni su 7, in Viale Guglielmo Marconi 79/81 a Casavatore (NA). Snack, bibite, energy drink, tramezzini e consegna a domicilio con Glovo, Just Eat, Deliveroo e Alfonsino.">
+<meta name="description" content="Pop Stop h24: distributori automatici aperti 24 ore su 24, 7 giorni su 7, in Viale Guglielmo Marconi 79/81 a Casavatore (NA). Guarda cosa c'è nelle macchine, ordina a domicilio con Glovo, Just Eat, Deliveroo e Alfonsino o chiedi assistenza.">
 <link rel="canonical" href="https://andreabarra1000-png.github.io/popstoph24/">
 <meta property="og:title" content="Pop Stop h24 Casavatore – aperti 24 ore su 24">
-<meta property="og:description" content="Snack, bibite ed energy drink a qualsiasi ora, anche a domicilio.">
+<meta property="og:description" content="Cosa c'è nelle macchine, ordina a domicilio, assistenza e indicazioni.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="it_IT">
 <meta name="google-site-verification" content="-70wM31mMgcz5SSsPxoPzFp_An-VaXXSp5mAGe1TdaA">
+<meta name="theme-color" content="#05848A">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -52,76 +53,136 @@
       "https://www.justeat.it/restaurants-enjoy-market-by-vado-napoli/menu",
       "https://deliveroo.it/menu/napoli/napoli-casoria/enjoy-market",
       "https://app.alfonsino.delivery/casoria/order/menu/vado-napoli-centro"
-    ],
-    "deliveryMethod": "http://purl.org/goodrelations/v1#DeliveryModeOwnFleet"
+    ]
   }
 }
 </script>
 <style>
-:root{--t:#05848A;--y:#FFD23F;--k:#14202B}
+:root{--t:#05848A;--t2:#046A6F;--y:#FFD23F;--k:#14202B;--bg:#F2F8F8}
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--k);background:#F3FAFA;line-height:1.5}
-header{background:var(--t);color:#fff;padding:48px 20px 40px;text-align:center}
-h1{margin:0 0 8px;font-size:2.2rem;letter-spacing:.5px}
-header p{margin:0 auto;max-width:560px;font-size:1.1rem}
-.badge{display:inline-block;margin-top:16px;background:var(--y);color:var(--k);font-weight:700;padding:6px 14px;border-radius:999px}
-main{max-width:720px;margin:0 auto;padding:24px 20px 48px}
-h2{font-size:1.4rem;margin:32px 0 12px}
-.btns{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.btn{display:block;text-align:center;text-decoration:none;font-weight:700;padding:14px;border-radius:14px;background:#fff;color:var(--k);border:2px solid var(--t)}
-.btn.main{background:var(--y);border-color:var(--y)}
-ul{padding-left:20px}
-.card{background:#fff;border-radius:16px;padding:16px 20px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-iframe{width:100%;height:280px;border:0;border-radius:16px}
-footer{text-align:center;font-size:.9rem;padding:24px;color:#4a5a66}
-a{color:var(--t)}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--k);background:var(--bg);line-height:1.45;font-size:17px}
+header{background:var(--t);color:#fff;padding:28px 18px 26px;text-align:center}
+h1{margin:0;font-size:2rem;letter-spacing:.5px}
+.open{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-weight:700}
+.dot{width:12px;height:12px;border-radius:50%;background:#3EE07A;box-shadow:0 0 0 4px rgba(62,224,122,.25)}
+.addr{margin:6px 0 0;opacity:.9;font-size:.95rem}
+main{max-width:640px;margin:0 auto;padding:18px 16px 40px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:140px;padding:16px 10px;border-radius:22px;text-decoration:none;font-weight:800;font-size:1.15rem;text-align:center;color:var(--k);background:#fff;border:3px solid var(--t);box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.tile span.i{font-size:2.4rem;line-height:1}
+.tile.y{background:var(--y);border-color:var(--y)}
+.tile.t{background:var(--t);border-color:var(--t);color:#fff}
+.tile small{font-weight:500;font-size:.85rem;opacity:.85}
+section{margin-top:34px;scroll-margin-top:10px}
+h2{font-size:1.45rem;margin:0 0 6px}
+.sub{margin:0 0 14px;color:#4a5a66;font-size:.95rem}
+.big{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:64px;margin:0 0 12px;padding:14px;border-radius:18px;font-size:1.2rem;font-weight:800;text-decoration:none;color:var(--k);background:#fff;border:3px solid var(--t)}
+.big.y{background:var(--y);border-color:var(--y)}
+.big.t{background:var(--t);border-color:var(--t);color:#fff}
+.search{width:100%;font-size:1.1rem;padding:14px 16px;border-radius:16px;border:2px solid #cfdede;margin-bottom:10px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px}
+.chip{flex:0 0 auto;padding:10px 14px;border-radius:999px;border:2px solid var(--t);background:#fff;font-weight:700;font-size:.95rem;color:var(--k)}
+.chip[aria-pressed=true]{background:var(--t);color:#fff}
+ul.list{list-style:none;margin:0;padding:0;background:#fff;border-radius:18px;overflow:hidden}
+ul.list li{display:flex;justify-content:space-between;gap:10px;padding:13px 16px;border-bottom:1px solid #edf3f3}
+ul.list li:last-child{border-bottom:0}
+.st{flex:0 0 auto;font-size:.85rem;font-weight:700;color:#11804A}
+.st.u{color:#B45F06}
+.note{font-size:.85rem;color:#5b6b76;margin-top:8px}
+iframe{width:100%;height:260px;border:0;border-radius:18px;margin-bottom:12px}
+.social{display:flex;gap:10px}
+.social a{flex:1;text-align:center;padding:12px;border-radius:14px;background:#fff;border:2px solid #cfdede;font-weight:700;color:var(--k);text-decoration:none}
+.top{display:block;text-align:center;margin-top:10px;color:var(--t2);font-weight:700}
+footer{text-align:center;font-size:.85rem;padding:22px;color:#4a5a66}
 </style>
 </head>
 <body>
 <header>
   <h1>Pop Stop h24</h1>
-  <p>Distributori automatici aperti <strong>24 ore su 24, 7 giorni su 7</strong> a Casavatore. Snack, bibite ed energy drink a qualsiasi ora, anche a domicilio.</p>
-  <span class="badge">Sempre aperti, anche di notte e nei festivi</span>
+  <div class="open"><span class="dot"></span> Aperti ora · 24 ore su 24, 7 giorni su 7</div>
+  <p class="addr">Viale Guglielmo Marconi 79/81, Casavatore (NA)</p>
 </header>
-<main>
-  <h2>Ordina a domicilio</h2>
-  <p>Consegna a Casavatore, Casoria e dintorni, quando l'app è disponibile.</p>
-  <div class="btns">
-    <a class="btn main" href="https://glovoapp.com/it/it/napoli/stores/enjoy-market-nap" rel="noopener">Glovo</a>
-    <a class="btn main" href="https://deliveroo.it/menu/napoli/napoli-casoria/enjoy-market" rel="noopener">Deliveroo</a>
-    <a class="btn main" href="https://www.justeat.it/restaurants-enjoy-market-by-vado-napoli/menu" rel="noopener">Just Eat</a>
-    <a class="btn main" href="https://app.alfonsino.delivery/casoria/order/menu/vado-napoli-centro" rel="noopener">Alfonsino</a>
+<main id="home">
+  <div class="grid">
+    <a class="tile y" href="#macchine"><span class="i">🍫</span>Cosa c'è ora<small>nelle macchine</small></a>
+    <a class="tile t" href="#ordina"><span class="i">🛵</span>Ordina<small>a domicilio</small></a>
+    <a class="tile" href="#assistenza"><span class="i">💬</span>Assistenza<small>WhatsApp</small></a>
+    <a class="tile" href="#vieni"><span class="i">📍</span>Vieni da noi<small>indicazioni</small></a>
   </div>
 
-  <h2>Vieni a trovarci</h2>
-  <div class="card">
-    <p><strong>Viale Guglielmo Marconi 79/81, 80020 Casavatore (NA)</strong><br>
-    Aperto 24 ore su 24, tutti i giorni, festivi compresi.<br>
-    WhatsApp e telefono: <a href="https://wa.me/393429464365">342 946 4365</a></p>
-    <div class="btns">
-      <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=PopStop%20H24&amp;query_place_id=ChIJQeNt5l0JOxMR29YJjxbDtKE" rel="noopener">Indicazioni stradali</a>
-      <a class="btn" href="https://search.google.com/local/writereview?placeid=ChIJQeNt5l0JOxMR29YJjxbDtKE" rel="noopener">Lascia una recensione</a>
+  <section id="macchine">
+    <h2>🍫 Cosa c'è nelle macchine</h2>
+    <p class="sub" id="agg">Caricamento…</p>
+    <input class="search" id="q" type="search" placeholder="Cerca: Red Bull, Takis, acqua…" aria-label="Cerca un prodotto">
+    <div class="chips" id="chips"></div>
+    <ul class="list" id="lista"></ul>
+    <p class="note">Le macchine si svuotano e si ricaricano di continuo: «ultimi pezzi» vuol dire che potrebbero finire presto.</p>
+    <a class="top" href="#home">↑ Torna su</a>
+  </section>
+
+  <section id="ordina">
+    <h2>🛵 Ordina a domicilio</h2>
+    <p class="sub">Consegna a Casavatore, Casoria e dintorni, quando l'app è disponibile.</p>
+    <a class="big y" href="https://glovoapp.com/it/it/napoli/stores/enjoy-market-nap" rel="noopener">Glovo</a>
+    <a class="big y" href="https://deliveroo.it/menu/napoli/napoli-casoria/enjoy-market" rel="noopener">Deliveroo</a>
+    <a class="big y" href="https://www.justeat.it/restaurants-enjoy-market-by-vado-napoli/menu" rel="noopener">Just Eat</a>
+    <a class="big y" href="https://app.alfonsino.delivery/casoria/order/menu/vado-napoli-centro" rel="noopener">Alfonsino</a>
+    <a class="top" href="#home">↑ Torna su</a>
+  </section>
+
+  <section id="assistenza">
+    <h2>💬 Assistenza</h2>
+    <p class="sub">La macchina non ha erogato? Problema con un ordine? Scrivici: rispondiamo appena possibile.</p>
+    <a class="big t" href="https://wa.me/393429464365?text=Ciao%20Pop%20Stop%20h24%2C%20ho%20bisogno%20di%20assistenza.%20Macchina%2Fordine%3A%20" rel="noopener">Scrivici su WhatsApp</a>
+    <a class="big" href="tel:+393429464365">Chiama 342 946 4365</a>
+    <a class="top" href="#home">↑ Torna su</a>
+  </section>
+
+  <section id="vieni">
+    <h2>📍 Vieni da noi</h2>
+    <p class="sub">Viale Guglielmo Marconi 79/81, 80020 Casavatore (NA) · sempre aperto, anche di notte e nei festivi.</p>
+    <a class="big t" href="https://www.google.com/maps/dir/?api=1&amp;destination=PopStop%20H24&amp;destination_place_id=ChIJQeNt5l0JOxMR29YJjxbDtKE" rel="noopener">Portami lì (Google Maps)</a>
+    <iframe title="Mappa Pop Stop h24 Casavatore" loading="lazy" src="https://www.google.com/maps?q=PopStop+H24,+Viale+Guglielmo+Marconi+81,+80020+Casavatore+NA&amp;output=embed"></iframe>
+    <a class="big" href="https://search.google.com/local/writereview?placeid=ChIJQeNt5l0JOxMR29YJjxbDtKE" rel="noopener">⭐ Lascia una recensione</a>
+    <div class="social">
+      <a href="https://www.instagram.com/popstoph24" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@popstoph365" rel="noopener">TikTok</a>
+      <a href="https://www.facebook.com/618353578038104" rel="noopener">Facebook</a>
     </div>
-  </div>
-  <p><iframe title="Mappa Pop Stop h24 Casavatore" loading="lazy" src="https://www.google.com/maps?q=PopStop+H24,+Viale+Guglielmo+Marconi+81,+80020+Casavatore+NA&amp;output=embed"></iframe></p>
-
-  <h2>Cosa trovi</h2>
-  <ul>
-    <li>Snack dolci e salati, anche snack dal mondo</li>
-    <li>Bibite fresche, acqua ed energy drink</li>
-    <li>Tramezzini e merende</li>
-    <li>Caramelle e dolciumi</li>
-    <li>Beni di prima necessità</li>
-  </ul>
-  <p>La merce cambia spesso: passa a vedere cosa c'è nelle macchine o apri l'app di consegna.</p>
-
-  <h2>Seguici</h2>
-  <div class="btns">
-    <a class="btn" href="https://www.instagram.com/popstoph24" rel="noopener">Instagram</a>
-    <a class="btn" href="https://www.tiktok.com/@popstoph365" rel="noopener">TikTok</a>
-    <a class="btn" href="https://www.facebook.com/618353578038104" rel="noopener">Facebook</a>
-  </div>
+    <a class="top" href="#home">↑ Torna su</a>
+  </section>
 </main>
 <footer>Pop Stop h24 · Viale Guglielmo Marconi 79/81, Casavatore (NA) · Enjoy Market S.r.l.</footer>
+<script>
+(function(){
+  var dati=[], cat="Tutto";
+  var lista=document.getElementById("lista"), q=document.getElementById("q"), chips=document.getElementById("chips");
+  function mostra(){
+    var t=q.value.trim().toLowerCase();
+    var r=dati.filter(function(p){return (cat==="Tutto"||p.c===cat)&&(!t||p.n.toLowerCase().indexOf(t)>-1);});
+    lista.innerHTML="";
+    if(!r.length){var li=document.createElement("li");li.textContent="Nessun prodotto trovato: prova un'altra parola.";lista.appendChild(li);return;}
+    r.forEach(function(p){
+      var li=document.createElement("li"), n=document.createElement("span"), s=document.createElement("span");
+      n.textContent=p.n; s.className="st"+(p.s==="ultimi"?" u":""); s.textContent=p.s==="ultimi"?"Ultimi pezzi":"Disponibile";
+      li.appendChild(n); li.appendChild(s); lista.appendChild(li);
+    });
+  }
+  function chip(nome){
+    var b=document.createElement("button"); b.className="chip"; b.type="button"; b.textContent=nome;
+    b.setAttribute("aria-pressed", nome===cat?"true":"false");
+    b.onclick=function(){cat=nome;[].forEach.call(chips.children,function(c){c.setAttribute("aria-pressed",c===b?"true":"false");});mostra();};
+    chips.appendChild(b);
+  }
+  q.addEventListener("input",mostra);
+  fetch("stock.json?"+Date.now()).then(function(r){return r.json();}).then(function(d){
+    dati=d.prodotti||[];
+    document.getElementById("agg").textContent=dati.length+" prodotti disponibili · aggiornato il "+d.aggiornato;
+    var cats=["Tutto"]; dati.forEach(function(p){if(cats.indexOf(p.c)<0)cats.push(p.c);});
+    cats.forEach(chip); mostra();
+  }).catch(function(){document.getElementById("agg").textContent="Elenco non disponibile al momento: passa a trovarci o apri un'app di consegna.";});
+})();
+</script>
 </body>
 </html>
