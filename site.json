@@ -1,0 +1,24 @@
+{
+  "base": "https://andreabarra1000-png.github.io/popstoph24/",
+  "nome": "Pop Stop h24",
+  "indirizzo": "Viale Guglielmo Marconi 79/81",
+  "cap": "80020",
+  "citta": "Casavatore",
+  "provincia": "NA",
+  "telefono": "+39 342 946 4365",
+  "telefono_vis": "342 946 4365",
+  "whatsapp": "393429464365",
+  "place_id": "ChIJQeNt5l0JOxMR29YJjxbDtKE",
+  "google_verifica": "-70wM31mMgcz5SSsPxoPzFp_An-VaXXSp5mAGe1TdaA",
+  "app": {
+    "glovo": ["Glovo", "https://glovoapp.com/it/it/napoli/stores/enjoy-market-nap"],
+    "deliveroo": ["Deliveroo", "https://deliveroo.it/menu/napoli/napoli-casoria/enjoy-market"],
+    "justeat": ["Just Eat", "https://www.justeat.it/restaurants-enjoy-market-by-vado-napoli/menu"],
+    "alfonsino": ["Alfonsino", "https://app.alfonsino.delivery/casoria/order/menu/vado-napoli-centro"]
+  },
+  "social": {
+    "Instagram": "https://www.instagram.com/popstoph24",
+    "TikTok": "https://www.tiktok.com/@popstoph365",
+    "Facebook": "https://www.facebook.com/618353578038104"
+  }
+}
