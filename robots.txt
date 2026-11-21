@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://andreabarra1000-png.github.io/popstoph24/sitemap.xml
