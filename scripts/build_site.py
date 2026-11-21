@@ -103,7 +103,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
         cur = ' aria-current="page"' if p == active else ""
         nav.append(f'<a href="{href}"{cur}>{n}</a>')
     graph = {"@context": "https://schema.org", "@graph": ld}
-    cfg = {"stock": r + "stock.json", "ordine": ORDINE, "icone": ICONE}
+    cfg = {"stock": r + "stock.json", "ordine": ORDINE, "icone": ICONE, "img": IMG}
     socials = "".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())
     zone_links = "".join(f'<a href="{r}zona/{k}/">{v["nome"]}</a>' for k, v in ZONE.items())
     return f'''<!DOCTYPE html>
@@ -160,9 +160,11 @@ def layout(path, title, desc, body, ld, depth, active=""):
 </nav>
 <div class="sheet" id="sheet" aria-hidden="true" role="dialog" aria-labelledby="sh-n"><div class="box">
   <button class="x" type="button" aria-label="Chiudi">✕</button>
+  <div class="shtop"><span class="pimg big" id="sh-i"></span><div>
   <span class="eyebrow">Nelle macchine ora</span>
   <h3 id="sh-n">Prodotto</h3>
-  <p id="sh-s">Disponibile</p>
+  <p id="sh-s">Disponibile</p></div></div>
+  <p class="shm" id="sh-m"></p>
   <a class="btn t wide" href="{MAPS_DIR}" rel="noopener" target="_blank">📍 Vieni a prenderlo ora</a>
   <p style="margin:8px 0 10px">Oppure fattelo portare a casa:</p>
   <div class="appsmini">{"".join(f'<a class="{k}" href="{u}" rel="noopener" target="_blank">{n}</a>' for k, (n, u) in APP.items())}</div>
@@ -238,6 +240,9 @@ def cats_block(r):
 def trova(rx):
     return [p for p in PRODOTTI if re.search(rx, p["n"], re.I)]
 
+def fimg(p):
+    return f'<img class="fi" src="{IMG.format(p["i"])}" alt="" loading="lazy" onerror="this.remove()">' if p.get("i") else ""
+
 def feat_block(r):
     np = trova(r"nutella peanut")
     dp = trova(r"dr pepper")
@@ -245,17 +250,34 @@ def feat_block(r):
     rb = trova(r"red bull")
     cards = []
     if np:
-        cards.append(f'<button class="fcard f1 reveal" type="button" data-p="{E(np[0]["n"])}" data-s="{np[0]["s"]}"><span class="tag">Novità</span><h3>Nutella Peanut</h3><p>Nutella con arachidi: da noi la trovi a qualsiasi ora.</p></button>')
+        cards.append(f'<button class="fcard f1 reveal" type="button" data-p="{E(np[0]["n"])}" data-s="{np[0]["s"]}" data-i="{np[0].get("i","")}" data-d="{E(dove_txt(np[0].get("m",[])))}">{fimg(np[0])}<span class="tag">Novità</span><h3>Nutella Peanut</h3><p>Nutella con arachidi: da noi la trovi a qualsiasi ora.</p></button>')
     if dp:
-        cards.append(f'<a class="fcard f2 reveal" href="{r}snack-americani-napoli/"><span class="tag">USA</span><h3>{len(dp)} gusti di Dr Pepper</h3><p>Cherry, Vanilla Float, Blackberry, Creamy Coconut e altri.</p></a>')
+        cards.append(f'<a class="fcard f2 reveal" href="{r}snack-americani-napoli/">{fimg(dp[0])}<span class="tag">USA</span><h3>{len(dp)} gusti di Dr Pepper</h3><p>Cherry, Vanilla Float, Blackberry, Creamy Coconut e altri.</p></a>')
     if tk:
-        cards.append(f'<a class="fcard f3 reveal" href="{r}prodotti/?q=takis"><span class="tag">Piccante</span><h3>Takis Fuego e Blue Heat</h3><p>Le tortillas arrotolate più piccanti, sempre in macchina.</p></a>')
+        cards.append(f'<a class="fcard f3 reveal" href="{r}prodotti/?q=takis">{fimg(tk[0])}<span class="tag">Piccante</span><h3>Takis Fuego e Blue Heat</h3><p>Le tortillas arrotolate più piccanti, sempre in macchina.</p></a>')
     if rb:
-        cards.append(f'<a class="fcard f4 reveal" href="{r}prodotti/?cat=Energy%20drink"><span class="tag">Energia</span><h3>{len(rb)} Red Bull diverse</h3><p>Più Monster e Powerade: la notte è lunga.</p></a>')
+        cards.append(f'<a class="fcard f4 reveal" href="{r}prodotti/?cat=Energy%20drink">{fimg(rb[0])}<span class="tag">Energia</span><h3>{len(rb)} Red Bull diverse</h3><p>Più Monster e Powerade: la notte è lunga.</p></a>')
     return '<div class="feat">' + "".join(cards) + "</div>"
 
 def zones_block(r):
     return '<div class="zones">' + "".join(f'<a href="{r}zona/{k}/">📍 {v["nome"]}</a>' for k, v in ZONE.items()) + f'<a href="{r}consegna-a-domicilio/">🛵 Tutte le zone di consegna</a></div>'
+
+IMG = "https://rs-menus-api.roocdn.com/images/{}/image.jpeg?width=320&height=320&fit=contain&auto=webp&format=webp"
+
+def dove_txt(m):
+    per = {}
+    for mac, slot in m:
+        per.setdefault(mac, []).append(str(slot))
+    return " · ".join(f"Macchina {mac} n. {', '.join(sl)}" for mac, sl in sorted(per.items()))
+
+def card(p):
+    img = (f'<img src="{IMG.format(p["i"])}" alt="{E(p["n"])}" loading="lazy" width="160" height="160" onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{{className:\'ph\',textContent:\'{ICONE.get(p["c"],"🛒")}\'}}))">'
+           if p.get("i") else f'<span class="ph">{ICONE.get(p["c"], "🛒")}</span>')
+    d = dove_txt(p.get("m", []))
+    st = "Ultimi pezzi" if p["s"] == "ultimi" else "Disponibile"
+    return (f'<li><button type="button" class="pc" data-p="{E(p["n"])}" data-s="{p["s"]}" data-i="{p.get("i","")}" data-d="{E(d)}">'
+            f'<span class="pimg">{img}</span><span class="pn">{E(p["n"])}</span>'
+            f'<span class="pm">📍 {E(d)}</span><span class="st{" u" if p["s"]=="ultimi" else ""}">{st}</span></button></li>')
 
 def plist_static(prods):
     g = {}
@@ -265,8 +287,7 @@ def plist_static(prods):
     for c in ORDINE:
         if c not in g:
             continue
-        lis = "".join(f'<li><button type="button" data-p="{E(p["n"])}" data-s="{p["s"]}"><span>{E(p["n"])}</span><span class="st{" u" if p["s"]=="ultimi" else ""}">{"Ultimi pezzi" if p["s"]=="ultimi" else "Disponibile"}</span></button></li>' for p in g[c])
-        out.append(f'<div class="group"><h2>{ICONE[c]} {E(c)}</h2><ul class="plist">{lis}</ul></div>')
+        out.append(f'<div class="group"><h2>{ICONE[c]} {E(c)}</h2><ul class="plist">{"".join(card(p) for p in g[c])}</ul></div>')
     return "".join(out)
 
 def write(path, content):
@@ -436,7 +457,7 @@ def mondo():
 </div></section>
 <section class="s" style="padding-top:10px"><div class="wrap">
   {plist_static(prods)}
-  {"<div class='feat' style='margin-top:30px'><button class='fcard f1' type='button' data-p='"+E(np[0]['n'])+"' data-s='"+np[0]['s']+"'><span class='tag'>Novità</span><h3>E c'è anche la Nutella Peanut</h3><p>La Nutella con le arachidi: da noi la trovi sempre, anche di notte.</p></button></div>" if np else ""}
+  {"<div class='feat' style='margin-top:30px'><button class='fcard f1' type='button' data-p='"+E(np[0]['n'])+"' data-s='"+np[0]['s']+"' data-i='"+np[0].get('i','')+"' data-d='"+E(dove_txt(np[0].get('m',[])))+"'>"+fimg(np[0])+"<span class='tag'>Novità</span><h3>E c'è anche la Nutella Peanut</h3><p>La Nutella con le arachidi: da noi la trovi sempre, anche di notte.</p></button></div>" if np else ""}
   <div class="prose" style="margin-top:34px">
     <h2>Perché da Pop Stop</h2>
     <p>Gli snack dal mondo di solito si trovano solo in pochi negozi specializzati, con orari da negozio. Nei nostri distributori di Viale Guglielmo Marconi 79/81 li trovi 24 ore su 24, 7 giorni su 7: Dr Pepper in tanti gusti (anche le versioni americane da 355 ml), Fanta USA come Grape, Strawberry, Peach e Pineapple, Takis Fuego e Blue Heat, le bibite High Up e i caffè Starbucks pronti da bere.</p>

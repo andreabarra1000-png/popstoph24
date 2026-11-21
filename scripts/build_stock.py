@@ -3,13 +3,14 @@
 
 Uso: python3 scripts/build_stock.py macchine.json > stock.json
 macchine.json = il documento stock/macchine così com'è ({"macchine": {"TCN41": [{"n","q",...}]}, "updatedAt": ...}).
-Sul sito vanno solo nome, categoria e stato (disponibile / ultimi pezzi): niente prezzi, niente alcolici.
+Sul sito vanno solo nome, categoria, stato (disponibile / ultimi pezzi), foto e macchina/numero: niente prezzi, niente alcolici.
+Le foto vengono da immagini.json (nome prodotto -> id immagine del menu Deliveroo del negozio).
 """
 import json, re, sys
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
-ALCOL = re.compile(r"birra|heineken|corona|tennent|peroni|beck|prosecco|mo[eë]t|champagne|bacardi|breezer|jack daniel|vino", re.I)
+ALCOL = re.compile(r"jack|birra|heineken|corona|tennent|peroni|beck|prosecco|mo[eë]t|champagne|bacardi|breezer|jack daniel|vino", re.I)
 CATEGORIE = [
     ("Energy drink", r"red bull|monster|powerade"),
     ("Acqua", r"acqua|fiji|electa|san benedetto baby"),
@@ -31,17 +32,33 @@ def pulisci(nome):
     n = re.sub(r"\s+", " ", nome).strip()
     return n[:1].upper() + n[1:] if n.isupper() is False else n.title()
 
+def chiave(n):
+    return re.sub(r"[^a-z0-9]", "", n.lower())
+
 def main(path):
+    import os
     doc = json.load(open(path, encoding="utf-8"))
-    tot = {}
-    for slots in doc.get("macchine", {}).values():
+    img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "immagini.json")
+    imgs = {chiave(k): v for k, v in json.load(open(img_path, encoding="utf-8")).items()} if os.path.exists(img_path) else {}
+    tot, dove = {}, {}
+    for mac, slots in sorted(doc.get("macchine", {}).items()):
+        num = int(mac[-1]) if mac[-1].isdigit() else mac  # TCN41 -> 1
         for s in slots:
             n, q = s.get("n", "").strip(), int(s.get("q") or 0)
             if not n or q <= 0 or ALCOL.search(n):
                 continue
             k = pulisci(n)
             tot[k] = tot.get(k, 0) + q
-    prodotti = [{"n": n, "c": categoria(n), "s": "ultimi" if q <= 2 else "ok"} for n, q in sorted(tot.items(), key=lambda x: x[0].lower())]
+            pos = [num, s.get("s")]
+            if pos not in dove.setdefault(k, []):
+                dove[k].append(pos)
+    prodotti = []
+    for n, q in sorted(tot.items(), key=lambda x: x[0].lower()):
+        p = {"n": n, "c": categoria(n), "s": "ultimi" if q <= 2 else "ok", "m": sorted(dove[n])}
+        i = imgs.get(chiave(n))
+        if i and not i.startswith("http"):
+            p["i"] = i
+        prodotti.append(p)
     upd = doc.get("updatedAt")
     try:
         dt = datetime.fromisoformat(upd.replace("Z", "+00:00")).astimezone(ZoneInfo("Europe/Rome"))

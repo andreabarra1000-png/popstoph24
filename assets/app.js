@@ -52,9 +52,12 @@
 
   /* scheda prodotto */
   var sheet=$("#sheet");
-  function apri(nome,stato){
+  function apri(nome,stato,img,dove,cat){
     if(!sheet)return;
     $("#sh-n",sheet).textContent=nome;
+    var bi=$("#sh-i",sheet);bi.innerHTML="";bi.className="pimg big";
+    if(img){var im=document.createElement("img");im.src=CFG.img.replace("{}",img);im.alt=nome;bi.appendChild(im)}else{bi.textContent="🛒";bi.className="pimg big ph"}
+    $("#sh-m",sheet).textContent=dove?"📍 Lo trovi in: "+dove:"";
     $("#sh-s",sheet).textContent=stato==="ultimi"?"Ultimi pezzi nelle macchine: corri!":"Disponibile ora nelle macchine di Casavatore";
     sheet.classList.add("on");sheet.setAttribute("aria-hidden","false");
     setTimeout(function(){$(".x",sheet).focus()},50);
@@ -66,7 +69,7 @@
   }
   document.addEventListener("click",function(e){
     var b=e.target.closest("[data-p]");
-    if(b){e.preventDefault();apri(b.dataset.p,b.dataset.s)}
+    if(b){e.preventDefault();apri(b.dataset.p,b.dataset.s,b.dataset.i,b.dataset.d)}
   });
 
   /* elenco prodotti dal vivo */
@@ -77,11 +80,13 @@
     var par=new URLSearchParams(location.search);
     if(par.get("cat"))cat=par.get("cat");
     if(par.get("q"))q.value=par.get("q");
+    function dove(m){var per={};m.forEach(function(x){(per[x[0]]=per[x[0]]||[]).push(x[1])});
+      return Object.keys(per).sort().map(function(k){return "Macchina "+k+" n. "+per[k].join(", ")}).join(" · ")}
     function norm(s){return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")}
     function render(){
       if(!dati)return;
       var t=norm(q.value.trim());
-      var r=dati.filter(function(p){return (cat==="Tutto"||p.c===cat)&&(!t||norm(p.n+" "+p.c).indexOf(t)>-1)});
+      var r=dati.filter(function(p){return (cat==="Tutto"||p.c===cat)&&(!t||norm(p.n+" "+p.c+" "+dove(p.m||[])).indexOf(t)>-1)});
       var g={};r.forEach(function(p){(g[p.c]=g[p.c]||[]).push(p)});
       box.innerHTML="";
       if(!r.length){box.innerHTML='<p class="empty">Nessun prodotto trovato. Prova un\'altra parola o scrivici su WhatsApp: magari arriva col prossimo carico.</p>';return}
@@ -91,10 +96,17 @@
         var h=document.createElement("h2");h.textContent=(ICO[c]||"")+" "+c;s.appendChild(h);
         var ul=document.createElement("ul");ul.className="plist";
         g[c].forEach(function(p){
-          var li=document.createElement("li"),b=document.createElement("button"),n=document.createElement("span"),st=document.createElement("span");
-          b.type="button";b.dataset.p=p.n;b.dataset.s=p.s;n.textContent=p.n;
-          st.className="st"+(p.s==="ultimi"?" u":"");st.textContent=p.s==="ultimi"?"Ultimi pezzi":"Disponibile";
-          b.appendChild(n);b.appendChild(st);li.appendChild(b);ul.appendChild(li);
+          var li=document.createElement("li"),b=document.createElement("button");
+          var d=dove(p.m||[]);
+          b.type="button";b.className="pc";b.dataset.p=p.n;b.dataset.s=p.s;b.dataset.i=p.i||"";b.dataset.d=d;
+          var wi=document.createElement("span");wi.className="pimg";
+          if(p.i){var im=document.createElement("img");im.src=CFG.img.replace("{}",p.i);im.alt=p.n;im.loading="lazy";im.width=160;im.height=160;
+            im.onerror=function(){var ph=document.createElement("span");ph.className="ph";ph.textContent=ICO[p.c]||"🛒";im.replaceWith(ph)};wi.appendChild(im)}
+          else{var ph=document.createElement("span");ph.className="ph";ph.textContent=ICO[p.c]||"🛒";wi.appendChild(ph)}
+          var n=document.createElement("span");n.className="pn";n.textContent=p.n;
+          var m=document.createElement("span");m.className="pm";m.textContent="📍 "+d;
+          var st=document.createElement("span");st.className="st"+(p.s==="ultimi"?" u":"");st.textContent=p.s==="ultimi"?"Ultimi pezzi":"Disponibile";
+          b.appendChild(wi);b.appendChild(n);if(d)b.appendChild(m);b.appendChild(st);li.appendChild(b);ul.appendChild(li);
         });
         s.appendChild(ul);box.appendChild(s);
       });
