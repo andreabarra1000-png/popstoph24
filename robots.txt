@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /scripts/
-Sitemap: https://andreabarra1000-png.github.io/popstoph24/sitemap.xml
+Sitemap: https://popstoph24.it/sitemap.xml
