@@ -66,7 +66,8 @@ def store_ld():
       "name": S["nome"], "alternateName": ["PopStop H24", "Pop Stop h24 Casavatore", "popstoph24"],
       "description": "Punto vendita self-service con distributori automatici aperto 24 ore su 24, 7 giorni su 7, a Casavatore (Napoli nord): energy drink, bibite, acqua, snack dolci e salati, tramezzini, caramelle, snack e bibite dal mondo e beni di prima necessità. Consegna a domicilio con Glovo, Just Eat, Deliveroo e Alfonsino.",
       "url": BASE, "image": BASE + "assets/og.png", "logo": BASE + "assets/icon-512.png",
-      "telephone": S["telefono"],
+      "telephone": S["telefono"], "vatID": "IT" + S.get("piva", ""),
+      "geo": {"@type": "GeoCoordinates", "latitude": S["geo"][0], "longitude": S["geo"][1]},
       "address": {"@type": "PostalAddress", "streetAddress": S["indirizzo"], "addressLocality": S["citta"],
                   "postalCode": S["cap"], "addressRegion": S["provincia"], "addressCountry": "IT"},
       "openingHoursSpecification": [{"@type": "OpeningHoursSpecification",
@@ -74,7 +75,7 @@ def store_ld():
           "opens": "00:00", "closes": "23:59"}],
       "areaServed": [{"@type": "City", "name": n} for n in ["Casavatore", "Casoria", "Arzano", "Napoli"]],
       "hasMap": f'https://www.google.com/maps/search/?api=1&query=PopStop%20H24&query_place_id={S["place_id"]}',
-      "sameAs": list(S["social"].values()) + [u for _, u in APP.values()],
+      "sameAs": list(S["social"].values()) + list(S.get("schede", {}).values()) + [u for _, u in APP.values()],
       "potentialAction": {"@type": "OrderAction", "target": [u for _, u in APP.values()],
                           "deliveryMethod": "http://purl.org/goodrelations/v1#DeliveryModeOwnFleet"},
       "keywords": "distributori automatici h24, aperto 24 ore, minimarket self-service, snack, bibite, energy drink, consegna a domicilio, Casavatore, Casoria, Napoli nord",
@@ -117,7 +118,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="google-site-verification" content="{S["google_verifica"]}">
 <meta name="theme-color" content="#061219">
-<meta name="geo.region" content="IT-NA"><meta name="geo.placename" content="Casavatore">
+<meta name="geo.region" content="IT-NA"><meta name="geo.placename" content="Casavatore"><meta name="geo.position" content="{S["geo"][0]};{S["geo"][1]}"><meta name="ICBM" content="{S["geo"][0]}, {S["geo"][1]}">
 <meta property="og:type" content="website"><meta property="og:locale" content="it_IT"><meta property="og:site_name" content="Pop Stop h24">
 <meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}">
 <meta property="og:url" content="{BASE}{path}"><meta property="og:image" content="{BASE}assets/og.png">
@@ -150,8 +151,9 @@ def layout(path, title, desc, body, ld, depth, active=""):
   </div>
   <div><h3>Sito</h3><a href="{home}">Home</a><a href="{r}consegna-a-domicilio/">Consegna a domicilio</a><a href="{r}prodotti/">Cosa c'è nelle macchine</a><a href="{r}snack-americani-napoli/">Snack dal mondo</a><a href="{REVIEW}" rel="noopener" target="_blank">Lascia una recensione</a></div>
   <div><h3>Seguici</h3>{"".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())}</div>
+  <div><h3>Trovaci anche su</h3>{"".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S.get("schede", {}).items())}</div>
 </div>
-<div class="wrap" style="margin-top:26px;font-size:.82rem">© {datetime.date.today().year} Enjoy Market S.r.l. · Pop Stop h24 Casavatore · Le consegne a domicilio sono gestite dalle app partner quando il servizio è disponibile nella tua zona.</div>
+<div class="wrap" style="margin-top:26px;font-size:.82rem">© {datetime.date.today().year} Enjoy Market S.r.l. · P.IVA {S.get("piva", "")} · Pop Stop h24 Casavatore · Le consegne a domicilio sono gestite dalle app partner quando il servizio è disponibile nella tua zona.</div>
 </footer>
 <nav class="dock" aria-label="Azioni rapide">
   <a class="d1" href="{r}consegna-a-domicilio/#app"><span>🛵</span>Ordina</a>

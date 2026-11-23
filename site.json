@@ -11,14 +11,37 @@
   "place_id": "ChIJQeNt5l0JOxMR29YJjxbDtKE",
   "google_verifica": "-70wM31mMgcz5SSsPxoPzFp_An-VaXXSp5mAGe1TdaA",
   "app": {
-    "glovo": ["Glovo", "https://glovoapp.com/it/it/napoli/stores/enjoy-market-nap"],
-    "deliveroo": ["Deliveroo", "https://deliveroo.it/menu/napoli/napoli-casoria/enjoy-market"],
-    "justeat": ["Just Eat", "https://www.justeat.it/restaurants-enjoy-market-by-vado-napoli/menu"],
-    "alfonsino": ["Alfonsino", "https://app.alfonsino.delivery/casoria/order/menu/vado-napoli-centro"]
+    "glovo": [
+      "Glovo",
+      "https://glovoapp.com/it/it/napoli/stores/enjoy-market-nap"
+    ],
+    "deliveroo": [
+      "Deliveroo",
+      "https://deliveroo.it/menu/napoli/napoli-casoria/enjoy-market"
+    ],
+    "justeat": [
+      "Just Eat",
+      "https://www.justeat.it/restaurants-enjoy-market-by-vado-napoli/menu"
+    ],
+    "alfonsino": [
+      "Alfonsino",
+      "https://app.alfonsino.delivery/casoria/order/menu/vado-napoli-centro"
+    ]
   },
   "social": {
     "Instagram": "https://www.instagram.com/popstoph24",
     "TikTok": "https://www.tiktok.com/@popstoph365",
     "Facebook": "https://www.facebook.com/618353578038104"
+  },
+  "geo": [
+    40.9007694,
+    14.2773781
+  ],
+  "piva": "08514011215",
+  "schede": {
+    "Google Maps": "https://www.google.com/maps/search/?api=1&query=PopStop%20H24&query_place_id=ChIJQeNt5l0JOxMR29YJjxbDtKE",
+    "Yelp": "https://www.yelp.it/biz/pop-stop-h24-casavatore",
+    "Cylex": "https://www.cylex-italia.it/casavatore/pop-stop-h24-16548132.html",
+    "OpenStreetMap": "https://www.openstreetmap.org/node/14404333381"
   }
 }

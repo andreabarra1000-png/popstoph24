@@ -234,7 +234,7 @@ section.s{padding:70px 0;scroll-margin-top:70px}
 
 /* footer */
 footer{padding:50px 0 120px;border-top:1px solid var(--line);color:var(--mut);font-size:.92rem}
-footer .cols{display:grid;grid-template-columns:2fr 1fr 1fr;gap:26px}
+footer .cols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:26px}
 footer h3{color:#fff;font-size:1rem;margin-bottom:10px}
 footer a{display:block;padding:4px 0;color:var(--mut);text-decoration:none}
 footer a:hover{color:#fff}
