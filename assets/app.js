@@ -81,7 +81,8 @@
     if(par.get("cat"))cat=par.get("cat");
     if(par.get("q"))q.value=par.get("q");
     function dove(m){var per={};m.forEach(function(x){(per[x[0]]=per[x[0]]||[]).push(x[1])});
-      return Object.keys(per).sort().map(function(k){return "Macchina "+k+" n. "+per[k].join(", ")}).join(" · ")}
+      var POS={1:"1ª macchina da sinistra",2:"2ª macchina da sinistra",3:"2ª macchina da destra",4:"1ª macchina da destra"};
+      return Object.keys(per).sort().map(function(k){return (POS[k]||"Macchina "+k)+" · n. "+per[k].join(", ")}).join(" · ")}
     function norm(s){return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")}
     function render(){
       if(!dati)return;

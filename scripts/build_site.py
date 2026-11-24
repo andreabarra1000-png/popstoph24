@@ -219,7 +219,7 @@ def help_block():
     return f'''<section class="s alt" id="assistenza"><div class="wrap">
   <div class="duo">
     <div class="panel reveal"><span class="eyebrow">Assistenza</span><h2 style="font-size:2rem">La macchina non ha erogato?</h2>
-      <p>Scrivici su WhatsApp con il numero della macchina, il prodotto e l'ora: ti rispondiamo il prima possibile e sistemiamo.</p>
+      <p>Scrivici su WhatsApp dicendo quale macchina (per esempio «2ª da sinistra»), il prodotto e l'ora: ti rispondiamo il prima possibile e sistemiamo.</p>
       <a class="btn t wide" href="{WA_ASS}" rel="noopener" target="_blank">💬 Scrivici su WhatsApp</a>
       <a class="btn o wide" href="{TEL}">📞 Chiama {S["telefono_vis"]}</a></div>
     <div class="panel rev reveal"><span class="eyebrow">Ti siamo piaciuti?</span><div class="stars5">★★★★★</div>
@@ -266,11 +266,14 @@ def zones_block(r):
 
 IMG = "https://rs-menus-api.roocdn.com/images/{}/image.jpeg?width=320&height=320&fit=contain&auto=webp&format=webp"
 
+# Le macchine non hanno numeri: si indicano per posizione guardandole di fronte
+POSIZIONE = {1: "1ª macchina da sinistra", 2: "2ª macchina da sinistra", 3: "2ª macchina da destra", 4: "1ª macchina da destra"}
+
 def dove_txt(m):
     per = {}
     for mac, slot in m:
         per.setdefault(mac, []).append(str(slot))
-    return " · ".join(f"Macchina {mac} n. {', '.join(sl)}" for mac, sl in sorted(per.items()))
+    return " · ".join(f"{POSIZIONE.get(mac, f'Macchina {mac}')} · n. {', '.join(sl)}" for mac, sl in sorted(per.items()))
 
 def card(p):
     img = (f'<img src="{IMG.format(p["i"])}" alt="{E(p["n"])}" loading="lazy" width="160" height="160" onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{{className:\'ph\',textContent:\'{ICONE.get(p["c"],"🛒")}\'}}))">'
