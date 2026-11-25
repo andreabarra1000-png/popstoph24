@@ -325,6 +325,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
 <link rel="canonical" href="{BASE}{path}">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="google-site-verification" content="{S["google_verifica"]}">
+<meta name="msvalidate.01" content="F8B0834C77434FD6B739C99472535122">
 <meta name="theme-color" content="#061219">
 <meta name="geo.region" content="IT-NA"><meta name="geo.placename" content="Casavatore"><meta name="geo.position" content="{S["geo"][0]};{S["geo"][1]}"><meta name="ICBM" content="{S["geo"][0]}, {S["geo"][1]}">
 <meta property="og:type" content="website"><meta property="og:locale" content="it_IT"><meta property="og:site_name" content="Pop Stop h24">
