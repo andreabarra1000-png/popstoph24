@@ -18,6 +18,20 @@
   function nomeOk(n){ return n.length>=3 && n.length<=14 && !BRUTTE.test(n.replace(/[^a-zàèéìòù]/gi,"")) && !BRUTTE.test(n) && !LINK.test(n); }
   function igOk(ig){ return !ig || (/^[a-z0-9._]{2,30}$/i.test(ig) && !BRUTTE.test(ig)); }
 
+  var TITOLO = (document.querySelector("h1")||{}).textContent || "il gioco di POP";
+  TITOLO = TITOLO.replace(/\s+/g," ").trim().slice(0,60);
+  var qs = new URLSearchParams(location.search);
+  var SFIDA = {n: pulisci(qs.get("sfida"),14), p: parseInt(qs.get("p"),10)||0};
+  if(!nomeOk(SFIDA.n) || SFIDA.p<=0 || SFIDA.p>300000) SFIDA = null;
+
+  function sfida(p){
+    var n = mio && mio.n ? mio.n : "";
+    var url = location.origin + location.pathname + (n ? "?sfida="+encodeURIComponent(n)+"&p="+p : "");
+    var txt = "Ho fatto "+p+" punti a «"+TITOLO+"», il gioco di Pop Stop h24 😎 Mi batti?";
+    if(navigator.share){ navigator.share({title:"Sfida a "+TITOLO, text:txt, url:url}).catch(function(){}); }
+    else { window.open("https://wa.me/?text="+encodeURIComponent(txt+" "+url), "_blank", "noopener"); }
+  }
+
   function get(){ return fetch(API+"?g="+encodeURIComponent(GIOCO)+"&t="+Date.now()).then(function(r){return r.json()}); }
   function post(d){ return fetch(API,{method:"POST",body:JSON.stringify(d)}).then(function(r){return r.json()}); }
 
@@ -34,7 +48,10 @@
     ".pclass li a{color:#19d6c8;text-decoration:none;font-size:.85rem}.pclass li.me{background:rgba(255,210,63,.18);border-radius:8px}"+
     ".pclass .msg{min-height:1.2em;font:700 .9rem system-ui,sans-serif;color:#3ee07a;margin:0 0 6px}.pclass .msg.err{color:#ff8a8a}"+
     ".pclass small{display:block;opacity:.7;margin-top:6px;font-size:.75rem}"+
-    ".pcrown{margin:10px auto 0;font:800 1rem system-ui,sans-serif;color:#ffd23f;text-align:center}";
+    ".pcrown{margin:10px auto 0;font:800 1rem system-ui,sans-serif;color:#ffd23f;text-align:center}"+
+    ".psfida{display:block;width:100%;margin:8px 0 4px;padding:11px 14px;border-radius:12px;border:2px solid #061219;background:#19d6c8;color:#061219;font:800 1rem system-ui,sans-serif;cursor:pointer}"+
+    ".pinvito{margin:10px auto 0;max-width:420px;padding:10px 12px;border-radius:14px;background:#ff5a36;color:#fff;font:800 1rem system-ui,sans-serif;text-align:center;border:3px solid #061219;box-shadow:3px 3px 0 #061219}"+
+    ".pclass .tutte{display:block;margin-top:8px;color:#ffd23f;font:700 .85rem system-ui,sans-serif;text-decoration:none}";
   document.head.appendChild(css);
 
   var dati = {settimana:[], sempre:[]}, vista = "settimana", mio = null;
@@ -63,11 +80,13 @@
       '<input name="tk" maxlength="25" placeholder="@tiktok (facoltativo)" autocapitalize="off">'+
       '<button type="submit">Entra in classifica</button></form>'+
       '<p class="msg" aria-live="polite"></p>'+
+      '<button type="button" class="psfida">⚔️ Sfida un amico a battermi</button>'+
       '<div class="tabs"><button type="button" data-v="settimana">Questa settimana</button><button type="button" data-v="sempre">Di sempre</button></div>'+
-      '<ol></ol><small>I primi della settimana li annunciamo su Instagram e TikTok di Pop Stop ogni lunedì, taggando chi ha messo il suo account. Niente parolacce: i nomi offensivi vengono tolti.</small>';
+      '<ol></ol><a class="tutte" href="/classifiche/">🏆 Tutte le classifiche dei giochi</a><small>I primi della settimana li annunciamo su Instagram e TikTok di Pop Stop ogni lunedì, taggando chi ha messo il suo account. Niente parolacce: i nomi offensivi vengono tolti.</small>';
     var ref = end.querySelector(".row") || end.lastElementChild;
     ref.parentNode.insertBefore(box, ref.nextSibling);
     box.querySelectorAll(".tabs button").forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); vista=b.dataset.v; lista(box); }); });
+    box.querySelector(".psfida").addEventListener("click", function(e){ e.stopPropagation(); sfida(box.dataset.punti|0); });
     box.addEventListener("click", function(e){ e.stopPropagation(); });
     box.addEventListener("touchstart", function(e){ e.stopPropagation(); }, {passive:true});
     var f = box.querySelector("form");
@@ -101,7 +120,10 @@
     var box = pannello(end);
     box.dataset.punti = p; box.dataset.inviato = "";
     var btn = box.querySelector("form button"); btn.disabled = false;
-    box.querySelector(".msg").textContent = p>0 ? "Hai fatto "+p+" punti: mettili in classifica!" : "";
+    var m = p>0 ? "Hai fatto "+p+" punti: mettili in classifica!" : "";
+    if(SFIDA && p>0) m = p>SFIDA.p ? "🏆 Hai battuto "+SFIDA.n+" ("+SFIDA.p+")! Mandagli il risultato." : "😬 "+SFIDA.n+" resta avanti ("+SFIDA.p+"). Riprova!";
+    box.querySelector(".msg").textContent = m;
+    box.querySelector(".psfida").hidden = !(p>0);
     aggiorna(box);
   }
 
@@ -119,6 +141,7 @@
   function avvia(){
     var end = document.querySelector("#c-end, #g-end"), start = document.querySelector("#c-start, #g-start");
     if(start) corona(start);
+    if(start && SFIDA){ var v = document.createElement("p"); v.className = "pinvito"; v.textContent = "⚔️ "+SFIDA.n+" ti sfida: batti "+SFIDA.p+" punti!"; start.insertBefore(v, start.firstChild); }
     if(!end) return;
     new MutationObserver(function(){ if(!end.hidden) onFine(end); }).observe(end, {attributes:true, attributeFilter:["hidden"]});
   }

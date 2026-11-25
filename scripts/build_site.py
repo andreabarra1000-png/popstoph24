@@ -400,7 +400,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
     <a href="{TEL}" style="display:inline">Tel. e WhatsApp {S["telefono_vis"]}</a></p>
     <div class="zones" style="margin-top:16px">{zone_links}</div>
   </div>
-  <div><h3>Sito</h3><a href="{home}">Home</a><a href="{r}consegna-a-domicilio/">Consegna a domicilio</a><a href="{r}prodotti/">Cosa c'è nelle macchine</a><a href="{r}snack-americani-napoli/">Snack dal mondo</a><a href="{r}aperto-24-ore-napoli-nord/">Aperto di notte a Napoli nord</a><a href="{r}energy-drink-a-domicilio/">Energy drink a domicilio</a><a href="{r}gioco/">Il gioco di POP</a><a href="{r}gioco/corri/">Corri, POP, corri!</a><a href="{r}gioco/spazio/">POP al cinema</a><a href="{REVIEW}" rel="noopener" target="_blank">Lascia una recensione</a></div>
+  <div><h3>Sito</h3><a href="{home}">Home</a><a href="{r}consegna-a-domicilio/">Consegna a domicilio</a><a href="{r}prodotti/">Cosa c'è nelle macchine</a><a href="{r}snack-americani-napoli/">Snack dal mondo</a><a href="{r}aperto-24-ore-napoli-nord/">Aperto di notte a Napoli nord</a><a href="{r}energy-drink-a-domicilio/">Energy drink a domicilio</a><a href="{r}gioco/">Il gioco di POP</a><a href="{r}gioco/corri/">Corri, POP, corri!</a><a href="{r}gioco/spazio/">POP al cinema</a><a href="{r}classifiche/">🏆 Classifiche dei giochi</a><a href="{REVIEW}" rel="noopener" target="_blank">Lascia una recensione</a></div>
   <div><h3>Cerchi…</h3>{"".join(f'<a href="{r}{k}/">{E(n)}</a>' for k, n in TEMI_NOMI.items())}</div>
   <div><h3>Seguici</h3>{"".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())}</div>
   <div><h3>Trovaci anche su</h3>{"".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S.get("schede", {}).items())}</div>
@@ -612,6 +612,7 @@ def home():
 <section class="s giochisub" id="giochi"><div class="wrap">
   <div class="giochi3 reveal"><h2>🎮 I giochi di POP</h2>
   <p class="g3sub">7 giochi gratis, si gioca subito dal telefono. Scorri e scegli! 👉</p>
+  <p style="text-align:center;margin:0 0 14px"><a class="btn y" href="classifiche/">🏆 Classifiche della settimana: chi comanda?</a></p>
   <div class="gtasti">{"".join(f'<a class="gtasto g{i}" href="{h}">{game_art(h.split("/")[1] or "riempi")}<b>{E(t)}</b><small>{E(g)}</small><span class="gplay">▶ Gioca</span></a>' for i, (h, e, t, g) in enumerate([("gioco/corri/", "🏃", "Corri, POP, corri!", "Platform"), ("gioco/", "🧃", "Riempi le macchine", "Prima delle 6")] + [(f"gioco/{k}/", e, t, g) for k, e, t, g, *_ in FILM]))}</div>
 </div>
 </div></section>
@@ -1195,6 +1196,35 @@ def film():
             f"{intro[:95].rsplit(' ',1)[0]}… Gioca gratis dal telefono con POP, la mascotte di Pop Stop h24.",
             body, ld, 2, active="gioco/"))
 
+def classifiche():
+    r = rel(1)
+    giochi = [("riempi", "🧃", "Riempi le macchine", "gioco/"), ("corri", "🏃", "Corri, POP, corri!", "gioco/corri/")] + [(k, e, t, f"gioco/{k}/") for k, e, t, *_ in FILM]
+    cards = "".join(f'''<article class="cl-card" data-g="{k}"><h2><span>{e}</span> {E(t)}</h2><ol class="cl-top"><li class="cl-vuoto">Carico…</li></ol>
+<p class="cl-rec"></p><a class="btn y" href="{r}{u}">▶ Gioca e sfida il primo</a></article>''' for k, e, t, u in giochi)
+    body = f'''<section class="page-hero"><div class="wrap">
+<span class="eyebrow">Hall of fame di Casavatore</span><h1>🏆 Le classifiche dei giochi di POP</h1>
+<p class="lead">Chi comanda questa settimana? Gioca gratis dal telefono, entra in classifica col tuo nome (e il tuo @, se vuoi) e manda la sfida agli amici. Ogni lunedì annunciamo il podio su Instagram e TikTok. Si gioca solo per la gloria: niente premi.</p>
+</div></section>
+<section class="s"><div class="wrap"><div class="cl-grid">{cards}</div></div></section>
+<style>.cl-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}}.cl-card{{background:#fff;border:3px solid #061219;border-radius:20px;padding:16px;box-shadow:5px 5px 0 #061219;display:flex;flex-direction:column}}.cl-card h2{{font-size:1.15rem;margin:0 0 10px}}.cl-top{{list-style:none;margin:0 0 8px;padding:0;flex:1}}.cl-top li{{display:flex;gap:8px;padding:7px 2px;border-bottom:1px dashed #cfd8dc;font-weight:700}}.cl-top li span{{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}.cl-top li small{{color:#0a8f86;font-weight:700}}.cl-rec{{font-size:.85rem;color:#456;margin:0 0 10px}}.cl-vuoto{{color:#678}}</style>
+<script>
+(function(){{var API="https://script.google.com/macros/s/AKfycbwubOr0FmOYfFl48BdCAa7YCRmdsFqGoT4ohoH-_Sw_A6MX3AAcs2R4U7CbMS1psbZZgQ/exec";
+function t(x){{return document.createTextNode(x)}}
+document.querySelectorAll(".cl-card").forEach(function(c){{
+ fetch(API+"?g="+c.dataset.g+"&t="+Date.now()).then(function(r){{return r.json()}}).then(function(d){{
+  var ol=c.querySelector("ol");ol.innerHTML="";var l=(d.settimana||[]).slice(0,5);
+  if(!l.length){{var li=document.createElement("li");li.className="cl-vuoto";li.appendChild(t("Nessuno questa settimana: il primo posto è libero!"));ol.appendChild(li)}}
+  l.forEach(function(x,i){{var li=document.createElement("li");var b=document.createElement("b");b.textContent=["🥇","🥈","🥉"][i]||(i+1)+"°";var sp=document.createElement("span");sp.textContent=x.n;
+   if(x.ig){{var sm=document.createElement("small");sm.textContent=" @"+x.ig;sp.appendChild(sm)}}var em=document.createElement("em");em.textContent=x.p;li.appendChild(b);li.appendChild(sp);li.appendChild(em);ol.appendChild(li)}});
+  var s=(d.sempre||[])[0];if(s)c.querySelector(".cl-rec").textContent="👑 Record di sempre: "+s.n+" con "+s.p+" punti";
+ }}).catch(function(){{c.querySelector("ol").innerHTML="<li class=cl-vuoto>Classifica non raggiungibile ora: riprova tra poco.</li>"}});
+}});}})();
+</script>'''
+    ld = [crumbs_ld([("Home", ""), ("Classifiche dei giochi", "classifiche/")])]
+    write("classifiche/index.html", layout("classifiche/", "Classifiche dei giochi di POP | Pop Stop h24",
+        "Chi comanda questa settimana a Casavatore? Le classifiche dei 7 giochi gratis di POP: gioca, entra in classifica e sfida gli amici.",
+        body, ld, 1, active="gioco/"))
+
 def redirect(slug, url):
     write(f"{slug}/index.html", f'''<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Pop Stop h24</title><meta http-equiv="refresh" content="0;url={E(url)}"><link rel="canonical" href="{E(url)}"></head>
@@ -1202,7 +1232,7 @@ def redirect(slug, url):
 <script>location.replace({json.dumps(url)})</script></body></html>''')
 
 def tecnici():
-    pages = ["", "consegna-a-domicilio/", "prodotti/", "snack-americani-napoli/", "gioco/", "gioco/corri/"] + [f"gioco/{f[0]}/" for f in FILM] + [f"{k}/" for k in TEMI] + [f"prodotti/{CAT_SLUG[c]}/" for c in ORDINE if any(p["c"] == c for p in PRODOTTI)] + [f"zona/{k}/" for k in ZONE]
+    pages = ["", "consegna-a-domicilio/", "prodotti/", "snack-americani-napoli/", "gioco/", "gioco/corri/", "classifiche/"] + [f"gioco/{f[0]}/" for f in FILM] + [f"{k}/" for k in TEMI] + [f"prodotti/{CAT_SLUG[c]}/" for c in ORDINE if any(p["c"] == c for p in PRODOTTI)] + [f"zona/{k}/" for k in ZONE]
     urls = "".join(f"  <url><loc>{BASE}{p}</loc><lastmod>{OGGI}</lastmod></url>\n" for p in pages)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
     write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /scripts/\nSitemap: {BASE}sitemap.xml\n")
@@ -1221,7 +1251,7 @@ def tecnici():
 - Sito: {BASE} · Prodotti: {BASE}prodotti/ · Consegna: {BASE}consegna-a-domicilio/
 """)
 
-home(); consegna(); prodotti(); mondo(); gioco(); corri(); film()
+home(); consegna(); prodotti(); mondo(); gioco(); corri(); film(); classifiche()
 for k, v in TEMI.items():
     tema(k, v)
 for c in ORDINE:
