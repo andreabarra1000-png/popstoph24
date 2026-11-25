@@ -687,3 +687,25 @@ a.popwrap.corsa .playme{top:5%;bottom:auto;right:-3%;font-size:.8rem}
 }
 @media (max-width:420px){.top .pill{padding:6px 9px;font-size:.78rem;gap:6px}.logo img{height:50px}}
 @media (max-width:350px){.burger .bt{display:none}}
+/* === Intestazioni e blocchi integrati (stile sticker) === */
+.s .head{align-items:flex-start}
+.s .head>div{display:flex;flex-direction:column;align-items:flex-start}
+.eyebrow{display:inline-block;background:var(--t-neon);color:#061219;border:2.5px solid #061219;border-radius:999px;padding:4px 12px;font-size:.72rem;letter-spacing:.1em;box-shadow:3px 3px 0 #061219;transform:rotate(-2deg);margin-bottom:12px}
+.s .head h2{font-size:clamp(1.6rem,4.4vw,2.6rem);line-height:1.1}
+.s .head p{font-size:.98rem;border-left:4px solid var(--t-neon);padding:2px 0 2px 12px;margin:0;color:#cfe3e6}
+.zones{gap:8px}
+.zones a{padding:8px 14px;font-size:.9rem;background:var(--card);border:2.5px solid #061219;box-shadow:3px 3px 0 rgba(25,214,200,.45)}
+.zones a:last-child{background:var(--y);color:#061219;box-shadow:3px 3px 0 #061219}
+@media (max-width:800px){
+  .s .head{margin-bottom:18px}
+  .s .head p{font-size:.92rem}
+  .zones{flex-wrap:nowrap;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .zones::-webkit-scrollbar{display:none}
+  .zones a{flex:0 0 auto}
+  .steps{gap:12px}
+  .step{display:grid;grid-template-columns:44px 1fr;column-gap:14px;align-items:start;padding:14px 16px}
+  .step::before{grid-row:1/3;margin:0;width:40px;height:40px;font-size:1.1rem;border:2.5px solid #061219}
+  .step h3{font-size:1.05rem;align-self:center}
+  .step p{font-size:.9rem;margin-top:2px}
+}
+@media (max-width:700px){.hero h1{font-size:clamp(2rem,9vw,2.5rem);line-height:1.08}}
