@@ -41,14 +41,14 @@ def _norm_dr(x):
     x = re.sub(r"(\d)\s*(ml|g|pz|x)\b", r"\1\2", x)
     return " ".join(re.sub(r"[^a-z0-9 ]", " ", x).split())
 
-def deliveroo_map():
-    """Collega ogni prodotto del sito alla sua scheda su Deliveroo (deliveroo.tsv: id<TAB>nome sul menu)."""
+def link_map(file):
+    """Collega i prodotti del sito agli id delle app (file: id<TAB>[altro id<TAB>]nome sul menu)."""
     righe = {}
     try:
-        for l in open(os.path.join(ROOT, "deliveroo.tsv"), encoding="utf-8"):
-            if "\t" in l:
-                i, n = l.rstrip("\n").split("\t", 1)
-                righe[_norm_dr(n)] = i
+        for l in open(os.path.join(ROOT, file), encoding="utf-8"):
+            parti = l.rstrip("\n").split("\t")
+            if len(parti) >= 2:
+                righe[_norm_dr(parti[-1])] = "|".join(parti[:-1])
     except OSError:
         return {}
     out = {}
@@ -64,7 +64,12 @@ def deliveroo_map():
             if len(cand) == 1 or len(cand[0]) > len(cand[1]):
                 out[p["n"]] = righe[cand[0]]
     return out
+
+def deliveroo_map():
+    return link_map("deliveroo.tsv")
+
 DR = deliveroo_map()
+GL = link_map("glovo.tsv")  # productId|externalId su Glovo
 
 # Just Eat non ha link al singolo prodotto: si apre il menu già sulla categoria giusta (#categoria_<id>)
 JE_CAT = {"Energy drink": "3467d71a-e195-5483-90ea-4006a6a54df2", "Acqua": "d333fc67-3501-51db-b576-5afba62e2fd4",
@@ -204,7 +209,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
         cur = ' aria-current="page"' if p == active else ""
         nav.append(f'<a href="{href}"{cur}>{n}</a>')
     graph = {"@context": "https://schema.org", "@graph": ld}
-    cfg = {"stock": r + "stock.json", "ordine": ORDINE, "icone": ICONE, "img": IMG, "dr": DR, "drurl": APP["deliveroo"][1], "je": JE_CAT, "jeurl": APP["justeat"][1]}
+    cfg = {"stock": r + "stock.json", "ordine": ORDINE, "icone": ICONE, "img": IMG, "dr": DR, "drurl": APP["deliveroo"][1], "je": JE_CAT, "jeurl": APP["justeat"][1], "gl": GL, "glurl": APP["glovo"][1]}
     socials = "".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())
     zone_links = "".join(f'<a href="{r}zona/{k}/">{v["nome"]}</a>' for k, v in ZONE.items())
     return f'''<!DOCTYPE html>
