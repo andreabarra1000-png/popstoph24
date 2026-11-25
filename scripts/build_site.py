@@ -358,7 +358,14 @@ def plist_static(prods):
         out.append(f'<div class="group"><h2>{ICONE[c]} {E(c)}</h2><ul class="plist">{"".join(card(p) for p in g[c])}</ul></div>')
     return "".join(out)
 
+def _ver(nome):
+    import hashlib
+    try: return hashlib.md5(open(os.path.join(ROOT, "assets", nome), "rb").read()).hexdigest()[:8]
+    except OSError: return "1"
+
 def write(path, content):
+    if path.endswith(".html"):
+        content = re.sub(r'assets/(app\.js|style\.css|gioco\.js|corri\.js)"', lambda m: f'assets/{m.group(1)}?v={_ver(m.group(1))}"', content)
     full = os.path.join(ROOT, path)
     os.makedirs(os.path.dirname(full) or ROOT, exist_ok=True)
     open(full, "w", encoding="utf-8").write(content)
@@ -436,7 +443,10 @@ def home():
 </div></section>
 
 <section class="s"><div class="wrap">
-  <a class="gamecta reveal" href="gioco/">{pop_svg("pop saluta", "")}<div><span class="sticker">Nuovo gioco</span><h2 style="margin-top:10px">Riempi le macchine prima delle 6!</h2><p>Aiuta POP a caricare i distributori prima che arrivi la fila del mattino. Quanti punti fai?</p></div><span class="btn">🎮 Gioca</span></a>
+  <div class="giochi2 reveal"><h2>🎮 I giochi di POP</h2>
+  <a class="gamecta" href="gioco/">{pop_svg("pop saluta", "")}<div><span class="sticker">Gioco 1</span><h3 style="margin-top:10px">Riempi le macchine prima delle 6!</h3><p>Aiuta POP a caricare i distributori prima che arrivi la fila del mattino.</p></div><span class="btn">🧃 Gioca</span></a>
+  <a class="gamecta" href="gioco/corri/">{pop_svg("pop saluta", "", cap=True)}<div><span class="sticker p">Nuovo</span><h3 style="margin-top:10px">Corri, POP, corri!</h3><p>POP non si ferma mai: salta, prendi i cioccolatini, evita granchi e buche.</p></div><span class="btn">🏃 Gioca</span></a>
+</div>
 </div></section>
 
 {visit_block(r)}
@@ -728,6 +738,7 @@ def gioco():
     r = rel(1)
     body = f'''
 <div class="gioco" id="gioco">
+  <nav class="gtabs" aria-label="I giochi di POP"><a href="{r}gioco/" aria-current="page">🧃 Riempi le macchine</a><a href="{r}gioco/corri/">🏃 Corri, POP, corri!</a></nav>
   <section class="gscreen" id="g-start">
     <div class="gfloat" aria-hidden="true"><span>🥤</span><span>⚡</span><span>🍫</span><span>🍟</span><span>🥪</span><span>💧</span><span>🍬</span><span>☕</span></div>
     <img class="pop" src="{r}assets/pop.svg" alt="POP, la mascotte di Pop Stop h24" width="220" height="286">
@@ -740,7 +751,6 @@ def gioco():
       <div>3️⃣ Riempi tutto prima delle 6: più sei veloce, più punti fai. Se sbagli perdi tempo!</div>
     </div>
     <button class="btn y" type="button" data-via>▶ Gioca</button>
-    <a class="altrogioco" href="corri/">🏃 Nuovo: <b>Corri, POP, corri!</b> il gioco a piattaforme →</a>
     <p id="g-best" style="margin-top:14px;font-weight:700;color:var(--y)"></p>
   </section>
 
@@ -797,6 +807,7 @@ def corri():
         write(f"assets/pop-corsa-{i}.svg", f)
     body = f'''
 <div class="corri" id="corri">
+  <nav class="gtabs" aria-label="I giochi di POP"><a href="{r}gioco/">🧃 Riempi le macchine</a><a href="{r}gioco/corri/" aria-current="page">🏃 Corri, POP, corri!</a></nav>
   <section class="cover fuori" id="c-start">
       <span class="sticker p">Nuovo gioco di POP</span>
       <h1>Corri, POP, corri!</h1>
@@ -812,6 +823,7 @@ def corri():
   <div class="cwrap">
     <canvas id="c-can" aria-label="Gioco Corri POP: POP corre senza fermarsi, tocca lo schermo per saltare"></canvas>
     <div class="chud" aria-live="off"><span id="c-cuori">❤️❤️❤️</span><span>🍫 <b id="c-ciocc">0</b></span><span>🏃 <b id="c-metri">0</b> m</span><button id="c-audio" type="button" aria-label="Togli i suoni">🔊</button></div>
+    <button class="csalta" id="c-salta" type="button" aria-label="Salta">⬆<small>SALTA</small></button>
     <div class="cbanner" id="c-banner"></div>
 
     <section class="cover" id="c-end" hidden>

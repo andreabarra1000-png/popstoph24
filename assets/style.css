@@ -594,3 +594,13 @@ a.popwrap.corsa .playme{top:5%;bottom:auto;right:-3%;font-size:.8rem}
 @media (max-width:560px){.cover .how{font-size:.78rem}.cover p{font-size:.85rem}.cover h1{font-size:1.6rem}.chud{font-size:.8rem}}
 .cover.fuori{position:static;background:none;backdrop-filter:none;padding:6px 6px 16px}
 .cover.fuori .how{font-size:.9rem}
+.gtabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:4px 0 10px}
+.gtabs a{font:800 .9rem var(--fd);text-decoration:none;color:#fff;background:var(--card);border:2.5px solid #061219;border-radius:999px;padding:8px 14px;box-shadow:3px 3px 0 rgba(25,214,200,.45)}
+.gtabs a[aria-current]{background:#FFD23F;color:#061219}
+.corri.in-corsa .cwrap{touch-action:none}
+.csalta{display:none;position:absolute;right:12px;bottom:12px;z-index:2;width:74px;height:74px;border-radius:50%;border:3px solid #061219;background:#FFD23F;color:#061219;font:900 1.7rem/1 var(--fd);box-shadow:4px 4px 0 rgba(6,18,25,.6);touch-action:none;-webkit-tap-highlight-color:transparent;flex-direction:column;align-items:center;justify-content:center}
+.csalta small{font-size:.6rem;letter-spacing:.06em}
+.csalta:active{transform:translate(2px,2px);box-shadow:2px 2px 0 rgba(6,18,25,.6)}
+.corri.in-corsa .csalta{display:flex}
+.giochi2{display:grid;gap:14px}.giochi2>h2{margin:0}
+@media (min-width:900px){.giochi2{grid-template-columns:1fr 1fr}.giochi2>h2{grid-column:1/-1}}

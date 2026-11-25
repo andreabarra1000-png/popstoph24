@@ -111,9 +111,26 @@
     if(p.terra){p.vy=-640;p.terra=false;p.salti=1;p.tieni=.22;bip(520,.12);polvere()}
     else if(p.salti<2){p.vy=-540;p.salti=2;p.tieni=.12;bip(700,.12)}
   }
-  function premi(e){if(e.target.closest&&e.target.closest("button,a"))return;if(!S||S.fine)return;e.preventDefault();giu=true;salta()}
-  can.parentNode.addEventListener("pointerdown",premi);
-  window.addEventListener("pointerup",function(){giu=false});
+  var ultimoTocco=0;
+  function inGioco(){return S&&!S.fine&&el.start.hidden}
+  function premi(e){
+    if(!inGioco())return;
+    if(e.target&&e.target.closest&&e.target.closest("button,a,.cover"))return;
+    var ora=Date.now(); if(ora-ultimoTocco<90)return; ultimoTocco=ora;
+    if(e.cancelable)e.preventDefault();
+    giu=true;salta();
+  }
+  function lascia(){giu=false}
+  var wrap=can.parentNode;
+  wrap.addEventListener("touchstart",premi,{passive:false});
+  wrap.addEventListener("touchend",lascia);wrap.addEventListener("touchcancel",lascia);
+  wrap.addEventListener("pointerdown",function(e){if(e.pointerType!=="touch")premi(e)});
+  wrap.addEventListener("mousedown",function(e){premi(e)});
+  window.addEventListener("pointerup",lascia);window.addEventListener("mouseup",lascia);
+  var bs=document.getElementById("c-salta");
+  if(bs){bs.addEventListener("touchstart",function(e){e.stopPropagation();if(e.cancelable)e.preventDefault();if(!inGioco())return;var o=Date.now();if(o-ultimoTocco<90)return;ultimoTocco=o;giu=true;salta()},{passive:false});
+    bs.addEventListener("mousedown",function(e){e.stopPropagation();if(!inGioco())return;var o=Date.now();if(o-ultimoTocco<90)return;ultimoTocco=o;giu=true;salta()});
+    bs.addEventListener("touchend",lascia)}
   window.addEventListener("keydown",function(e){if(e.code==="Space"||e.code==="ArrowUp"||e.code==="KeyW"){if(S&&!S.fine){e.preventDefault();if(!giu){giu=true;salta()}}}});
   window.addEventListener("keyup",function(e){if(e.code==="Space"||e.code==="ArrowUp"||e.code==="KeyW")giu=false});
 
@@ -279,14 +296,14 @@
   document.addEventListener("visibilitychange",function(){if(document.hidden){cancelAnimationFrame(raf)}else if(S&&!S.fine){ultimo=performance.now();raf=requestAnimationFrame(ciclo)}});
 
   function via(){
-    el.start.hidden=true;el.end.hidden=true;
+    el.start.hidden=true;el.end.hidden=true;root.classList.add("in-corsa");
     misura();nuovo();aggHud();
     dici(FRASI[0]);banner(TAPPE[0].n);S.tappa=0;
     ultimo=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(ciclo);
     can.parentNode.scrollIntoView({block:"center",behavior:"smooth"});
   }
   function fine(){
-    S.fine=true;cancelAnimationFrame(raf);disegna();
+    S.fine=true;cancelAnimationFrame(raf);disegna();root.classList.remove("in-corsa");giu=false;
     var m=Math.floor(S.x/10),pt=m+S.c*10,rec=pt>best;
     if(rec){best=pt;try{localStorage.setItem("pop-corri-record",best)}catch(e){}}
     el.tit.textContent=m>1500?"Che corsa! 🏆":m>600?"Sei arrivato lontano! 🏃":"Ti sei fermato! 😮‍💨";

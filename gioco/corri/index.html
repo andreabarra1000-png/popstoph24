@@ -19,7 +19,7 @@
 <link rel="apple-touch-icon" href="../../assets/icon-180.png">
 <link rel="manifest" href="../../manifest.webmanifest">
 <link rel="preload" href="../../assets/bricolage.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/style.css">
+<link rel="stylesheet" href="../../assets/style.css?v=8bad97cb">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://popstoph24.it/"}, {"@type": "ListItem", "position": 2, "name": "Gioco", "item": "https://popstoph24.it/gioco/"}, {"@type": "ListItem", "position": 3, "name": "Corri POP", "item": "https://popstoph24.it/gioco/corri/"}]}, {"@type": "VideoGame", "name": "Corri POP – il gioco di Pop Stop h24", "url": "https://popstoph24.it/gioco/corri/", "inLanguage": "it-IT", "genre": ["Platform", "Endless runner"], "gamePlatform": "Web browser", "applicationCategory": "Game", "operatingSystem": "Any", "description": "Mini gioco gratuito a piattaforme di Pop Stop h24: la mascotte POP corre senza fermarsi, salta, raccoglie cioccolatini ed evita gli ostacoli.", "publisher": {"@id": "https://popstoph24.it/#negozio"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}]}</script>
 </head>
 <body>
@@ -34,6 +34,7 @@
 <main id="main">
 
 <div class="corri" id="corri">
+  <nav class="gtabs" aria-label="I giochi di POP"><a href="../../gioco/">🧃 Riempi le macchine</a><a href="../../gioco/corri/" aria-current="page">🏃 Corri, POP, corri!</a></nav>
   <section class="cover fuori" id="c-start">
       <span class="sticker p">Nuovo gioco di POP</span>
       <h1>Corri, POP, corri!</h1>
@@ -49,6 +50,7 @@
   <div class="cwrap">
     <canvas id="c-can" aria-label="Gioco Corri POP: POP corre senza fermarsi, tocca lo schermo per saltare"></canvas>
     <div class="chud" aria-live="off"><span id="c-cuori">❤️❤️❤️</span><span>🍫 <b id="c-ciocc">0</b></span><span>🏃 <b id="c-metri">0</b> m</span><button id="c-audio" type="button" aria-label="Togli i suoni">🔊</button></div>
+    <button class="csalta" id="c-salta" type="button" aria-label="Salta">⬆<small>SALTA</small></button>
     <div class="cbanner" id="c-banner"></div>
 
     <section class="cover" id="c-end" hidden>
@@ -63,7 +65,7 @@
     <div class="row"><a class="btn t" href="../../consegna-a-domicilio/#app">🛵 Ordina a domicilio</a><a class="btn o" href="https://www.google.com/maps/dir/?api=1&destination=Pop%20Stop%20h24%20Viale%20Guglielmo%20Marconi%2079/81%20Casavatore&destination_place_id=ChIJQeNt5l0JOxMR29YJjxbDtKE" rel="noopener" target="_blank">📍 Portami da Pop Stop</a><a class="btn" href="../../gioco/">🎮 Riempi le macchine</a></div>
   </div>
 </div>
-<script src="../../assets/corri.js" defer></script>
+<script src="../../assets/corri.js?v=b5325412" defer></script>
 </main>
 <footer><div class="wrap cols">
   <div>
@@ -96,6 +98,6 @@
   <p style="font-size:.85rem;margin:0">Il menu delle app può variare rispetto alle macchine.</p>
 </div></div>
 <script>window.POP={"stock": "../../stock.json", "ordine": ["Energy drink", "Bibite", "Acqua", "Caffè e latte", "Patatine e snack salati", "Tramezzini e salato", "Dolci e cioccolato", "Caramelle e gomme", "Igiene e altro"], "icone": {"Energy drink": "⚡", "Bibite": "🥤", "Acqua": "💧", "Caffè e latte": "☕", "Patatine e snack salati": "🌶️", "Tramezzini e salato": "🥪", "Dolci e cioccolato": "🍫", "Caramelle e gomme": "🍬", "Igiene e altro": "🧴"}, "img": "https://rs-menus-api.roocdn.com/images/{}/image.jpeg?width=320&height=320&fit=contain&auto=webp&format=webp"}</script>
-<script src="../../assets/app.js" defer></script>
+<script src="../../assets/app.js?v=787ba252" defer></script>
 </body>
 </html>
