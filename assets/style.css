@@ -568,3 +568,29 @@ a.popwrap.corsa .playme{top:5%;bottom:auto;right:-3%;font-size:.8rem}
 .tappa b{right:auto;left:0}
 @media (max-width:860px){a.popwrap.corsa .bubble{max-width:58%}}
 .tappa{top:10px;bottom:auto}
+/* ===== Gioco Corri POP ===== */
+.corri{max-width:1000px;margin:0 auto;padding:12px 10px 120px;user-select:none;-webkit-user-select:none}
+.cwrap{position:relative;border:3px solid #061219;border-radius:22px;overflow:hidden;box-shadow:6px 6px 0 rgba(25,214,200,.5);background:#0e2b36;touch-action:manipulation}
+#c-can{display:block;width:100%}
+.chud{position:absolute;top:8px;left:8px;right:8px;display:flex;gap:8px;align-items:center;pointer-events:none;font:800 .95rem var(--fd);z-index:2}
+.chud>span{background:rgba(6,18,25,.82);color:#fff;border:2px solid #061219;border-radius:999px;padding:4px 10px}
+.chud b{color:#FFD23F;font-variant-numeric:tabular-nums}
+#c-audio{margin-left:auto;pointer-events:auto;background:rgba(6,18,25,.82);border:2px solid #061219;border-radius:999px;padding:4px 9px;font-size:1rem;cursor:pointer}
+.cbanner{position:absolute;left:50%;top:48px;transform:translate(-50%,-20px);background:#061219;color:#FFD23F;font:800 1rem var(--fd);text-transform:uppercase;letter-spacing:.08em;padding:6px 14px;border-radius:10px;opacity:0;pointer-events:none;z-index:2;white-space:nowrap}
+.cbanner.on{animation:cban 2.4s ease forwards}
+@keyframes cban{10%{opacity:1;transform:translate(-50%,0)}80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,-10px)}}
+.cover{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px;background:rgba(6,18,25,.78);backdrop-filter:blur(2px);overflow:auto}
+.cover[hidden]{display:none}
+.cover h1,.cover h2{font-size:clamp(1.6rem,6vw,2.6rem);font-weight:800;margin:8px 0}
+.cover p{color:#cfe3e6;max-width:32em;margin:0 auto 10px;font-size:.95rem}
+.cover .how{display:grid;gap:6px;text-align:left;max-width:460px;margin:4px auto 12px;font-size:.85rem}
+.cover .how div{background:var(--card);border:2px solid #061219;border-radius:12px;padding:7px 10px}
+.cover .score{font:800 1.1rem var(--fd)}.cover .score b{font-size:2.6rem;color:var(--y);display:block}
+.cover .row,.cdopo .row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:10px}
+.crec{font-weight:800;color:var(--y)}
+.cdopo{text-align:center;margin-top:22px}.cdopo p{color:#cfe3e6}
+.altrogioco{display:inline-block;margin-top:14px;color:#fff;background:var(--card);border:2.5px solid #061219;box-shadow:4px 4px 0 rgba(255,79,139,.6);border-radius:14px;padding:10px 14px;font-weight:700;text-decoration:none}
+.altrogioco b{color:var(--y)}
+@media (max-width:560px){.cover .how{font-size:.78rem}.cover p{font-size:.85rem}.cover h1{font-size:1.6rem}.chud{font-size:.8rem}}
+.cover.fuori{position:static;background:none;backdrop-filter:none;padding:6px 6px 16px}
+.cover.fuori .how{font-size:.9rem}

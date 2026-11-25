@@ -145,6 +145,7 @@ def tg_block(r):
     items += [
       "Consegna a domicilio con Glovo · Just Eat · Deliveroo · Alfonsino",
       f'Sfida POP: <a href="{r}gioco/">riempi le macchine prima delle 6 →</a>',
+      f'Nuovo gioco: <a href="{r}gioco/corri/">Corri, POP, corri! 🏃</a>',
       f"Macchine aggiornate il {E(STOCK['aggiornato'])}",
     ]
     track = "".join(f"<span>{x}</span>" for x in items)
@@ -211,7 +212,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
     <a href="{TEL}" style="display:inline">Tel. e WhatsApp {S["telefono_vis"]}</a></p>
     <div class="zones" style="margin-top:16px">{zone_links}</div>
   </div>
-  <div><h3>Sito</h3><a href="{home}">Home</a><a href="{r}consegna-a-domicilio/">Consegna a domicilio</a><a href="{r}prodotti/">Cosa c'è nelle macchine</a><a href="{r}snack-americani-napoli/">Snack dal mondo</a><a href="{r}aperto-24-ore-napoli-nord/">Aperto di notte a Napoli nord</a><a href="{r}energy-drink-a-domicilio/">Energy drink a domicilio</a><a href="{r}gioco/">Il gioco di POP</a><a href="{REVIEW}" rel="noopener" target="_blank">Lascia una recensione</a></div>
+  <div><h3>Sito</h3><a href="{home}">Home</a><a href="{r}consegna-a-domicilio/">Consegna a domicilio</a><a href="{r}prodotti/">Cosa c'è nelle macchine</a><a href="{r}snack-americani-napoli/">Snack dal mondo</a><a href="{r}aperto-24-ore-napoli-nord/">Aperto di notte a Napoli nord</a><a href="{r}energy-drink-a-domicilio/">Energy drink a domicilio</a><a href="{r}gioco/">Il gioco di POP</a><a href="{r}gioco/corri/">Corri, POP, corri!</a><a href="{REVIEW}" rel="noopener" target="_blank">Lascia una recensione</a></div>
   <div><h3>Seguici</h3>{"".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())}</div>
   <div><h3>Trovaci anche su</h3>{"".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S.get("schede", {}).items())}</div>
 </div>
@@ -390,7 +391,7 @@ def home():
     </div>
     <div class="facts"><span><b>24/7</b> anche nei festivi</span><span><b data-count>{NPROD}</b> prodotti in macchina</span><span><b>4</b> app di consegna</span></div>
   </div>
-  <a class="popwrap corsa" href="gioco/" aria-label="Gioca con POP: riempi le macchine prima delle 6">
+  <a class="popwrap corsa" href="gioco/corri/" aria-label="Gioca con POP: Corri, POP, corri!">
     <div class="bubble" data-pop-frasi>Corri, POP, corri! 🏃</div>
     <div class="scena" aria-hidden="true">
       <div class="fondo f-parco"><i class="collina c1"></i><i class="collina c2"></i><i class="albero">🌳</i></div>
@@ -739,6 +740,7 @@ def gioco():
       <div>3️⃣ Riempi tutto prima delle 6: più sei veloce, più punti fai. Se sbagli perdi tempo!</div>
     </div>
     <button class="btn y" type="button" data-via>▶ Gioca</button>
+    <a class="altrogioco" href="corri/">🏃 Nuovo: <b>Corri, POP, corri!</b> il gioco a piattaforme →</a>
     <p id="g-best" style="margin-top:14px;font-weight:700;color:var(--y)"></p>
   </section>
 
@@ -786,8 +788,56 @@ def gioco():
         "Il mini gioco gratuito di Pop Stop h24: aiuta POP a riempire i distributori automatici prima che arrivi la fila del mattino. Gioca dal telefono e sfida gli amici.",
         body, ld, 1, active="gioco/"))
 
+def corri():
+    r = rel(2)
+    base = pop_svg("pop", "", cap=True).replace('<svg class="pop" viewBox="0 0 200 260"', '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -34 216 300" width="216" height="300"')
+    for i, (a, b) in enumerate([(-28, 22), (22, -28), (0, 0)]):
+        f = base.replace('<g class="p-legL">', f'<g class="p-legL" transform="rotate({a} 65 226)">').replace('<g class="p-legR">', f'<g class="p-legR" transform="rotate({b} 135 226)">')
+        f = f.replace('<g class="p-armL">', f'<g class="p-armL" transform="rotate({b} 30 127)">').replace('<g class="p-armR">', f'<g class="p-armR" transform="rotate({a} 170 127)">')
+        write(f"assets/pop-corsa-{i}.svg", f)
+    body = f'''
+<div class="corri" id="corri">
+  <section class="cover fuori" id="c-start">
+      <span class="sticker p">Nuovo gioco di POP</span>
+      <h1>Corri, POP, corri!</h1>
+      <p>POP ha messo le scarpe da corsa e non si ferma più: dall'Alabama al deserto fino al mare in tempesta. Salta, raccogli i cioccolatini e non cadere!</p>
+      <div class="how">
+        <div>👆 <b>Tocca</b> (o barra spaziatrice) per saltare: tieni premuto per saltare più in alto, tocca di nuovo in aria per il <b>doppio salto</b>.</div>
+        <div>🍫 Prendi i cioccolatini e colpisci da sotto le <b>scatole</b>: dentro ce ne sono altri.</div>
+        <div>🦀 Salta <b>sopra</b> ai granchi per farli fuori. Evita panchine, palloni e buche: hai 3 cuori.</div>
+      </div>
+      <button class="btn y" type="button" data-via>▶ Corri!</button>
+      <p class="crec" id="c-best"></p>
+    </section>
+  <div class="cwrap">
+    <canvas id="c-can" aria-label="Gioco Corri POP: POP corre senza fermarsi, tocca lo schermo per saltare"></canvas>
+    <div class="chud" aria-live="off"><span id="c-cuori">❤️❤️❤️</span><span>🍫 <b id="c-ciocc">0</b></span><span>🏃 <b id="c-metri">0</b> m</span><button id="c-audio" type="button" aria-label="Togli i suoni">🔊</button></div>
+    <div class="cbanner" id="c-banner"></div>
+
+    <section class="cover" id="c-end" hidden>
+      <h2 id="c-tit">Ti sei fermato!</h2>
+      <p class="score" id="c-fin"></p>
+      <p class="crec" id="c-record"></p>
+      <div class="row"><button class="btn y" type="button" data-via>🔁 Ricorri</button><a class="btn wa" id="c-share" href="#" rel="noopener" target="_blank">💬 Sfida un amico</a></div>
+    </section>
+  </div>
+  <div class="cdopo">
+    <p>Tutta questa corsa mette fame. Le macchine vere sono piene e aperte 24 ore su 24.</p>
+    <div class="row"><a class="btn t" href="{r}consegna-a-domicilio/#app">🛵 Ordina a domicilio</a><a class="btn o" href="{MAPS_DIR}" rel="noopener" target="_blank">📍 Portami da Pop Stop</a><a class="btn" href="{r}gioco/">🎮 Riempi le macchine</a></div>
+  </div>
+</div>
+<script src="{r}assets/corri.js" defer></script>'''
+    ld = [crumbs_ld([("Home", ""), ("Gioco", "gioco/"), ("Corri POP", "gioco/corri/")]),
+          {"@type": "VideoGame", "name": "Corri POP – il gioco di Pop Stop h24", "url": BASE + "gioco/corri/", "inLanguage": "it-IT",
+           "genre": ["Platform", "Endless runner"], "gamePlatform": "Web browser", "applicationCategory": "Game", "operatingSystem": "Any",
+           "description": "Mini gioco gratuito a piattaforme di Pop Stop h24: la mascotte POP corre senza fermarsi, salta, raccoglie cioccolatini ed evita gli ostacoli.",
+           "publisher": {"@id": BASE + "#negozio"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}]
+    write("gioco/corri/index.html", layout("gioco/corri/", "Gioco: Corri, POP, corri! | Pop Stop h24",
+        "Il gioco a piattaforme gratuito di Pop Stop h24: POP corre senza mai fermarsi, salta, prende i cioccolatini e sfida gli amici. Si gioca dal telefono.",
+        body, ld, 2, active="gioco/"))
+
 def tecnici():
-    pages = ["", "consegna-a-domicilio/", "prodotti/", "snack-americani-napoli/", "gioco/"] + [f"{k}/" for k in TEMI] + [f"prodotti/{CAT_SLUG[c]}/" for c in ORDINE if any(p["c"] == c for p in PRODOTTI)] + [f"zona/{k}/" for k in ZONE]
+    pages = ["", "consegna-a-domicilio/", "prodotti/", "snack-americani-napoli/", "gioco/", "gioco/corri/"] + [f"{k}/" for k in TEMI] + [f"prodotti/{CAT_SLUG[c]}/" for c in ORDINE if any(p["c"] == c for p in PRODOTTI)] + [f"zona/{k}/" for k in ZONE]
     urls = "".join(f"  <url><loc>{BASE}{p}</loc><lastmod>{OGGI}</lastmod></url>\n" for p in pages)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
     write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /scripts/\nSitemap: {BASE}sitemap.xml\n")
@@ -806,7 +856,7 @@ def tecnici():
 - Sito: {BASE} · Prodotti: {BASE}prodotti/ · Consegna: {BASE}consegna-a-domicilio/
 """)
 
-home(); consegna(); prodotti(); mondo(); gioco()
+home(); consegna(); prodotti(); mondo(); gioco(); corri()
 for k, v in TEMI.items():
     tema(k, v)
 for c in ORDINE:

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gioco: Corri, POP, corri! | Pop Stop h24</title>
+<meta name="description" content="Il gioco a piattaforme gratuito di Pop Stop h24: POP corre senza mai fermarsi, salta, prende i cioccolatini e sfida gli amici. Si gioca dal telefono.">
+<link rel="canonical" href="https://popstoph24.it/gioco/corri/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="google-site-verification" content="-70wM31mMgcz5SSsPxoPzFp_An-VaXXSp5mAGe1TdaA">
+<meta name="theme-color" content="#061219">
+<meta name="geo.region" content="IT-NA"><meta name="geo.placename" content="Casavatore"><meta name="geo.position" content="40.9007694;14.2773781"><meta name="ICBM" content="40.9007694, 14.2773781">
+<meta property="og:type" content="website"><meta property="og:locale" content="it_IT"><meta property="og:site_name" content="Pop Stop h24">
+<meta property="og:title" content="Gioco: Corri, POP, corri! | Pop Stop h24"><meta property="og:description" content="Il gioco a piattaforme gratuito di Pop Stop h24: POP corre senza mai fermarsi, salta, prende i cioccolatini e sfida gli amici. Si gioca dal telefono.">
+<meta property="og:url" content="https://popstoph24.it/gioco/corri/"><meta property="og:image" content="https://popstoph24.it/assets/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<link rel="preload" href="../../assets/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://popstoph24.it/"}, {"@type": "ListItem", "position": 2, "name": "Gioco", "item": "https://popstoph24.it/gioco/"}, {"@type": "ListItem", "position": 3, "name": "Corri POP", "item": "https://popstoph24.it/gioco/corri/"}]}, {"@type": "VideoGame", "name": "Corri POP – il gioco di Pop Stop h24", "url": "https://popstoph24.it/gioco/corri/", "inLanguage": "it-IT", "genre": ["Platform", "Endless runner"], "gamePlatform": "Web browser", "applicationCategory": "Game", "operatingSystem": "Any", "description": "Mini gioco gratuito a piattaforme di Pop Stop h24: la mascotte POP corre senza fermarsi, salta, raccoglie cioccolatini ed evita gli ostacoli.", "publisher": {"@id": "https://popstoph24.it/#negozio"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}]}</script>
+</head>
+<body>
+<a class="sr" href="#main">Vai al contenuto</a>
+<header class="top"><div class="wrap">
+  <a class="logo" href="../../" aria-label="Pop Stop h24, home"><b>24</b><span>Pop Stop <em>h24</em></span></a>
+  <nav class="nav" aria-label="Menu principale"><a href="../../consegna-a-domicilio/">Ordina</a><a href="../../prodotti/">Cosa c'è</a><a href="../../snack-americani-napoli/">Snack dal mondo</a><a href="../../gioco/" aria-current="page">Gioca 🎮</a><a href="../../#vieni">Come arrivare</a><a href="../../#assistenza">Assistenza</a></nav>
+  <a class="pill" href="../../#vieni"><i></i>Aperto · <span data-ora>24h</span></a>
+  <button class="burger" type="button" aria-label="Apri il menu" aria-expanded="false">☰</button>
+</div></header>
+
+<main id="main">
+
+<div class="corri" id="corri">
+  <section class="cover fuori" id="c-start">
+      <span class="sticker p">Nuovo gioco di POP</span>
+      <h1>Corri, POP, corri!</h1>
+      <p>POP ha messo le scarpe da corsa e non si ferma più: dall'Alabama al deserto fino al mare in tempesta. Salta, raccogli i cioccolatini e non cadere!</p>
+      <div class="how">
+        <div>👆 <b>Tocca</b> (o barra spaziatrice) per saltare: tieni premuto per saltare più in alto, tocca di nuovo in aria per il <b>doppio salto</b>.</div>
+        <div>🍫 Prendi i cioccolatini e colpisci da sotto le <b>scatole</b>: dentro ce ne sono altri.</div>
+        <div>🦀 Salta <b>sopra</b> ai granchi per farli fuori. Evita panchine, palloni e buche: hai 3 cuori.</div>
+      </div>
+      <button class="btn y" type="button" data-via>▶ Corri!</button>
+      <p class="crec" id="c-best"></p>
+    </section>
+  <div class="cwrap">
+    <canvas id="c-can" aria-label="Gioco Corri POP: POP corre senza fermarsi, tocca lo schermo per saltare"></canvas>
+    <div class="chud" aria-live="off"><span id="c-cuori">❤️❤️❤️</span><span>🍫 <b id="c-ciocc">0</b></span><span>🏃 <b id="c-metri">0</b> m</span><button id="c-audio" type="button" aria-label="Togli i suoni">🔊</button></div>
+    <div class="cbanner" id="c-banner"></div>
+
+    <section class="cover" id="c-end" hidden>
+      <h2 id="c-tit">Ti sei fermato!</h2>
+      <p class="score" id="c-fin"></p>
+      <p class="crec" id="c-record"></p>
+      <div class="row"><button class="btn y" type="button" data-via>🔁 Ricorri</button><a class="btn wa" id="c-share" href="#" rel="noopener" target="_blank">💬 Sfida un amico</a></div>
+    </section>
+  </div>
+  <div class="cdopo">
+    <p>Tutta questa corsa mette fame. Le macchine vere sono piene e aperte 24 ore su 24.</p>
+    <div class="row"><a class="btn t" href="../../consegna-a-domicilio/#app">🛵 Ordina a domicilio</a><a class="btn o" href="https://www.google.com/maps/dir/?api=1&destination=Pop%20Stop%20h24%20Viale%20Guglielmo%20Marconi%2079/81%20Casavatore&destination_place_id=ChIJQeNt5l0JOxMR29YJjxbDtKE" rel="noopener" target="_blank">📍 Portami da Pop Stop</a><a class="btn" href="../../gioco/">🎮 Riempi le macchine</a></div>
+  </div>
+</div>
+<script src="../../assets/corri.js" defer></script>
+</main>
+<footer><div class="wrap cols">
+  <div>
+    <a class="logo" href="../../"><b>24</b>Pop Stop <em>h24</em></a>
+    <p style="margin-top:12px">Distributori automatici aperti 24 ore su 24, 7 giorni su 7.<br>Viale Guglielmo Marconi 79/81, 80020 Casavatore (NA)<br>
+    <a href="tel:+393429464365" style="display:inline">Tel. e WhatsApp 342 946 4365</a></p>
+    <div class="zones" style="margin-top:16px"><a href="../../zona/casoria/">Casoria</a><a href="../../zona/arzano/">Arzano</a><a href="../../zona/secondigliano/">Secondigliano</a><a href="../../zona/afragola/">Afragola</a><a href="../../zona/casalnuovo/">Casalnuovo di Napoli</a><a href="../../zona/scampia/">Scampia</a><a href="../../zona/miano/">Miano</a><a href="../../zona/san-pietro-a-patierno/">San Pietro a Patierno</a></div>
+  </div>
+  <div><h3>Sito</h3><a href="../../">Home</a><a href="../../consegna-a-domicilio/">Consegna a domicilio</a><a href="../../prodotti/">Cosa c'è nelle macchine</a><a href="../../snack-americani-napoli/">Snack dal mondo</a><a href="../../aperto-24-ore-napoli-nord/">Aperto di notte a Napoli nord</a><a href="../../energy-drink-a-domicilio/">Energy drink a domicilio</a><a href="../../gioco/">Il gioco di POP</a><a href="../../gioco/corri/">Corri, POP, corri!</a><a href="https://search.google.com/local/writereview?placeid=ChIJQeNt5l0JOxMR29YJjxbDtKE" rel="noopener" target="_blank">Lascia una recensione</a></div>
+  <div><h3>Seguici</h3><a href="https://www.instagram.com/popstoph24" rel="noopener" target="_blank">Instagram</a><a href="https://www.tiktok.com/@popstoph365" rel="noopener" target="_blank">TikTok</a><a href="https://www.facebook.com/618353578038104" rel="noopener" target="_blank">Facebook</a></div>
+  <div><h3>Trovaci anche su</h3><a href="https://www.google.com/maps/search/?api=1&query=PopStop%20H24&query_place_id=ChIJQeNt5l0JOxMR29YJjxbDtKE" rel="noopener" target="_blank">Google Maps</a><a href="https://www.yelp.it/biz/pop-stop-h24-casavatore" rel="noopener" target="_blank">Yelp</a><a href="https://www.cylex-italia.it/casavatore/pop-stop-h24-16548132.html" rel="noopener" target="_blank">Cylex</a><a href="https://www.openstreetmap.org/node/14404333381" rel="noopener" target="_blank">OpenStreetMap</a></div>
+</div>
+<div class="wrap" style="margin-top:26px;font-size:.82rem">© 2026 Enjoy Market S.r.l. · P.IVA 08514011215 · Pop Stop h24 Casavatore · Le consegne a domicilio sono gestite dalle app partner quando il servizio è disponibile nella tua zona.</div>
+</footer>
+<nav class="dock" aria-label="Azioni rapide">
+  <a class="d1" href="../../consegna-a-domicilio/#app"><span>🛵</span>Ordina</a>
+  <a class="d2" href="https://www.google.com/maps/dir/?api=1&destination=Pop%20Stop%20h24%20Viale%20Guglielmo%20Marconi%2079/81%20Casavatore&destination_place_id=ChIJQeNt5l0JOxMR29YJjxbDtKE" rel="noopener" target="_blank"><span>📍</span>Portami</a>
+  <a class="d3" href="https://wa.me/393429464365?text=Ciao%20Pop%20Stop%20h24%21%20" rel="noopener" target="_blank"><span>💬</span>WhatsApp</a>
+</nav>
+<div class="sheet" id="sheet" aria-hidden="true" role="dialog" aria-labelledby="sh-n"><div class="box">
+  <button class="x" type="button" aria-label="Chiudi">✕</button>
+  <div class="shtop"><span class="pimg big" id="sh-i"></span><div>
+  <span class="eyebrow">Nelle macchine ora</span>
+  <h3 id="sh-n">Prodotto</h3>
+  <p id="sh-s">Disponibile</p></div></div>
+  <p class="shm" id="sh-m"></p>
+  <a class="btn t wide" href="https://www.google.com/maps/dir/?api=1&destination=Pop%20Stop%20h24%20Viale%20Guglielmo%20Marconi%2079/81%20Casavatore&destination_place_id=ChIJQeNt5l0JOxMR29YJjxbDtKE" rel="noopener" target="_blank">📍 Vieni a prenderlo ora</a>
+  <p style="margin:8px 0 10px">Oppure fattelo portare a casa:</p>
+  <div class="appsmini"><a class="glovo" href="https://glovoapp.com/it/it/napoli/stores/enjoy-market-nap" rel="noopener" target="_blank">Glovo</a><a class="deliveroo" href="https://deliveroo.it/menu/napoli/napoli-casoria/enjoy-market" rel="noopener" target="_blank">Deliveroo</a><a class="justeat" href="https://www.justeat.it/restaurants-enjoy-market-by-vado-napoli/menu" rel="noopener" target="_blank">Just Eat</a><a class="alfonsino" href="https://app.alfonsino.delivery/casoria/order/menu/vado-napoli-centro" rel="noopener" target="_blank">Alfonsino</a></div>
+  <p style="font-size:.85rem;margin:0">Il menu delle app può variare rispetto alle macchine.</p>
+</div></div>
+<script>window.POP={"stock": "../../stock.json", "ordine": ["Energy drink", "Bibite", "Acqua", "Caffè e latte", "Patatine e snack salati", "Tramezzini e salato", "Dolci e cioccolato", "Caramelle e gomme", "Igiene e altro"], "icone": {"Energy drink": "⚡", "Bibite": "🥤", "Acqua": "💧", "Caffè e latte": "☕", "Patatine e snack salati": "🌶️", "Tramezzini e salato": "🥪", "Dolci e cioccolato": "🍫", "Caramelle e gomme": "🍬", "Igiene e altro": "🧴"}, "img": "https://rs-menus-api.roocdn.com/images/{}/image.jpeg?width=320&height=320&fit=contain&auto=webp&format=webp"}</script>
+<script src="../../assets/app.js" defer></script>
+</body>
+</html>
