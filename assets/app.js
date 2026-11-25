@@ -64,7 +64,7 @@
   }
   var gg=$("[data-giorni]"),km=$("[data-km]");
   if(gg||km){
-    var inizio=Date.UTC(2026,7,28,8,0,0);
+    var inizio=Date.UTC(2026,8,10,14,58,0);
     function conta(){var ms=Date.now()-inizio;if(gg)gg.textContent=Math.floor(ms/864e5);if(km)km.textContent=(ms/36e5*8).toLocaleString("it-IT",{minimumFractionDigits:2,maximumFractionDigits:2})}
     conta();setInterval(conta,1000);
   }

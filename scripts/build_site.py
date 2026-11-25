@@ -391,7 +391,7 @@ def home():
     <div class="bubble" data-pop-frasi>Corri, POP, corri! 🏃</div>
     <div class="scena" aria-hidden="true"><i class="nuvola n1"></i><i class="nuvola n2"></i><i class="palo p1">🌴</i><i class="palo p2">🏠</i><i class="palo p3">🌲</i><i class="strada"></i></div>
     <div class="corridore">{pop_svg("pop hero run", cap=True)}<b class="dust d1"></b><b class="dust d2"></b><b class="dust d3"></b></div>
-    <div class="contakm">🏃 POP corre da <b data-giorni>90</b> giorni senza fermarsi · <b data-km>17.000</b> km</div>
+    <div class="contakm">🏃 POP corre da <b data-giorni>75</b> giorni senza fermarsi · <b data-km>14.400</b> km</div>
     <span class="sticker p playme">🎮 Toccami e gioca!</span>
   </a>
 </div></section>
