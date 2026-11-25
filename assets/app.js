@@ -105,7 +105,7 @@
       var k=a.getAttribute("data-app");
       if(k==="deliveroo")a.href=CFG.drurl+(dr0?"?item-id="+dr0:"");
       else if(k==="glovo"){var g=(CFG.gl||{})[nome];a.href=CFG.glurl+(g?"?productId="+g.split("|")[0]+"&externalProductId="+g.split("|")[1]+"&storeProductId="+g.split("|")[1]:"")}
-      else if(k==="justeat"){var c=cat||"";if(c==="Bibite"&&/estath|santal|santàl|th[eè] |succoso/i.test(nome))c="Bibite dolci";var jc=(CFG.je||{})[c];a.href=CFG.jeurl+(jc?"#categoria_"+jc:"")}
+      else if(k==="justeat"){var jc=(CFG.je||{})[nome];a.href=CFG.jeurl+(jc?"#categoria_"+jc:"")}
     });
     var hi=$("#sh-hint",sheet);if(hi)hi.textContent="Glovo e Deliveroo aprono direttamente il prodotto, Just Eat la sua categoria; su Alfonsino cercalo nel menu.";
     if(!sheet)return;

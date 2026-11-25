@@ -72,11 +72,57 @@ DR = deliveroo_map()
 GL = link_map("glovo.tsv")  # productId|externalId su Glovo
 
 # Just Eat non ha link al singolo prodotto: si apre il menu già sulla categoria giusta (#categoria_<id>)
-JE_CAT = {"Energy drink": "3467d71a-e195-5483-90ea-4006a6a54df2", "Acqua": "d333fc67-3501-51db-b576-5afba62e2fd4",
-          "Bibite": "3dc857de-622d-5023-a7ef-261741db793f", "Bibite dolci": "9aebab97-9d8d-5950-ae9e-a32af5ac4a2c",
-          "Patatine e snack salati": "e2e95459-e54e-58e7-a1d0-3f547d294e82", "Tramezzini e salato": "e2e95459-e54e-58e7-a1d0-3f547d294e82",
-          "Dolci e cioccolato": "bda934f6-ee6b-57db-902b-edf328f62ae4", "Caffè e latte": "5511ba64-46f0-5294-b739-9b6b563a4ffa",
-          "Caramelle e gomme": "7d61a792-3961-590b-9053-0053e71ec5da", "Igiene e altro": "7166689d-9aee-52ab-83bd-6fbcea3ba1a2"}
+# Categorie Just Eat (dal 25/11 menu con 34 categorie specifiche, uguali su tutte le app).
+# Ogni prodotto apre il menu Just Eat direttamente sulla sua categoria (#categoria_<id>).
+JE_ID = {"Red Bull": "b139e3b7-8fb5-5494-a2c0-23533aa11ce7", "Monster Energy": "dfe7048e-7ed3-5048-90ad-e6056084c2fc",
+  "Sport drink e altri energy": "b6d12098-7c72-55c4-ad1e-576d3d51fc5b", "Bambini e neonati": "3bcc4f29-3eea-585b-a500-d68683b1eb16",
+  "Acqua": "73964126-f69f-5098-80e5-1d0e89a36c94", "Cocktail e alcolici": "dbee7b5e-d27e-5ad3-9675-5182d2ed9dba",
+  "Coca-Cola e Pepsi": "beb29bd6-1df3-5a96-8a26-bc497bc5d336", "Bibite americane USA": "6c9d19db-d1c8-5e21-aff6-662be0bdc4fb",
+  "Aranciate, limonate e gassate": "218b3485-3c38-553e-8847-5063f006e4cc", "Bibite giapponesi e asiatiche": "6696f0ef-2c46-5b47-a539-9c9a2d517602",
+  "Tè freddi e succhi": "6e7e6a1d-ba4a-5ca3-992c-6aec92d93940", "Caffè e latte": "997718ad-4deb-5228-89b9-b14bcbeba93d",
+  "Tramezzini e panini": "c51af73b-888e-57a8-ace7-3a25688e487b", "Insalate pronte": "d6b2a854-8a8c-5056-8583-fb50d3e6d85d",
+  "Salumi e merende salate": "34e011ca-5e13-505a-87b8-9a273786878f", "Takis piccanti": "dfd7c3d6-5445-57ac-8978-6a7c80dbc716",
+  "Crackers, grissini e salatini": "2c439142-c284-57bc-9bea-30c73636f717", "Pringles": "3f27ff45-6bf9-5854-b0af-010b7f712d41",
+  "Patatine": "f53de7f2-7125-5b34-8b71-ba7ca7789b2c", "Nutella e creme spalmabili": "e81f7e88-46f8-55ac-ae33-37997332984e",
+  "Merendine Kinder e Ferrero": "a5db38cb-c93f-5b3e-b969-a84b113ae367", "Mondo Kinder": "b70f9218-5c2e-551c-a8c8-30390fbf47ab",
+  "Mochi giapponesi": "0590769c-fb11-5b0b-aa8e-bf32189121ab", "Cioccolato da condividere": "8181b9ad-8b0a-5ed6-b608-a09054e4ce05",
+  "Barrette e snack al cioccolato": "9e7e63d1-c7fb-5dfe-95aa-ad3a3a0ac518", "Biscotti, merendine e colazione": "73e9327c-0d98-50c2-b294-9e313401f7b7",
+  "Caramelle gommose": "e60a5345-7045-56e8-be0a-6d148b3e5890", "Gomme e mentine": "6814dbf3-f849-5ad2-bc57-2b0a71e94f36",
+  "Birre": "e07c8038-87c2-528b-b423-a231b32df402", "Vini e Champagne": "5769d9ee-5432-50af-be47-ec9983e3efbd",
+  "Salute e intimità": "3cab3211-ba1e-5ce3-9f7c-ad2f86164bd2", "Igiene e cura personale": "ced0dfa9-b84d-59ef-8289-23e6a4285422",
+  "Casa e utili": "a793f426-4471-5dd2-a773-5bde86b06be7"}
+# Stesse regole usate per riordinare i menu su Vado (la prima che corrisponde vince)
+MENU_REGOLE = [
+  ("Red Bull", r"^Red Bull"), ("Monster Energy", r"^Monster"), ("Sport drink e altri energy", r"Powerade|Squid Game Energy"),
+  ("Bambini e neonati", r"Mellin|Plasmon|Humana|Frull[aà]|Latte Mio|San Benedetto Baby|Paw Patrol|Fruittella|Mentos Shampoo|Bath Bomb|Trudi|Estath[eé] Kids"),
+  ("Acqua", r"Acqua|Lilia|Levissima|Ferrarelle Maxima"), ("Cocktail e alcolici", r"Breezer|Jack Daniel"),
+  ("Coca-Cola e Pepsi", r"^CocaCola|^Pepsi"), ("Bibite americane USA", r"Dr Pepper|Fanta .*US"),
+  ("Aranciate, limonate e gassate", r"Fanta|Sprite|Schweppes|Lemon Soda|Ferrarelle (Gassosa|Aranciata)"),
+  ("Bibite giapponesi e asiatiche", r"High Up|Ocean Bomb"), ("Tè freddi e succhi", r"Estath|Th[eè] |Succoso|Sant[aà]l"),
+  ("Caffè e latte", r"Starbucks|^Granarolo Latte|Latte Zymil|Nesquik Shake|Dalgona|Locatelli"),
+  ("Tramezzini e panini", r"Tramezzino|Sandwich|Pan Soffice|Focaccina"), ("Insalate pronte", r"Insalatissime"),
+  ("Salumi e merende salate", r"Un Due Tris|Irresistibili|Monetine|Salamini|Teneroni"), ("Takis piccanti", r"^Takis"),
+  ("Crackers, grissini e salatini", r"Tuc|Cracker|Grissini|Crostini|Sticki|Cameo|Piselli|Aperisnack|Pop ?Corn|Pancarr"),
+  ("Pringles", r"Pringles"), ("Patatine", r"San Carlo|Patatin|Cipster|Fonzies|Highlander"),
+  ("Nutella e creme spalmabili", r"Nutella|Skippy"),
+  ("Merendine Kinder e Ferrero", r"Pingu[iì]|Delice|Paradiso|Fiesta|Maxi King|Choco Fresh|Happy Hippo|Kinder Cereali|Kinder Cards|Kinder Crunchy"),
+  ("Mondo Kinder", r"Kinder"), ("Mochi giapponesi", r"Mochi"),
+  ("Cioccolato da condividere", r"Tavoletta|Rocher|Raffaello|Maltesers|Galak|Mini Wafers|Pralinate|Mikado|Pocket Coffee|KitKat Salted"),
+  ("Barrette e snack al cioccolato", r"Twix|KitKat|Snickers|Bounty|Lion|Mars|MeM|Reese|Oro Ciok|Coco Pops|Fitness|Barretta|Milka Choco|Sperlari|Chamallows"),
+  ("Biscotti, merendine e colazione", r"Ringo|Oreo|Baiocchi|Cornetto|Parmareggio|Milka Cookies|Kellogg"),
+  ("Caramelle gommose", r"Haribo|Skittles|Frosty|Jelly Fruit|Gummy|Nerds|Dolcetto"), ("Gomme e mentine", r"Big Babol|Mentos|Vigorsol|Tic Tac"),
+  ("Birre", r"Tennent|Beck|Peroni|Heineken|Corona|Birra"), ("Vini e Champagne", r"Prosecco|Mo[eë]t"),
+  ("Salute e intimità", r"Control|Gravidanza|Urine|Alcotest|Cerotti|Amuchina"),
+  ("Igiene e cura personale", r"Tempo|Tampax|Labello|Venus|Gillette|Salviettine|Spazzolino|Veet|Lines|Lycia"),
+  ("Casa e utili", r"Sacchi|Bicchier|Piatti|Forchette|Coltell|Energizer|Scotch|Clipper|Carte da Gioco|Attak")]
+
+def menu_cat(nome):
+    for c, rx in MENU_REGOLE:
+        if re.search(rx, nome, re.I):
+            return c
+    return None
+
+JE_CAT = {p["n"]: JE_ID[menu_cat(p["n"])] for p in PRODOTTI if menu_cat(p["n"])}
 
 ZONE = {
   "casoria": {"nome": "Casoria", "frase": "Casoria è attaccata a Casavatore",
