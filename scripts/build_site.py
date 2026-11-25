@@ -189,6 +189,7 @@ def tg_block(r):
       "Consegna a domicilio con Glovo · Just Eat · Deliveroo · Alfonsino",
       f'Sfida POP: <a href="{r}gioco/">riempi le macchine prima delle 6 →</a>',
       f'Nuovo gioco: <a href="{r}gioco/corri/">Corri, POP, corri! 🏃</a>',
+      f'POP al cinema: <a href="{r}gioco/spazio/">5 giochi nuovi 🎬</a>',
       f"Macchine aggiornate il {E(STOCK['aggiornato'])}",
     ]
     track = "".join(f"<span>{x}</span>" for x in items)
@@ -255,7 +256,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
     <a href="{TEL}" style="display:inline">Tel. e WhatsApp {S["telefono_vis"]}</a></p>
     <div class="zones" style="margin-top:16px">{zone_links}</div>
   </div>
-  <div><h3>Sito</h3><a href="{home}">Home</a><a href="{r}consegna-a-domicilio/">Consegna a domicilio</a><a href="{r}prodotti/">Cosa c'è nelle macchine</a><a href="{r}snack-americani-napoli/">Snack dal mondo</a><a href="{r}aperto-24-ore-napoli-nord/">Aperto di notte a Napoli nord</a><a href="{r}energy-drink-a-domicilio/">Energy drink a domicilio</a><a href="{r}gioco/">Il gioco di POP</a><a href="{r}gioco/corri/">Corri, POP, corri!</a><a href="{REVIEW}" rel="noopener" target="_blank">Lascia una recensione</a></div>
+  <div><h3>Sito</h3><a href="{home}">Home</a><a href="{r}consegna-a-domicilio/">Consegna a domicilio</a><a href="{r}prodotti/">Cosa c'è nelle macchine</a><a href="{r}snack-americani-napoli/">Snack dal mondo</a><a href="{r}aperto-24-ore-napoli-nord/">Aperto di notte a Napoli nord</a><a href="{r}energy-drink-a-domicilio/">Energy drink a domicilio</a><a href="{r}gioco/">Il gioco di POP</a><a href="{r}gioco/corri/">Corri, POP, corri!</a><a href="{r}gioco/spazio/">POP al cinema</a><a href="{REVIEW}" rel="noopener" target="_blank">Lascia una recensione</a></div>
   <div><h3>Seguici</h3>{"".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())}</div>
   <div><h3>Trovaci anche su</h3>{"".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S.get("schede", {}).items())}</div>
 </div>
@@ -410,7 +411,7 @@ def _ver(nome):
 
 def write(path, content):
     if path.endswith(".html"):
-        content = re.sub(r'assets/(app\.js|style\.css|gioco\.js|corri\.js)"', lambda m: f'assets/{m.group(1)}?v={_ver(m.group(1))}"', content)
+        content = re.sub(r'assets/(app\.js|style\.css|gioco\.js|corri\.js|film\.js)"', lambda m: f'assets/{m.group(1)}?v={_ver(m.group(1))}"', content)
     full = os.path.join(ROOT, path)
     os.makedirs(os.path.dirname(full) or ROOT, exist_ok=True)
     open(full, "w", encoding="utf-8").write(content)
@@ -491,6 +492,8 @@ def home():
   <div class="giochi2 reveal"><h2>🎮 I giochi di POP</h2>
   <a class="gamecta" href="gioco/">{pop_svg("pop saluta", "")}<div><span class="sticker">Gioco 1</span><h3 style="margin-top:10px">Riempi le macchine prima delle 6!</h3><p>Aiuta POP a caricare i distributori prima che arrivi la fila del mattino.</p></div><span class="btn">🧃 Gioca</span></a>
   <a class="gamecta" href="gioco/corri/">{pop_svg("pop saluta", "", cap=True)}<div><span class="sticker p">Nuovo</span><h3 style="margin-top:10px">Corri, POP, corri!</h3><p>POP non si ferma mai: salta, prendi i cioccolatini, evita granchi e buche.</p></div><span class="btn">🏃 Gioca</span></a>
+  <h3 class="filmtit">🎬 POP al cinema: 5 giochi nuovi</h3>
+  <div class="filmgrid">{"".join(f'<a class="filmcard" href="gioco/{k}/"><span class="fe">{e}</span><b>{E(t)}</b><small>{E(g)}</small></a>' for k, e, t, g, *_ in FILM)}</div>
 </div>
 </div></section>
 
@@ -783,7 +786,7 @@ def gioco():
     r = rel(1)
     body = f'''
 <div class="gioco" id="gioco">
-  <nav class="gtabs" aria-label="I giochi di POP"><a href="{r}gioco/" aria-current="page">🧃 Riempi le macchine</a><a href="{r}gioco/corri/">🏃 Corri, POP, corri!</a></nav>
+  {gtabs(r, "gioco/")}
   <section class="gscreen" id="g-start">
     <div class="gfloat" aria-hidden="true"><span>🥤</span><span>⚡</span><span>🍫</span><span>🍟</span><span>🥪</span><span>💧</span><span>🍬</span><span>☕</span></div>
     <img class="pop" src="{r}assets/pop.svg" alt="POP, la mascotte di Pop Stop h24" width="220" height="286">
@@ -852,7 +855,7 @@ def corri():
         write(f"assets/pop-corsa-{i}.svg", f)
     body = f'''
 <div class="corri" id="corri">
-  <nav class="gtabs" aria-label="I giochi di POP"><a href="{r}gioco/">🧃 Riempi le macchine</a><a href="{r}gioco/corri/" aria-current="page">🏃 Corri, POP, corri!</a></nav>
+  {gtabs(r, "gioco/corri/")}
   <section class="cover fuori" id="c-start">
       <span class="sticker p">Nuovo gioco di POP</span>
       <h1>Corri, POP, corri!</h1>
@@ -893,8 +896,66 @@ def corri():
         "Il gioco a piattaforme gratuito di Pop Stop h24: POP corre senza mai fermarsi, salta, prende i cioccolatini e sfida gli amici. Si gioca dal telefono.",
         body, ld, 2, active="gioco/"))
 
+FILM = [
+  ("squalo", "🦈", "Arriva la pinna!", "Mare aperto", "POP è sul canotto in mezzo al mare e qualcosa con una pinna gira intorno a lui. Schiva le pinne, prendi le lattine che galleggiano e tieniti stretto.",
+   ["👆 <b>Trascina</b> il dito (o usa ← →) per spostare il canotto.", "🥤 Prendi le <b>lattine</b>: 10 punti l'una. La boa rossa ti ridà un cuore.", "🦈 Evita le <b>pinne</b>: hai 3 cuori e il mare si fa sempre più affollato."], "Action", "il gioco del mare con le pinne"),
+  ("dino", "🦖", "Il parco dei dinosauri", "Avventura preistorica", "Il distributore h24 è dall'altra parte del recinto, ma dietro c'è un dinosauro enorme. Avanza solo quando dorme e resta immobile quando ti guarda.",
+   ["👆 <b>Tieni premuto</b> (o →) per far camminare POP, lascia per fermarti.", "🥤 Se il <b>bicchiere trema</b> il dinosauro sta per girarsi: il semaforo diventa rosso.", "🍫 Raccogli i cioccolatini e arriva alla macchina per passare al recinto dopo."], "Stealth", "il gioco del parco dei dinosauri"),
+  ("spazio", "🚀", "POP nello spazio", "Viaggio tra le stelle", "POP ha indossato il casco ed è partito col jetpack per portare snack in tutta la galassia. Vola tra gli asteroidi e raccogli le stelle.",
+   ["👆 <b>Tieni premuto</b> (o barra spaziatrice) per accendere il jetpack e salire, lascia per scendere.", "⭐ Prendi le <b>stelle</b>: 10 punti l'una, più vai lontano più punti fai.", "☄️ Evita gli <b>asteroidi</b> e il fondo dello schermo: hai 3 cuori."], "Arcade", "il gioco di POP nello spazio"),
+  ("laser", "🕶️", "Missione: snack impossibile", "Spionaggio", "Nel caveau più protetto della città c'è uno snack da recuperare. POP scende appeso a una corda dal lucernario: i laser si accendono e si spengono, e alcuni si muovono.",
+   ["👆 <b>Tieni premuto</b> (o ↓) per calare POP con la corda, lascia per risalire.", "🔴 Passa quando i <b>laser sono spenti</b> (tratteggiati): se ne tocchi uno scatta l'allarme.", "🍫 Prendi lo snack sul piedistallo e torna su: ogni colpo è più difficile."], "Puzzle", "il gioco della missione nel caveau"),
+  ("fantasmi", "👻", "Acchiappa i fantasmi", "Casa infestata", "La vecchia villa è piena di fantasmi che si affacciano alle finestre. POP ha un aspirapolvere speciale e 60 secondi per liberare la casa.",
+   ["👆 <b>Tocca</b> i fantasmi quando escono dalle finestre: più ne prendi di fila, più punti.", "✨ I fantasmi <b>luccicanti</b> valgono il triplo.", "🐈‍⬛ Non toccare il <b>gatto nero</b>: ti costa un cuore."], "Arcade", "il gioco dei fantasmi"),
+]
+
+def gtabs(r, cur):
+    voci = [("gioco/", "🧃 Riempi le macchine"), ("gioco/corri/", "🏃 Corri, POP, corri!")] + [(f"gioco/{k}/", f"{e} {t}") for k, e, t, *_ in FILM]
+    return '<nav class="gtabs" aria-label="I giochi di POP">' + "".join(f'<a href="{r}{u}"' + (' aria-current="page"' if u == cur else '') + f'>{t}</a>' for u, t in voci) + '</nav>'
+
+def film():
+    r = rel(2)
+    for i, (k, e, tit, gen, intro, how, genre, nome) in enumerate(FILM):
+        altri = [f for f in FILM if f[0] != k][:2]
+        body = f'''
+<div class="corri film" id="corri" data-film="{k}">
+  {gtabs(r, f"gioco/{k}/")}
+  <section class="cover fuori" id="c-start">
+      <span class="sticker p">POP al cinema · {E(gen)}</span>
+      <h1>{e} {E(tit)}</h1>
+      <p>{E(intro)}</p>
+      <div class="how">{"".join(f"<div>{h}</div>" for h in how)}</div>
+      <button class="btn y" type="button" data-via>▶ Gioca</button>
+      <p class="crec" id="c-best"></p>
+    </section>
+  <div class="cwrap">
+    <canvas id="c-can" aria-label="Gioco {E(tit)} con POP"></canvas>
+    <div class="chud" aria-live="off"><span id="c-cuori">❤️❤️❤️</span><span>🏆 <b id="c-punti">0</b></span><span>{ {"squalo":"🥤","dino":"🚧","spazio":"⭐","laser":"🍫","fantasmi":"👻"}[k]} <b id="c-extra">0</b></span><button id="c-audio" type="button" aria-label="Togli i suoni">🔊</button></div>
+    <div class="cbanner" id="c-banner"></div>
+    <section class="cover" id="c-end" hidden>
+      <h2 id="c-tit">Fine!</h2>
+      <p class="score" id="c-fin"></p>
+      <p class="crec" id="c-record"></p>
+      <div class="row"><button class="btn y" type="button" data-via>🔁 Rigioca</button><a class="btn wa" id="c-share" href="#" rel="noopener" target="_blank">💬 Sfida un amico</a></div>
+    </section>
+  </div>
+  <div class="cdopo">
+    <p>Dopo il film, lo snack. Le macchine vere sono aperte 24 ore su 24 in Viale Marconi a Casavatore.</p>
+    <div class="row"><a class="btn t" href="{r}consegna-a-domicilio/#app">🛵 Ordina a domicilio</a><a class="btn o" href="{MAPS_DIR}" rel="noopener" target="_blank">📍 Portami da Pop Stop</a>{"".join(f'<a class="btn" href="{r}gioco/{a[0]}/">{a[1]} {E(a[2])}</a>' for a in altri)}</div>
+  </div>
+</div>
+<script src="{r}assets/film.js" defer></script>'''
+        ld = [crumbs_ld([("Home", ""), ("Gioco", "gioco/"), (tit, f"gioco/{k}/")]),
+              {"@type": "VideoGame", "name": f"{tit} – il gioco di POP, Pop Stop h24", "url": BASE + f"gioco/{k}/", "inLanguage": "it-IT",
+               "genre": [genre], "gamePlatform": "Web browser", "applicationCategory": "Game", "operatingSystem": "Any",
+               "description": f"Mini gioco gratuito di Pop Stop h24: {intro}",
+               "publisher": {"@id": BASE + "#negozio"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}]
+        write(f"gioco/{k}/index.html", layout(f"gioco/{k}/", f"Gioco: {tit} | Pop Stop h24",
+            f"{intro[:120].rsplit(' ',1)[0]}… Gioca gratis dal telefono con POP, la mascotte di Pop Stop h24.",
+            body, ld, 2, active="gioco/"))
+
 def tecnici():
-    pages = ["", "consegna-a-domicilio/", "prodotti/", "snack-americani-napoli/", "gioco/", "gioco/corri/"] + [f"{k}/" for k in TEMI] + [f"prodotti/{CAT_SLUG[c]}/" for c in ORDINE if any(p["c"] == c for p in PRODOTTI)] + [f"zona/{k}/" for k in ZONE]
+    pages = ["", "consegna-a-domicilio/", "prodotti/", "snack-americani-napoli/", "gioco/", "gioco/corri/"] + [f"gioco/{f[0]}/" for f in FILM] + [f"{k}/" for k in TEMI] + [f"prodotti/{CAT_SLUG[c]}/" for c in ORDINE if any(p["c"] == c for p in PRODOTTI)] + [f"zona/{k}/" for k in ZONE]
     urls = "".join(f"  <url><loc>{BASE}{p}</loc><lastmod>{OGGI}</lastmod></url>\n" for p in pages)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
     write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /scripts/\nSitemap: {BASE}sitemap.xml\n")
@@ -913,7 +974,7 @@ def tecnici():
 - Sito: {BASE} · Prodotti: {BASE}prodotti/ · Consegna: {BASE}consegna-a-domicilio/
 """)
 
-home(); consegna(); prodotti(); mondo(); gioco(); corri()
+home(); consegna(); prodotti(); mondo(); gioco(); corri(); film()
 for k, v in TEMI.items():
     tema(k, v)
 for c in ORDINE:

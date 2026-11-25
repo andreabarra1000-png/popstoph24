@@ -655,3 +655,13 @@ a.popwrap.corsa .playme{top:5%;bottom:auto;right:-3%;font-size:.8rem}
 .leggero .f-deserto svg,.leggero .collina,.leggero .albero{animation-duration:30s!important}
 @media (prefers-reduced-motion:reduce){.scena *,.corridore *{animation-duration:3s!important}.piuma,.pioggia{display:none}}
 .apphint{font-size:.8rem;color:var(--mut);margin:8px 0 0}
+/* POP al cinema */
+.film .cwrap{background:#061219}
+.film .cover h1{font-size:clamp(1.5rem,5.5vw,2.4rem)}
+.corri.film.in-corsa .cwrap{touch-action:none}
+.filmtit{margin:22px 0 10px;font-size:1.2rem}
+.filmgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.filmcard{display:flex;flex-direction:column;gap:4px;text-decoration:none;color:#fff;background:var(--card);border:3px solid #061219;border-radius:16px;padding:12px;box-shadow:4px 4px 0 rgba(255,210,63,.55);transition:transform .15s}
+.filmcard:hover{transform:translate(-2px,-2px)}
+.filmcard .fe{font-size:2rem}.filmcard b{font:800 1rem var(--fd)}.filmcard small{color:#cfe3e6}
+@media (max-width:700px){.gtabs{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.gtabs::-webkit-scrollbar{display:none}.gtabs a{flex:0 0 auto}}
