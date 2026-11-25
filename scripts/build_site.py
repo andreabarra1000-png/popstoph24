@@ -656,7 +656,7 @@ def home():
     ld = [store_ld(), {"@type": "WebSite", "@id": BASE + "#sito", "url": BASE, "name": "Pop Stop h24", "alternateName": ["PopStop H24", "Pop Stop h24 Casavatore", "popstoph24"], "inLanguage": "it-IT",
           "publisher": {"@id": BASE + "#negozio"}}, faq_ld(FAQ_HOME)]
     write("index.html", layout("", "Pop Stop h24 Casavatore | H24 aperto 24 ore su 24 a Napoli nord",
-        f"L'h24 di Casavatore, Casoria, Arzano e Napoli nord: distributori aperti 24 ore con {NPROD} prodotti tra snack, bibite, energy drink e tramezzini. Consegna con Glovo, Just Eat, Deliveroo e Alfonsino.",
+        f"L'h24 di Casavatore, Casoria e Napoli nord: distributori aperti 24 ore con {NPROD} snack, bibite, energy drink e tramezzini. Anche a domicilio con Glovo e Just Eat.",
         body, ld, 0))
 
 # ---------------- CONSEGNA ----------------
@@ -733,8 +733,8 @@ def prodotti():
           {"@type": "ItemList", "name": "Prodotti nei distributori Pop Stop h24", "numberOfItems": NPROD,
            "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": p["n"]} for i, p in enumerate(PRODOTTI)]}]
     write("prodotti/index.html", layout("prodotti/",
-        f"Cosa c'è nei distributori h24 di Casavatore: {NPROD} prodotti | Pop Stop",
-        "Energy drink, bibite, acqua, Starbucks, patatine, Takis, tramezzini, Kinder e Nutella Peanut: cosa c'è ora nelle macchine di Pop Stop h24 a Casavatore, con foto e posizione.",
+        f"Distributori h24 Casavatore: {NPROD} prodotti | Pop Stop h24",
+        "Energy drink, bibite, acqua, Starbucks, Takis, tramezzini e Kinder: cosa c'è ora nelle macchine di Pop Stop h24 a Casavatore, con foto e posizione.",
         body, ld, d, "prodotti/"))
 
 # ---------------- SNACK DAL MONDO ----------------
@@ -781,7 +781,7 @@ TEMI = {
               "Se non vuoi uscire, ordina su Glovo, Just Eat, Deliveroo o Alfonsino: le consegne dipendono dagli orari e dalla zona coperta dall'app."]},
   "distributori-automatici-napoli": {
     "titolo": "Distributori automatici a Napoli nord aperti 24 ore | Pop Stop h24",
-    "desc": "Distributori automatici h24 a Casavatore, a due passi da Casoria, Arzano e Secondigliano: bibite, energy drink, snack, tramezzini e prodotti utili, giorno e notte. Paghi con carta o contanti.",
+    "desc": "Distributori automatici h24 a Casavatore, vicino a Casoria, Arzano e Secondigliano: bibite, energy drink, snack e tramezzini giorno e notte. Carta o contanti.",
     "kicker": "🏪 Self-service h24", "h1": "Distributori automatici a Napoli nord, aperti 24 ore",
     "lead": "Pop Stop h24 è un punto self-service con 4 distributori automatici in Viale Guglielmo Marconi 79/81 a Casavatore. Non chiude mai: entri, scegli e paghi direttamente alla macchina, a qualsiasi ora.",
     "rx": r".", "max": 24,
@@ -807,7 +807,7 @@ TEMI = {
             ("Posso comprare beni di prima necessità di notte?", "Sì: acqua, latte, fazzoletti, assorbenti, rasoi e preservativi sono nelle macchine a qualsiasi ora."),
             ("Fate consegne a domicilio?", "Sì, tramite Glovo, Just Eat, Deliveroo e Alfonsino, quando l'app è attiva nella tua zona.")]},
   "snack-di-notte-napoli": {
-    "titolo": "Snack di notte a Napoli: dove mangiare qualcosa a tarda notte | Pop Stop",
+    "titolo": "Snack di notte a Napoli, aperto a tarda notte | Pop Stop h24",
     "desc": "Fame di notte a Napoli nord? Da Pop Stop h24 a Casavatore trovi snack, patatine, cioccolato, tramezzini e bibite fredde a qualsiasi ora, anche a domicilio con le app.",
     "kicker": "🍫 Fame notturna", "h1": "Snack di notte a Napoli nord: siamo aperti",
     "lead": "È mezzanotte passata, hai fame e i bar sono chiusi. Da Pop Stop h24 a Casavatore le macchine sono accese: patatine, Takis, Kinder, tramezzini e una bibita fredda, quando vuoi.",
@@ -819,7 +819,7 @@ TEMI = {
             ("Posso ordinare snack a domicilio di notte?", "Sì, con Glovo, Deliveroo o Alfonsino, quando hanno rider disponibili nella tua zona. Just Eat consegna fino a mezzanotte.")]},
   "takis-napoli": {
     "titolo": "Takis a Napoli: Fuego e Blue Heat, anche di notte | Pop Stop h24",
-    "desc": "Dove comprare i Takis a Napoli? Da Pop Stop h24 a Casavatore: Takis Fuego, Blue Heat e altri gusti nei distributori aperti 24 ore, o a domicilio con Glovo, Just Eat e Deliveroo.",
+    "desc": "Dove comprare i Takis a Napoli? Da Pop Stop h24 a Casavatore: Takis Fuego, Blue Heat e altri gusti nei distributori aperti 24 ore, o a domicilio.",
     "kicker": "🌶️ Takis", "h1": "Takis a Napoli, sempre disponibili",
     "lead": "I Takis, le chips di tortilla arrotolate e super piccanti diventate famose su TikTok, li trovi da Pop Stop h24 a Casavatore: Fuego al chili e lime, Blue Heat e gli altri gusti che arrivano, a qualsiasi ora.",
     "rx": r"takis|pringles hot|piccant", "max": 12,
@@ -852,7 +852,7 @@ TEMI = {
             ("Le consegnate a domicilio?", "Sì, con Glovo, Just Eat, Deliveroo e Alfonsino, quando l'app consegna nella tua zona.")]},
   "acqua-a-domicilio-napoli": {
     "titolo": "Acqua a domicilio a Casavatore e Casoria, anche di notte | Pop Stop",
-    "desc": "Acqua fresca a domicilio o nei distributori h24 di Pop Stop a Casavatore: Sorgesana, Ferrarelle, Electa e Fiji da mezzo litro, giorno e notte, con Glovo, Just Eat e Deliveroo.",
+    "desc": "Acqua fresca a domicilio o nei distributori h24 di Pop Stop a Casavatore: Sorgesana, Ferrarelle, Electa e Fiji, giorno e notte, anche con Glovo e Just Eat.",
     "kicker": "💧 Acqua", "h1": "Acqua fresca a domicilio o h24 a Casavatore",
     "lead": "Acqua naturale e frizzante sempre fredda nelle nostre macchine, anche di notte: Sorgesana, Ferrarelle, Electa e Fiji in bottiglietta, da prendere al volo o da farsi portare a casa.",
     "rx": r"acqua|ferrarelle maxima|levissima|lilia", "max": 12,
@@ -999,8 +999,8 @@ def zona(slug, z):
 </div></section>'''
     ld = [store_ld(), crumbs_ld([("Home", ""), ("Consegna a domicilio", "consegna-a-domicilio/"), (n, f"zona/{slug}/")]), faq_ld(faq)]
     write(f"zona/{slug}/index.html", layout(f"zona/{slug}/",
-        f"H24 {n}: aperto 24 ore, snack e bibite anche di notte | Pop Stop h24",
-        f"Cerchi un h24 a {n}? Pop Stop h24 è aperto 24 ore su 24 a Casavatore, con distributori automatici e consegna a domicilio con Glovo, Just Eat, Deliveroo e Alfonsino.",
+        f"H24 {n} aperto 24 ore su 24 | Pop Stop h24",
+        f"Cerchi un h24 a {n}? Pop Stop h24 è aperto 24 ore su 24 a Casavatore: distributori automatici e consegna con Glovo, Just Eat e Deliveroo.",
         body, ld, d))
 
 # ---------------- 404 ----------------
@@ -1192,7 +1192,7 @@ def film():
                "description": f"Mini gioco gratuito di Pop Stop h24: {intro}",
                "publisher": {"@id": BASE + "#negozio"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}]
         write(f"gioco/{k}/index.html", layout(f"gioco/{k}/", f"Gioco: {tit} | Pop Stop h24",
-            f"{intro[:120].rsplit(' ',1)[0]}… Gioca gratis dal telefono con POP, la mascotte di Pop Stop h24.",
+            f"{intro[:95].rsplit(' ',1)[0]}… Gioca gratis dal telefono con POP, la mascotte di Pop Stop h24.",
             body, ld, 2, active="gioco/"))
 
 def redirect(slug, url):
