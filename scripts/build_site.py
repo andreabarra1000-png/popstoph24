@@ -433,16 +433,17 @@ def home():
     body = f'''
 <section class="hero"><div class="sky"></div><div class="stars"></div><div class="hfloat" aria-hidden="true"><span>🥤</span><span>⚡</span><span>🍫</span><span>🍟</span><span>🥪</span><span>🍬</span><span>💧</span></div><div class="wrap">
   <div>
-    <span class="kicker">● Casavatore · Napoli nord</span>
     <h1>Distributori automatici aperti <span class="n">24 ore</span> a Casavatore</h1>
     <p class="lead"><strong>Snack, bibite, energy drink e beni di prima necessità</strong> a qualsiasi ora. Vieni in Viale Marconi o fattelo portare a casa con le app di consegna.</p>
-    <p class="now">Sono le <span data-ora>—</span>. <span data-frase style="color:#fff">Siamo aperti.</span></p>
+    <div class="infobox">
+      <p class="ib-top"><span class="kicker">● Casavatore · Napoli nord</span><span class="now">🕓 Sono le <span data-ora>—</span>. <span data-frase style="color:#fff">Siamo aperti.</span></span></p>
+      <div class="facts"><span><b>24/7</b> anche nei festivi</span><span><b data-count>{NPROD}</b> prodotti in macchina</span><span><b>4</b> app di consegna</span></div>
+    </div>
     <div class="ctas">
       <a class="btn y" href="consegna-a-domicilio/#app">🛵 Ordina a domicilio</a>
       <a class="btn t" href="{MAPS_DIR}" rel="noopener" target="_blank">📍 Portami da Pop Stop</a>
       <a class="btn o" href="prodotti/">🍫 Cosa c'è ora</a>
     </div>
-    <div class="facts"><span><b>24/7</b> anche nei festivi</span><span><b data-count>{NPROD}</b> prodotti in macchina</span><span><b>4</b> app di consegna</span></div>
   </div>
   <a class="popwrap corsa" href="gioco/corri/" aria-label="Gioca con POP: Corri, POP, corri!">
     <div class="bubble" data-pop-frasi>Corri, POP, corri! 🏃</div>
