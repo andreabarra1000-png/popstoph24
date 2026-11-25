@@ -1,16 +1,10 @@
-42373486178	14631	Nutella Peanut 370 g
-42370949582	11564	Red Bull Plus Zero Zuccheri 250 ml
-42372872465	4360	Red Bull White Edition 250 ml
 42370949713	6105	Red Bull Peach Edition 250 ml
-42371975441	13965	Dr Pepper Cherry Crush 330 ml
-42373164886	68	Corona Extra 330 ml
-42272172489	2245	Kinder Bueno 43g
-42370949696	3688	Kinder Cioccolato Barrette
-42370949685	3265	Kinder Delice 39 g
 42272172510	3889	Red Bull Sugarfree 250 ml
 42370949702	4008	Red Bull Green Edition 250 ml
+42372872465	4360	Red Bull White Edition 250 ml
 42372872469	5133	Red Bull Red Edition Anguria 250 ml
 42370949712	6103	Red Bull Sea Blue Juneberry 250 ml
+42370949582	11564	Red Bull Plus Zero Zuccheri 250 ml
 42372872475	63	Monster Energy 500 ml
 42373164885	65	Monster Energy Mango Loco 500 ml
 42372872468	4895	Monster Energy Ultra White 500 ml
@@ -23,6 +17,7 @@
 42372872425	11489	Powerade Zero Lemon Lime 500 ml
 42372872434	14216	Powerade Zero Limone 500 ml
 42373839989	1232	Powerade Citrus 500 ml
+42374557591	3891	Red Bull Winter Edition 250 ml
 42374557592	8335	Monster Energy Lando Norris Zero Sugar 500 ml
 42374557593	9054	Red Bull Iced Gummy Bear 250 ml
 42374766757	12309	Red Bull Energy Drink 355ml
@@ -30,6 +25,7 @@
 42370949631	13810	Electa Acqua Oligominerale Naturale 500 ml
 42372872435	14259	Acqua Sorgesana Frizzante 500 ml
 42373164879	11042	Acqua Sorgesana Naturale 500 ml
+42374880065	13705	Ferrarelle Maxima 500 ml
 42370949676	3	CocaCola Zero Zuccheri 330 ml
 42370949701	4	CocaCola Original Taste 330 ml
 42372872479	78	Pepsi 330 ml
@@ -47,6 +43,7 @@
 42371975427	10721	Dr Pepper 23 Original US 355 ml
 42371975432	13661	Dr Pepper Vanilla Float US 355 ml
 42370949657	13836	Dr Pepper Creamy Coconut 330 ml
+42371975441	13965	Dr Pepper Cherry Crush 330 ml
 42371975442	13966	Dr Pepper Cream Swirl 330 ml
 42370949578	10645	Mojito Lemon Soda 330 ml
 42370949725	7727	Lemon Soda Spritz 330 ml
@@ -71,6 +68,9 @@
 42370949592	12814	Nutella GO 52 g
 42374126238	14257	Kinder Pinguì Cheesecake Caramello 30 g
 42370949577	10292	Kinder Choco Fresh 5 x 20 g
+42370949696	3688	Kinder Cioccolato Barrette
+42370949685	3265	Kinder Delice 39 g
+42272172489	2245	Kinder Bueno 43g
 42370949669	2147	Kinder Bueno White 39 g
 42372872444	2148	Kinder Happy Hippo Nocciola 5x
 42372872458	3759	Twix White 46 g
@@ -124,12 +124,12 @@
 42371975455	13995	Gli Irresistibili Citterio Salame Grissini
 42374126235	8527	Vallepiù Tramezzino Tonno 140 g
 42374459999	15079	Beretta Salamini Piccanti 85 g
+42374766758	8685	Citterio Gli Irresistibili Salamini 75 g
+42373486178	14631	Nutella Peanut 370 g
 42370949668	2	Estathé alla Pesca 330 ml
 42370949677	31	Estathé al Limone 330 ml
-42373164881	2489	Thè al Limone San Benedetto 330 ml
 42370949658	13837	Santal ACE Vetro 250 ml
 42370949660	13839	Santal Mela Verde Vetro 250 ml
-42371975440	13936	Santàl Ananas Vetro 200 ml
 42373164884	5480	Starbucks Caramel Macchiato 220 ml
 42373164888	7750	Starbucks Cappuccino 220 ml
 42373164889	7758	Starbucks Caffè Latte 220 ml
@@ -154,6 +154,8 @@
 42372872504	94	Heineken 330 ml
 42370949728	8	Tennent's Super 330 ml
 42370949733	98	Peroni Chill Lemon 330 ml
+42373164886	68	Corona Extra 330 ml
 42373839990	3610	CocaCola Jack Daniel's 330 ml
 42374126228	14851	Bacardi Breezer Zesty Orange 275 ml
 42374126233	14909	Bacardi Breezer Sharp Ruby Grapefruit 275 ml
+42371975440	13936	Santàl Ananas Vetro 200 ml
