@@ -556,7 +556,7 @@ def _ver(nome):
 
 def write(path, content):
     if path.endswith(".html"):
-        content = re.sub(r'assets/(app\.js|style\.css|gioco\.js|corri\.js|film\.js)"', lambda m: f'assets/{m.group(1)}?v={_ver(m.group(1))}"', content)
+        content = re.sub(r'assets/(app\.js|style\.css|gioco\.js|corri\.js|film\.js|classifica\.js)"', lambda m: f'assets/{m.group(1)}?v={_ver(m.group(1))}"', content)
     full = os.path.join(ROOT, path)
     os.makedirs(os.path.dirname(full) or ROOT, exist_ok=True)
     open(full, "w", encoding="utf-8").write(content)
@@ -1074,7 +1074,8 @@ def gioco():
   <img class="gpop" id="g-pop" src="{r}assets/pop.svg" alt="" width="74" height="96">
   <div class="fum" id="g-fumetto" aria-live="polite"></div>
 </div>
-<script src="{r}assets/gioco.js" defer></script>'''
+<script src="{r}assets/gioco.js" defer></script>
+<script src="{r}assets/classifica.js" defer></script>'''
     ld = [crumbs_ld([("Home", ""), ("Gioco", "gioco/")]),
           {"@type": "VideoGame", "name": "Riempi le macchine – il gioco di POP", "url": BASE + "gioco/", "inLanguage": "it-IT",
            "genre": "Arcade", "gamePlatform": "Web browser", "applicationCategory": "Game", "operatingSystem": "Any",
@@ -1124,7 +1125,8 @@ def corri():
     <div class="row"><a class="btn t" href="{r}consegna-a-domicilio/#app">🛵 Ordina a domicilio</a><a class="btn o" href="{MAPS_DIR}" rel="noopener" target="_blank">📍 Portami da Pop Stop</a><a class="btn" href="{r}gioco/">🎮 Riempi le macchine</a></div>
   </div>
 </div>
-<script src="{r}assets/corri.js" defer></script>'''
+<script src="{r}assets/corri.js" defer></script>
+<script src="{r}assets/classifica.js" defer></script>'''
     ld = [crumbs_ld([("Home", ""), ("Gioco", "gioco/"), ("Corri POP", "gioco/corri/")]),
           {"@type": "VideoGame", "name": "Corri POP – il gioco di Pop Stop h24", "url": BASE + "gioco/corri/", "inLanguage": "it-IT",
            "genre": ["Platform", "Endless runner"], "gamePlatform": "Web browser", "applicationCategory": "Game", "operatingSystem": "Any",
@@ -1182,7 +1184,8 @@ def film():
     <div class="row"><a class="btn t" href="{r}consegna-a-domicilio/#app">🛵 Ordina a domicilio</a><a class="btn o" href="{MAPS_DIR}" rel="noopener" target="_blank">📍 Portami da Pop Stop</a>{"".join(f'<a class="btn" href="{r}gioco/{a[0]}/">{a[1]} {E(a[2])}</a>' for a in altri)}</div>
   </div>
 </div>
-<script src="{r}assets/film.js" defer></script>'''
+<script src="{r}assets/film.js" defer></script>
+<script src="{r}assets/classifica.js" defer></script>'''
         ld = [crumbs_ld([("Home", ""), ("Gioco", "gioco/"), (tit, f"gioco/{k}/")]),
               {"@type": "VideoGame", "name": f"{tit} – il gioco di POP, Pop Stop h24", "url": BASE + f"gioco/{k}/", "inLanguage": "it-IT",
                "genre": [genre], "gamePlatform": "Web browser", "applicationCategory": "Game", "operatingSystem": "Any",
