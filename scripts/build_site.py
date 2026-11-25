@@ -1152,6 +1152,12 @@ def film():
             f"{intro[:120].rsplit(' ',1)[0]}… Gioca gratis dal telefono con POP, la mascotte di Pop Stop h24.",
             body, ld, 2, active="gioco/"))
 
+def redirect(slug, url):
+    write(f"{slug}/index.html", f'''<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pop Stop h24</title><meta http-equiv="refresh" content="0;url={E(url)}"><link rel="canonical" href="{E(url)}"></head>
+<body style="background:#061219;color:#fff;font-family:sans-serif;text-align:center;padding:60px 20px"><p>Un attimo…</p><p><a style="color:#ffd23f" href="{E(url)}">Tocca qui se non si apre da solo</a></p>
+<script>location.replace({json.dumps(url)})</script></body></html>''')
+
 def tecnici():
     pages = ["", "consegna-a-domicilio/", "prodotti/", "snack-americani-napoli/", "gioco/", "gioco/corri/"] + [f"gioco/{f[0]}/" for f in FILM] + [f"{k}/" for k in TEMI] + [f"prodotti/{CAT_SLUG[c]}/" for c in ORDINE if any(p["c"] == c for p in PRODOTTI)] + [f"zona/{k}/" for k in ZONE]
     urls = "".join(f"  <url><loc>{BASE}{p}</loc><lastmod>{OGGI}</lastmod></url>\n" for p in pages)
@@ -1181,4 +1187,5 @@ for c in ORDINE:
 for k, v in ZONE.items():
     zona(k, v)
 page404(); tecnici()
+redirect("recensione", REVIEW); redirect("instagram", S["social"]["Instagram"]); redirect("tiktok", S["social"]["TikTok"])
 print("ok:", NPROD, "prodotti, base", BASE)
