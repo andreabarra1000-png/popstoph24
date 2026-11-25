@@ -240,10 +240,10 @@ def layout(path, title, desc, body, ld, depth, active=""):
 <body{' class="pg-gioco"' if path.startswith("gioco") else ""}>
 <a class="sr" href="#main">Vai al contenuto</a>
 <header class="top"><div class="wrap">
-  <a class="logo" href="{home}" aria-label="Pop Stop h24, home"><b>24</b><span>Pop Stop <em>h24</em></span></a>
-  <nav class="nav" aria-label="Menu principale">{"".join(nav)}</nav>
+  <button class="burger" type="button" aria-label="Apri il menu" aria-expanded="false"><span class="ln" aria-hidden="true">☰</span><span class="bt">Home</span></button>
+  <a class="logo" href="{home}" aria-label="Pop Stop h24, home"><img src="{r}assets/logo.png" alt="Pop Stop h24" width="218" height="186"></a>
+  <nav class="nav" aria-label="Menu principale"><a class="nhome" href="{home}">🏠 Home</a>{"".join(nav)}</nav>
   <a class="pill" href="{home}#vieni"><i></i>Aperto · <span data-ora>24h</span></a>
-  <button class="burger" type="button" aria-label="Apri il menu" aria-expanded="false">☰</button>
 </div></header>
 {"" if path.startswith("gioco") or path=="404.html" else tg_block(r)}
 <main id="main">
@@ -251,7 +251,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
 </main>
 <footer><div class="wrap cols">
   <div>
-    <a class="logo" href="{home}"><b>24</b>Pop Stop <em>h24</em></a>
+    <a class="logo" href="{home}"><img src="{r}assets/logo.png" alt="Pop Stop h24" width="218" height="186" style="height:72px;width:auto"></a>
     <p style="margin-top:12px">Distributori automatici aperti 24 ore su 24, 7 giorni su 7.<br>{E(INDIRIZZO_FULL)}<br>
     <a href="{TEL}" style="display:inline">Tel. e WhatsApp {S["telefono_vis"]}</a></p>
     <div class="zones" style="margin-top:16px">{zone_links}</div>
