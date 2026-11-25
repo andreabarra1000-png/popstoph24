@@ -157,7 +157,7 @@
     S.x+=S.v*dt;
     var p=S.p,px=S.x+100,pw=34,ph=54;
     // tappa
-    var tp=Math.floor(S.x/10/500)%3;
+    var tp=Math.floor(Math.max(0,S.x)/10/500)%3;
     if(tp!==S.tappa){S.tappa=tp;banner(TAPPE[tp].n+(S.x>100?" · giro "+(1+Math.floor(S.x/10/1500)):""));if(S.x>100)dici(FRASI[[0,2,4][tp]])}
     if(S.t>4&&Math.random()<dt*0.04&&S.fraseT<=0)dici(FRASI[Math.floor(Math.random()*FRASI.length)]);
     // fisica
@@ -237,7 +237,7 @@
 
   function disegna(){
     ctx.setTransform(dpr*scala,0,0,dpr*scala,0,0);
-    var tp=Math.max(0,S.tappa),T=TAPPE[tp],cam=S.x;
+    var tp=Math.max(0,S.tappa)%3,T=TAPPE[tp],cam=S.x;
     cielo(tp);
     // piuma
     ctx.save();ctx.translate(S.piuma.x,S.piuma.y);ctx.rotate(Math.sin(S.t*2.4)*0.5);emo("🪶",0,12,26);ctx.restore();
@@ -289,8 +289,8 @@
   /* ---- ciclo ---- */
   function ciclo(t){
     if(!S||S.fine)return;
-    var dt=Math.min(0.033,(t-ultimo)/1000||0);ultimo=t;
-    passo(dt);if(S.fine)return;disegna();
+    var dt=Math.max(0,Math.min(0.033,(t-ultimo)/1000||0));ultimo=Math.max(ultimo,t);
+    try{passo(dt);if(S.fine)return;disegna()}catch(err){if(window.console)console.error(err)}
     raf=requestAnimationFrame(ciclo);
   }
   document.addEventListener("visibilitychange",function(){if(document.hidden){cancelAnimationFrame(raf)}else if(S&&!S.fine){ultimo=performance.now();raf=requestAnimationFrame(ciclo)}});
