@@ -529,3 +529,42 @@ a.popwrap.corsa .bubble{top:0;left:0;max-width:62%}
 a.popwrap.corsa .playme{top:auto;bottom:22%;right:-2%}
 .contakm{bottom:-6%}
 @media (max-width:860px){a.popwrap.corsa .bubble{max-width:64%;font-size:.82rem;padding:8px 10px}}
+/* ===== Scenario "film" dietro POP ===== */
+.palo{display:none}
+.fondo{position:absolute;inset:0;opacity:0;animation:fase 30s linear infinite}
+@keyframes fase{0%{opacity:0}3%{opacity:1}33%{opacity:1}36%{opacity:0}100%{opacity:0}}
+.f-parco{background:linear-gradient(180deg,#7fd3f0,#c9f0ff 70%);animation-delay:0s}
+.f-deserto{background:linear-gradient(180deg,#ff7a45,#ffb36b 60%,#ffd59a);animation-delay:-20s}
+.f-mare{background:linear-gradient(180deg,#4b5d6b,#7c93a3 60%);animation-delay:-10s}
+.f-deserto svg{position:absolute;left:0;bottom:16%;width:200%;height:70%;animation:scorri 14s linear infinite}
+@keyframes scorri{to{transform:translateX(-50%)}}
+.collina{position:absolute;bottom:14%;width:70%;height:40%;border-radius:50% 50% 0 0;background:#58c46b;animation:passa 12s linear infinite}
+.c2{animation-delay:-6s;background:#3fae58;height:30%}
+.albero{position:absolute;bottom:16%;font-size:3rem;font-style:normal;animation:passa 7s linear infinite}
+.onda{position:absolute;left:0;right:0;bottom:16%;height:26%;background:repeating-linear-gradient(90deg,#2f6f8f 0 30px,#3c86a8 30px 60px);border-top:4px solid #a9d8ec;animation:righe 1.2s linear infinite}
+.barca{position:absolute;bottom:34%;font-size:2.6rem;font-style:normal;animation:passa 10s linear infinite,dondola 1.6s ease-in-out infinite alternate}
+@keyframes dondola{to{rotate:8deg}}
+.faro{position:absolute;bottom:38%;right:6%;font-size:2rem;font-style:normal;opacity:.8}
+.pioggia{position:absolute;inset:0;background:repeating-linear-gradient(105deg,transparent 0 10px,rgba(255,255,255,.35) 10px 11px);background-size:40px 40px;animation:piove .35s linear infinite}
+@keyframes piove{to{background-position:-12px 40px}}
+.piuma{position:absolute;top:8%;font-size:1.7rem;font-style:normal;z-index:2;animation:vola 11s linear infinite,sway 2.2s ease-in-out infinite alternate}
+@keyframes vola{from{left:-12%;transform:translateY(0)}50%{transform:translateY(40px)}to{left:108%;transform:translateY(-10px)}}
+@keyframes sway{from{rotate:-25deg}to{rotate:25deg}}
+.cosa{position:absolute;bottom:16%;font-size:2.1rem;font-style:normal;z-index:1;animation:passa 6s linear infinite;filter:drop-shadow(0 3px 0 rgba(0,0,0,.25))}
+.cosa.k1{width:92px;animation-duration:6s}.cosa.k1 svg{width:100%;display:block}
+.k2{animation-delay:-1.2s}.k3{animation-delay:-2.4s}.k4{animation-delay:-3.6s}
+.k5{bottom:48%;animation:passa 6s linear infinite,moneta .5s ease-in-out infinite alternate;animation-delay:-4.8s,0s}
+@keyframes moneta{to{transform:translateY(-10px) scale(1.1)}}
+.tappa{position:absolute;top:10px;right:10px;z-index:3;font:800 .7rem var(--fd);text-transform:uppercase;letter-spacing:.06em}
+.tappa b{position:absolute;right:0;white-space:nowrap;background:#061219;color:#FFD23F;padding:3px 8px;border-radius:6px;opacity:0;animation:fase 30s linear infinite}
+.tappa b:nth-child(2){animation-delay:-20s}.tappa b:nth-child(3){animation-delay:-10s}
+.scena .nuvola{z-index:1}
+.corridore{z-index:2}
+a.popwrap.corsa .playme{z-index:5}
+.corridore{width:46%}
+.p-scarpa{transform-box:fill-box;transform-origin:30% 50%;scale:1.35}
+a.popwrap.corsa .playme{top:5%;bottom:auto;right:-3%;font-size:.8rem}
+.tappa{top:auto;bottom:4%;right:auto;left:10px}
+.tappa b{right:auto;left:0}
+@media (max-width:860px){a.popwrap.corsa .bubble{max-width:58%}}
+.tappa{top:10px;bottom:auto}
