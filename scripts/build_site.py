@@ -536,11 +536,9 @@ def home():
 </div></section>
 
 <section class="s"><div class="wrap">
-  <div class="giochi2 reveal"><h2>🎮 I giochi di POP</h2>
-  <a class="gamecta" href="gioco/">{pop_svg("pop saluta", "")}<div><span class="sticker">Gioco 1</span><h3 style="margin-top:10px">Riempi le macchine prima delle 6!</h3><p>Aiuta POP a caricare i distributori prima che arrivi la fila del mattino.</p></div><span class="btn">🧃 Gioca</span></a>
-  <a class="gamecta" href="gioco/corri/">{pop_svg("pop saluta", "", cap=True)}<div><span class="sticker p">Nuovo</span><h3 style="margin-top:10px">Corri, POP, corri!</h3><p>POP non si ferma mai: salta, prendi i cioccolatini, evita granchi e buche.</p></div><span class="btn">🏃 Gioca</span></a>
-  <h3 class="filmtit">🎬 POP al cinema: 5 giochi nuovi</h3>
-  <div class="filmgrid">{"".join(f'<a class="filmcard" href="gioco/{k}/"><span class="fe">{e}</span><b>{E(t)}</b><small>{E(g)}</small></a>' for k, e, t, g, *_ in FILM)}</div>
+  <div class="giochi3 reveal"><h2>🎮 I giochi di POP</h2>
+  <p class="g3sub">Tocca un tasto e gioca subito, gratis, dal telefono.</p>
+  <div class="gtasti">{"".join(f'<a class="gtasto g{i}" href="{h}"><span class="ge">{e}</span><b>{E(t)}</b><small>{E(g)}</small><span class="gplay">▶ Gioca</span></a>' for i, (h, e, t, g) in enumerate([("gioco/corri/", "🏃", "Corri, POP, corri!", "Platform"), ("gioco/", "🧃", "Riempi le macchine", "Prima delle 6")] + [(f"gioco/{k}/", e, t, g) for k, e, t, g, *_ in FILM]))}</div>
 </div>
 </div></section>
 
