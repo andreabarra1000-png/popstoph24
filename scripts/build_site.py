@@ -248,7 +248,7 @@ def cats_block(r):
     out = []
     for c in ORDINE:
         if c in cnt:
-            out.append(f'<a class="cat reveal" href="{r}prodotti/?cat={quote(c)}"><span class="e">{ICONE[c]}</span><b>{E(c)}</b><small>{cnt[c]} prodotti</small></a>')
+            out.append(f'<a class="cat reveal" href="{r}prodotti/{CAT_SLUG[c]}/"><span class="e">{ICONE[c]}</span><b>{E(c)}</b><small>{cnt[c]} prodotti</small></a>')
     return '<div class="cats">' + "".join(out) + "</div>"
 
 def trova(rx):
@@ -387,8 +387,8 @@ def home():
 </div></section>'''
     ld = [store_ld(), {"@type": "WebSite", "@id": BASE + "#sito", "url": BASE, "name": "Pop Stop h24", "inLanguage": "it-IT",
           "publisher": {"@id": BASE + "#negozio"}}, faq_ld(FAQ_HOME)]
-    write("index.html", layout("", "Pop Stop h24 Casavatore – distributori automatici aperti 24 ore e consegna a domicilio",
-        f"Distributori automatici aperti 24 ore su 24 a Casavatore (Napoli nord), Viale Guglielmo Marconi 79/81: {NPROD} prodotti tra snack, bibite, energy drink e tramezzini. Consegna a domicilio con Glovo, Just Eat, Deliveroo e Alfonsino.",
+    write("index.html", layout("", "Pop Stop h24 Casavatore | Distributori aperti 24 ore su 24",
+        f"Distributori automatici aperti 24 ore a Casavatore (Napoli nord): {NPROD} prodotti tra snack, bibite, energy drink e tramezzini. Consegna con Glovo, Just Eat e Deliveroo.",
         body, ld, 0))
 
 # ---------------- CONSEGNA ----------------
@@ -434,8 +434,8 @@ def consegna():
           {"@type": "Service", "name": "Consegna a domicilio Pop Stop h24", "serviceType": "Consegna a domicilio di snack e bevande",
            "provider": {"@id": BASE + "#negozio"}, "areaServed": ["Casavatore", "Casoria", "Arzano", "Secondigliano", "Napoli"]}]
     write("consegna-a-domicilio/index.html", layout("consegna-a-domicilio/",
-        "Consegna a domicilio snack e bibite h24 a Casavatore, Casoria e Napoli nord | Pop Stop h24",
-        "Ordina snack, bibite, energy drink, acqua e tramezzini a domicilio da Pop Stop h24 con Glovo, Just Eat, Deliveroo e Alfonsino. Casavatore, Casoria, Arzano, Secondigliano e Napoli nord.",
+        "Snack e bibite a domicilio a Casavatore e Casoria | Pop Stop h24",
+        "Snack, bibite, energy drink, acqua e tramezzini a domicilio da Pop Stop h24 con Glovo, Just Eat, Deliveroo e Alfonsino: Casavatore, Casoria, Arzano e Napoli nord.",
         body, ld, d, "consegna-a-domicilio/"))
 
 # ---------------- PRODOTTI ----------------
@@ -457,14 +457,16 @@ def prodotti():
   <p class="upd" id="agg">{NPROD} prodotti nelle macchine · aggiornato il {E(STOCK["aggiornato"])}</p>
   <div id="prodotti">{plist_static(PRODOTTI)}</div>
   <p class="note">«Ultimi pezzi» vuol dire che potrebbero finire presto. Non trovi quello che cerchi? <a href="{WA}" rel="noopener" target="_blank">Chiedicelo su WhatsApp</a>.</p>
+  <div class="head" style="margin-top:40px"><div><span class="eyebrow">Per categoria</span><h2>Sfoglia per categoria</h2></div></div>
+  <div class="zones">{"".join(f'<a href="{CAT_SLUG[c]}/">{ICONE[c]} {E(c)}</a>' for c in ORDINE if any(p["c"] == c for p in PRODOTTI))}</div>
 </div></section>
 {visit_block(r, "Passa a prenderlo")}'''
     ld = [store_ld(), crumbs_ld([("Home", ""), ("Cosa c'è nelle macchine", "prodotti/")]),
           {"@type": "ItemList", "name": "Prodotti nei distributori Pop Stop h24", "numberOfItems": NPROD,
            "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": p["n"]} for i, p in enumerate(PRODOTTI)]}]
     write("prodotti/index.html", layout("prodotti/",
-        f"Cosa c'è nei distributori automatici h24 di Casavatore: {NPROD} prodotti | Pop Stop h24",
-        "Energy drink, bibite, acqua, caffè Starbucks, patatine, Takis, tramezzini, Kinder, Nutella Peanut e caramelle: guarda cosa c'è ora nelle macchine di Pop Stop h24 a Casavatore.",
+        f"Cosa c'è nei distributori h24 di Casavatore: {NPROD} prodotti | Pop Stop",
+        "Energy drink, bibite, acqua, Starbucks, patatine, Takis, tramezzini, Kinder e Nutella Peanut: cosa c'è ora nelle macchine di Pop Stop h24 a Casavatore, con foto e posizione.",
         body, ld, d, "prodotti/"))
 
 # ---------------- SNACK DAL MONDO ----------------
@@ -493,15 +495,15 @@ def mondo():
     ld = [store_ld(), crumbs_ld([("Home", ""), ("Snack dal mondo", "snack-americani-napoli/")]),
           {"@type": "ItemList", "name": "Snack e bibite dal mondo da Pop Stop h24", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": p["n"]} for i, p in enumerate(prods)]}]
     write("snack-americani-napoli/index.html", layout("snack-americani-napoli/",
-        "Snack e bibite americane a Napoli h24: Dr Pepper, Takis, Fanta USA | Pop Stop h24 Casavatore",
-        f"Dove trovare Dr Pepper, Takis, Fanta americane, bibite asiatiche e Starbucks vicino Napoli a qualsiasi ora: {len(prods)} prodotti dal mondo nei distributori h24 di Pop Stop a Casavatore.",
+        "Snack americani a Napoli h24: Dr Pepper, Takis, Fanta USA | Pop Stop",
+        f"Dr Pepper, Takis, Fanta americane, bibite asiatiche e Starbucks vicino Napoli a qualsiasi ora: {len(prods)} prodotti dal mondo nei distributori h24 di Pop Stop a Casavatore.",
         body, ld, d, "snack-americani-napoli/"))
 
 # ---------------- PAGINE A TEMA ----------------
 TEMI = {
   "aperto-24-ore-napoli-nord": {
-    "titolo": "Cosa c'è aperto di notte a Napoli nord? Pop Stop h24 a Casavatore",
-    "desc": "Cerchi un posto aperto di notte a Napoli nord, Casoria o Casavatore? Pop Stop h24 è aperto 24 ore su 24: distributori automatici con bibite, acqua, energy drink, snack, tramezzini e prodotti utili.",
+    "titolo": "Aperto di notte a Napoli nord, 24 ore su 24 | Pop Stop h24",
+    "desc": "Un posto aperto di notte a Napoli nord, Casoria o Casavatore: Pop Stop h24, distributori automatici 24 ore su 24 con bibite, acqua, energy drink, snack e tramezzini.",
     "kicker": "🌙 Aperto anche di notte", "h1": "Aperto 24 ore a Napoli nord: anche alle 3 di notte",
     "lead": "Bar chiusi, supermercati chiusi, distributori di benzina con lo shop spento? A Casavatore c'è Pop Stop h24: 4 distributori automatici sempre accesi, 365 giorni l'anno, festivi e Capodanno compresi.",
     "rx": r"acqua|red bull|monster|coca|tramezzino|pan soffice|control|lycia|tampax|gillette",
@@ -510,8 +512,8 @@ TEMI = {
               "Siamo comodi per chi arriva da Casoria, Arzano, Secondigliano, Capodichino, Afragola e da tutta la zona nord di Napoli. Si paga direttamente alla macchina.",
               "Se non vuoi uscire, ordina su Glovo, Just Eat, Deliveroo o Alfonsino: le consegne dipendono dagli orari e dalla zona coperta dall'app."]},
   "energy-drink-a-domicilio": {
-    "titolo": "Energy drink a domicilio a Casavatore e Napoli nord, anche di notte | Pop Stop h24",
-    "desc": "Red Bull, Monster e Powerade a domicilio con Glovo, Just Eat, Deliveroo e Alfonsino, o nei distributori aperti 24 ore di Pop Stop h24 a Casavatore. Anche le edizioni speciali.",
+    "titolo": "Energy drink a domicilio a Casavatore, anche di notte | Pop Stop",
+    "desc": "Red Bull, Monster e Powerade a domicilio con Glovo, Just Eat e Deliveroo, o nei distributori aperti 24 ore di Pop Stop h24 a Casavatore. Anche le edizioni speciali.",
     "kicker": "⚡ Energy drink", "h1": "Energy drink a domicilio o h24 a Casavatore",
     "lead": "Red Bull in tante edizioni, Monster, Powerade e bevande per lo sport: nei nostri distributori ci sono sempre, e con le app di consegna te li portano a casa quando il servizio è attivo nella tua zona.",
     "rx": r"red bull|monster|powerade",
@@ -560,6 +562,49 @@ def presi_block(r):
   <ul class="plist">{"".join(card(p) for p in trov[:12])}</ul>
 </div></section>'''
 
+# ---------------- CATEGORIE ----------------
+CAT_SLUG = {"Energy drink": "energy-drink", "Bibite": "bibite", "Acqua": "acqua", "Caffè e latte": "caffe-e-latte",
+            "Patatine e snack salati": "patatine-e-snack-salati", "Tramezzini e salato": "tramezzini",
+            "Dolci e cioccolato": "dolci-e-cioccolato", "Caramelle e gomme": "caramelle-e-gomme", "Igiene e altro": "igiene-e-prima-necessita"}
+CAT_TXT = {
+  "Energy drink": ("Energy drink h24 a Casavatore", "Red Bull in tante edizioni, Monster e Powerade sempre freschi nei distributori: per il turno di notte, lo studio, la palestra o il viaggio."),
+  "Bibite": ("Bibite fresche h24 a Casavatore", "Coca-Cola, Fanta, Sprite, Pepsi, Estathé, Schweppes, Dr Pepper e bibite americane e asiatiche, fredde a qualsiasi ora."),
+  "Acqua": ("Acqua fresca 24 ore su 24 a Casavatore", "Acqua naturale e frizzante sempre disponibile, giorno e notte, anche nei festivi: dalla bottiglietta classica alla Fiji."),
+  "Caffè e latte": ("Caffè freddo, latte e bevande al latte h24", "Starbucks pronti da bere, latte, latte e cioccolato e shake: per la colazione presto o la pausa di notte."),
+  "Patatine e snack salati": ("Patatine e snack salati h24 a Casavatore", "Pringles, San Carlo, Takis piccanti e tanti snack salati, nelle macchine a qualsiasi ora."),
+  "Tramezzini e salato": ("Tramezzini e snack salati h24 a Casavatore", "Tramezzini pronti, salamini, Un Due Tris e snack salati per quando hai fame davvero, anche alle 3 di notte."),
+  "Dolci e cioccolato": ("Dolci, cioccolato e merendine h24 a Casavatore", "Kinder, Nutella, KitKat, Twix, Oreo, Ringo e tante merendine: la voglia di dolce non ha orari, e noi nemmeno."),
+  "Caramelle e gomme": ("Caramelle e chewing gum h24 a Casavatore", "Haribo, Skittles, Tic Tac, Vigorsol, Big Babol e caramelle dal mondo, sempre nei distributori."),
+  "Igiene e altro": ("Prodotti di prima necessità h24 a Casavatore", "Assorbenti, rasoi, preservativi e prodotti utili quando le farmacie e i negozi sono chiusi, 24 ore su 24."),
+}
+
+def categoria(c):
+    slug = CAT_SLUG[c]; d = 2; r = rel(d)
+    prods = [p for p in PRODOTTI if p["c"] == c]
+    h1, intro = CAT_TXT[c]
+    altre = "".join(f'<a href="{r}prodotti/{CAT_SLUG[x]}/">{ICONE[x]} {E(x)}</a>' for x in ORDINE if x != c)
+    body = f'''
+<div class="wrap crumbs"><a href="{r}">Home</a> › <a href="{r}prodotti/">Cosa c'è</a> › {E(c)}</div>
+<section class="page-hero"><div class="wrap">
+  <span class="kicker">{ICONE[c]} {E(c)} · {len(prods)} prodotti</span>
+  <h1>{E(h1)}</h1>
+  <p class="lead">{E(intro)} Li trovi nelle macchine di Viale Guglielmo Marconi 79/81, oppure a casa tua con le app di consegna quando sono disponibili nella tua zona.</p>
+  <div class="ctas"><a class="btn y" href="{r}consegna-a-domicilio/#app">🛵 Ordina a domicilio</a><a class="btn t" href="{MAPS_DIR}" rel="noopener" target="_blank">📍 Portami da Pop Stop</a></div>
+</div></section>
+<section class="s" style="padding-top:10px"><div class="wrap">
+  <p class="upd">Aggiornato il {E(STOCK["aggiornato"])} con quello che c'è davvero nelle macchine. Tocca un prodotto per vedere in quale macchina si trova.</p>
+  <ul class="plist">{"".join(card(p) for p in prods)}</ul>
+  <div class="head" style="margin-top:40px"><div><span class="eyebrow">Altre categorie</span><h2>Cos'altro c'è</h2></div></div>
+  <div class="zones">{altre}</div>
+</div></section>
+{visit_block(r)}'''
+    ld = [store_ld(), crumbs_ld([("Home", ""), ("Cosa c'è nelle macchine", "prodotti/"), (c, f"prodotti/{slug}/")]),
+          {"@type": "ItemList", "name": f"{c} da Pop Stop h24", "numberOfItems": len(prods),
+           "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": p["n"]} for i, p in enumerate(prods)]}]
+    tit = f"{h1} | Pop Stop"
+    desc = f"{intro} {len(prods)} prodotti nei distributori di Pop Stop h24, Casavatore."
+    write(f"prodotti/{slug}/index.html", layout(f"prodotti/{slug}/", tit, desc if len(desc) <= 158 else desc[:155].rsplit(" ", 1)[0].rstrip(",:;") + "…", body, ld, d))
+
 # ---------------- ZONE ----------------
 def zona(slug, z):
     d = 2; r = rel(d); n = z["nome"]
@@ -592,8 +637,8 @@ def zona(slug, z):
 </div></section>'''
     ld = [store_ld(), crumbs_ld([("Home", ""), ("Consegna a domicilio", "consegna-a-domicilio/"), (n, f"zona/{slug}/")]), faq_ld(faq)]
     write(f"zona/{slug}/index.html", layout(f"zona/{slug}/",
-        f"Aperto 24 ore vicino a {n}: snack e bibite a domicilio | Pop Stop h24",
-        f"Cerchi un posto aperto di notte vicino a {n}? Pop Stop h24 a Casavatore: distributori automatici 24 ore su 24 e consegna a domicilio con Glovo, Just Eat, Deliveroo e Alfonsino.",
+        f"Aperto 24 ore vicino a {n} | Pop Stop h24",
+        f"Aperto di notte vicino a {n}: Pop Stop h24 a Casavatore, distributori automatici 24 ore su 24 e consegna con Glovo, Just Eat e Deliveroo.",
         body, ld, d))
 
 # ---------------- 404 ----------------
@@ -647,7 +692,7 @@ def gioco():
 
   <section class="gscreen gend" id="g-end" hidden>
     <img class="pop" src="{r}assets/pop.svg" alt="" width="220" height="286">
-    <h1 id="g-tit">Sono le 6!</h1>
+    <h2 id="g-tit" style="font-size:clamp(1.8rem,7vw,2.8rem)">Sono le 6!</h2>
     <p class="score" id="g-fin"></p>
     <p id="g-record" style="font-weight:800;color:var(--y)"></p>
     <div class="row">
@@ -669,12 +714,12 @@ def gioco():
            "genre": "Arcade", "gamePlatform": "Web browser", "applicationCategory": "Game", "operatingSystem": "Any",
            "description": "Mini gioco gratuito di Pop Stop h24: aiuta la mascotte POP a riempire i distributori automatici prima delle 6 del mattino.",
            "publisher": {"@id": BASE + "#negozio"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}]
-    write("gioco/index.html", layout("gioco/", "Gioco: Riempi le macchine prima delle 6! – Pop Stop h24",
+    write("gioco/index.html", layout("gioco/", "Gioco: Riempi le macchine prima delle 6! | Pop Stop",
         "Il mini gioco gratuito di Pop Stop h24: aiuta POP a riempire i distributori automatici prima che arrivi la fila del mattino. Gioca dal telefono e sfida gli amici.",
         body, ld, 1, active="gioco/"))
 
 def tecnici():
-    pages = ["", "consegna-a-domicilio/", "prodotti/", "snack-americani-napoli/", "gioco/"] + [f"{k}/" for k in TEMI] + [f"zona/{k}/" for k in ZONE]
+    pages = ["", "consegna-a-domicilio/", "prodotti/", "snack-americani-napoli/", "gioco/"] + [f"{k}/" for k in TEMI] + [f"prodotti/{CAT_SLUG[c]}/" for c in ORDINE if any(p["c"] == c for p in PRODOTTI)] + [f"zona/{k}/" for k in ZONE]
     urls = "".join(f"  <url><loc>{BASE}{p}</loc><lastmod>{OGGI}</lastmod></url>\n" for p in pages)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
     write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /scripts/\nSitemap: {BASE}sitemap.xml\n")
@@ -696,6 +741,9 @@ def tecnici():
 home(); consegna(); prodotti(); mondo(); gioco()
 for k, v in TEMI.items():
     tema(k, v)
+for c in ORDINE:
+    if any(p["c"] == c for p in PRODOTTI):
+        categoria(c)
 for k, v in ZONE.items():
     zona(k, v)
 page404(); tecnici()
