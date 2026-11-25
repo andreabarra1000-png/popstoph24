@@ -249,7 +249,7 @@ footer a:hover{color:#fff}
 
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
 .reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 .appsmini .glovo{background:#ffc244}.appsmini .deliveroo{background:#00ccbc}.appsmini .justeat{background:#ff8000}.appsmini .alfonsino{background:#ff5a4e;color:#fff!important}
 
 /* ===== POP e stile giovane (25/11) ===== */
@@ -409,3 +409,78 @@ a.popwrap:hover .pop,a.popwrap:focus-visible .pop{animation:popjump .6s}
 .gsky{background:linear-gradient(180deg,#3b2a7a 0%,#ff6f91 45%,#ffb36b 75%,#ffe3a3 100%)}
 .gsky::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#050b24 0%,#0a1d3a 60%,#061219 100%);opacity:calc(1 - var(--t))}
 .gsky .sun,.gsky .moon,.gsky .st{z-index:1}
+
+/* ===== sito animato (25/11 notte) ===== */
+/* ticker stile TG */
+.tg{position:relative;display:flex;align-items:stretch;background:#FFD23F;color:#061219;border-bottom:3px solid #061219;overflow:hidden;z-index:40;height:44px}
+.tg-lab{flex:0 0 auto;display:flex;align-items:center;gap:8px;background:#e8133b;color:#fff;font:800 .95rem var(--fd);letter-spacing:.06em;padding:0 14px 0 12px;position:relative;z-index:2;clip-path:polygon(0 0,100% 0,calc(100% - 12px) 100%,0 100%);padding-right:24px}
+.tg-lab i{width:10px;height:10px;border-radius:50%;background:#fff;animation:onair 1s steps(2) infinite}
+@keyframes onair{50%{opacity:.15}}
+.tg-run{flex:1;overflow:hidden;display:flex;align-items:center;mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.tg-track{display:flex;width:max-content;animation:tgrun 38s linear infinite}
+.tg:hover .tg-track{animation-play-state:paused}
+.tg-track span{white-space:nowrap;font:700 1rem var(--fd);padding:0 18px}
+.tg-track span::after{content:"●";margin-left:36px;color:#e8133b;font-size:.7rem;vertical-align:middle}
+.tg-track a{color:#061219;font-weight:800}
+@keyframes tgrun{to{transform:translateX(-50%)}}
+/* POP che corre sul ticker */
+.runner{position:absolute;bottom:2px;left:0;width:34px;z-index:3;animation:corre 14s linear infinite;pointer-events:auto}
+.runner .pop{width:34px;height:auto;filter:none}
+@keyframes corre{0%{transform:translateX(-60px)}55%{transform:translateX(calc(100vw + 60px))}100%{transform:translateX(calc(100vw + 60px))}}
+.run .p-legL{transform-origin:65px 222px;animation:gamba .22s ease-in-out infinite alternate}
+.run .p-legR{transform-origin:135px 222px;animation:gamba .22s ease-in-out infinite alternate-reverse}
+.run .p-body{animation:salto .22s ease-in-out infinite alternate}
+.run .p-armL{transform-origin:30px 127px;animation:braccio .22s ease-in-out infinite alternate}
+.run .p-armR{transform-origin:170px 127px;animation:braccio .22s ease-in-out infinite alternate-reverse}
+@keyframes gamba{from{transform:rotate(-28deg)}to{transform:rotate(28deg)}}
+@keyframes salto{to{transform:translateY(-8px) rotate(4deg)}}
+@keyframes braccio{from{transform:rotate(-40deg)}to{transform:rotate(40deg)}}
+.dust{position:absolute;left:-6px;bottom:0;width:10px;height:10px;border-radius:50%;background:rgba(6,18,25,.35);animation:dust .44s ease-out infinite}
+@keyframes dust{from{transform:scale(.4);opacity:.8}to{transform:translate(-14px,-4px) scale(1.3);opacity:0}}
+@media (max-width:600px){.tg{height:40px}.tg-lab{font-size:.8rem}.tg-track span{font-size:.92rem}}
+/* POP in home: vive */
+.pop.hero{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45));animation:popbob 2.4s ease-in-out infinite}
+.pop .p-eyes{transform-box:fill-box;transform-origin:center;animation:sbatte 4.5s infinite}
+@keyframes sbatte{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.pop .p-pup{transition:transform .15s ease-out}
+.pop.hero .p-armR{transform-origin:170px 127px;animation:ciao 2.4s ease-in-out infinite}
+@keyframes ciao{0%,60%,100%{transform:rotate(0)}70%{transform:rotate(-55deg)}80%{transform:rotate(-25deg)}90%{transform:rotate(-55deg)}}
+.pop .p-led circle{animation:led 1.2s steps(2) infinite}
+.pop .p-led circle:nth-child(2n){animation-delay:.6s}
+@keyframes led{50%{fill:#FFD23F}}
+.pop.hero .p-snack rect{transform-box:fill-box;transform-origin:center;animation:snackpop 3s ease-in-out infinite}
+.pop.hero .p-snack rect:nth-child(3n+1){animation-delay:.3s}.pop.hero .p-snack rect:nth-child(3n+2){animation-delay:.9s}.pop.hero .p-snack rect:nth-child(3n){animation-delay:1.5s}
+@keyframes snackpop{0%,80%,100%{transform:scale(1)}88%{transform:scale(1.18)}}
+.popwrap.scappa .pop.hero{animation:scappa .75s ease-in forwards}
+.popwrap.scappa .p-legL,.popwrap.scappa .p-legR{animation:gamba .12s infinite alternate}
+@keyframes scappa{30%{transform:translateY(-14px) rotate(-8deg)}100%{transform:translateX(120vw) rotate(10deg)}}
+.popwrap{padding-top:0}
+@media (max-width:860px){.bubble{top:-16%;left:-30%}}
+.saluta{width:110px;height:auto;transform:rotate(-6deg)}
+.saluta .p-armR{transform-origin:170px 127px;animation:ciao 1.6s ease-in-out infinite}
+.gamecta:hover .saluta{animation:popjump .6s}
+/* snack che fluttuano nella hero */
+.hfloat{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.hfloat span{position:absolute;bottom:-50px;font-size:2rem;opacity:.35;animation:sale 11s linear infinite;filter:saturate(1.2)}
+.hfloat span:nth-child(1){left:4%}.hfloat span:nth-child(2){left:20%;animation-delay:-3s;font-size:2.6rem}.hfloat span:nth-child(3){left:38%;animation-delay:-7s}
+.hfloat span:nth-child(4){left:55%;animation-delay:-1.5s;font-size:1.6rem}.hfloat span:nth-child(5){left:70%;animation-delay:-5s;font-size:2.4rem}.hfloat span:nth-child(6){left:84%;animation-delay:-9s}.hfloat span:nth-child(7){left:95%;animation-delay:-4s}
+/* categorie, app, bottoni */
+.cat.in .e{animation:salta2 2.6s ease-in-out infinite}
+.cat:nth-child(2n).in .e{animation-delay:-.8s}.cat:nth-child(3n).in .e{animation-delay:-1.6s}
+@keyframes salta2{0%,70%,100%{transform:translateY(0) rotate(0)}80%{transform:translateY(-8px) rotate(-10deg)}90%{transform:translateY(0) rotate(6deg)}}
+.app .go i{animation:spingi 1.4s ease-in-out infinite}
+@keyframes spingi{50%{transform:translateX(5px)}}
+.btn.y,.btn.t{position:relative;overflow:hidden}
+.btn.y::after,.btn.t::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:luce 3.2s ease-in-out infinite}
+@keyframes luce{0%,60%{left:-60%}100%{left:130%}}
+.eyebrow{display:inline-block}
+.reveal.in .eyebrow,.head.in .eyebrow{animation:pop .5s}
+.hero h1 .n{animation:wob 3s ease-in-out infinite}
+@keyframes wob{50%{transform:rotate(1.5deg) scale(1.03)}}
+.dock a span{display:inline-block;animation:salta2 3s ease-in-out infinite}
+.dock .d2 span{animation-delay:-1s}.dock .d3 span{animation-delay:-2s}
+.pc .pimg img{transition:transform .25s}
+.pc:hover .pimg img{transform:scale(1.08) rotate(-3deg)}
+@media (prefers-reduced-motion:reduce){.hfloat{display:none}.tg-track{animation-duration:70s}}
+.hfloat span{opacity:.16}
+@media (max-width:860px){.popwrap{margin-top:46px}.bubble{top:-15%;left:-28%}}

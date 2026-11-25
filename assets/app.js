@@ -32,6 +32,32 @@
   }
   tick();setInterval(tick,1000);
 
+  /* POP: occhi che seguono il dito, salto e corsa verso il gioco */
+  var pops=$$(".pop .p-pup");
+  function guarda(x,y){
+    pops.forEach(function(p){
+      var sv=p.ownerSVGElement;if(!sv)return;var r=sv.getBoundingClientRect();if(!r.width)return;
+      var cx=r.left+r.width/2,cy=r.top+r.height*.33;var dx=x-cx,dy=y-cy,d=Math.sqrt(dx*dx+dy*dy)||1;
+      p.style.transform="translate("+(dx/d*5).toFixed(1)+"px,"+(dy/d*5).toFixed(1)+"px)";
+    });
+  }
+  window.addEventListener("pointermove",function(e){guarda(e.clientX,e.clientY)},{passive:true});
+  window.addEventListener("touchstart",function(e){var t=e.touches[0];if(t)guarda(t.clientX,t.clientY)},{passive:true});
+  var pw=$("a.popwrap");
+  if(pw){pw.addEventListener("click",function(e){
+    if(e.metaKey||e.ctrlKey)return;e.preventDefault();var u=pw.href;pw.classList.add("scappa");
+    var b=$(".bubble",pw);if(b)b.innerHTML="Andiamo a giocare! 🏃";
+    setTimeout(function(){location.href=u},700);
+  })}
+  /* contatori */
+  if("IntersectionObserver" in window){
+    var co=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;co.unobserve(e.target);
+      var el=e.target,fin=parseInt(el.textContent,10);if(!fin)return;var t0=performance.now();
+      (function step(t){var k=Math.min(1,(t-t0)/1200);el.textContent=Math.round(fin*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step)})(t0);
+    })});
+    $$(".facts b").forEach(function(b){if(/^\d+$/.test(b.textContent.trim()))co.observe(b)});
+  }
+
   /* menu */
   var bg=$(".burger"),nav=$(".nav");
   if(bg)bg.addEventListener("click",function(){var o=nav.classList.toggle("open");bg.setAttribute("aria-expanded",o)});
