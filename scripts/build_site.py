@@ -166,7 +166,7 @@ def store_ld():
       "@type": "ConvenienceStore", "@id": BASE + "#negozio",
       "name": S["nome"], "alternateName": ["PopStop H24", "Pop Stop h24 Casavatore", "popstoph24"],
       "description": "Punto vendita self-service con distributori automatici aperto 24 ore su 24, 7 giorni su 7, a Casavatore (Napoli nord): energy drink, bibite, acqua, snack dolci e salati, tramezzini, caramelle, snack e bibite dal mondo e beni di prima necessità. Consegna a domicilio con Glovo, Just Eat, Deliveroo e Alfonsino.",
-      "url": BASE, "image": BASE + "assets/og.png", "logo": BASE + "assets/icon-512.png",
+      "url": BASE, "image": BASE + "assets/og-popstop.jpg", "logo": BASE + "assets/popstop-512.png",
       "telephone": S["telefono"], "vatID": "IT" + S.get("piva", ""),
       "geo": {"@type": "GeoCoordinates", "latitude": S["geo"][0], "longitude": S["geo"][1]},
       "address": {"@type": "PostalAddress", "streetAddress": S["indirizzo"], "addressLocality": S["citta"],
@@ -273,11 +273,13 @@ def layout(path, title, desc, body, ld, depth, active=""):
 <meta name="geo.region" content="IT-NA"><meta name="geo.placename" content="Casavatore"><meta name="geo.position" content="{S["geo"][0]};{S["geo"][1]}"><meta name="ICBM" content="{S["geo"][0]}, {S["geo"][1]}">
 <meta property="og:type" content="website"><meta property="og:locale" content="it_IT"><meta property="og:site_name" content="Pop Stop h24">
 <meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}">
-<meta property="og:url" content="{BASE}{path}"><meta property="og:image" content="{BASE}assets/og.png">
-<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="{r}assets/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="{r}assets/icon-180.png">
+<meta property="og:url" content="{BASE}{path}"><meta property="og:image" content="{BASE}assets/og-popstop.jpg"><meta property="og:image:secure_url" content="{BASE}assets/og-popstop.jpg">
+<meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Pop Stop h24: snack, bibite ed energy drink giorno e notte a Casavatore">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{BASE}assets/og-popstop.jpg">
+<link rel="icon" href="{BASE}favicon.ico" sizes="48x48">
+<link rel="icon" href="{r}assets/popstop-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="{r}assets/popstop-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="{r}assets/popstop-180.png">
 <link rel="manifest" href="{r}manifest.webmanifest">
 <link rel="preload" href="{r}assets/bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{r}assets/style.css">
@@ -1006,7 +1008,7 @@ def tecnici():
     write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /scripts/\nSitemap: {BASE}sitemap.xml\n")
     write("manifest.webmanifest", json.dumps({"name": "Pop Stop h24 Casavatore", "short_name": "Pop Stop", "start_url": "./", "display": "standalone",
         "background_color": "#061219", "theme_color": "#061219", "lang": "it",
-        "icons": [{"src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}]}, ensure_ascii=False, indent=1))
+        "icons": [{"src": "assets/popstop-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "assets/popstop-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}]}, ensure_ascii=False, indent=1))
     cats = ", ".join(f"{c} ({sum(1 for p in PRODOTTI if p['c']==c)})" for c in ORDINE)
     write("llms.txt", f"""# Pop Stop h24 – Casavatore (Napoli)
 
