@@ -125,6 +125,45 @@ def menu_cat(nome):
 JE_CAT = {p["n"]: JE_ID[menu_cat(p["n"])] for p in PRODOTTI if menu_cat(p["n"])}
 
 ZONE = {
+  "casavatore": {"nome": "Casavatore", "frase": "Siamo proprio a Casavatore, in Viale Guglielmo Marconi 79/81",
+    "vicino": "Pop Stop h24 è a Casavatore, sul Viale Guglielmo Marconi al civico 79/81: il punto h24 del paese, con 4 distributori sempre accesi.",
+    "extra": "Se abiti a Casavatore ci arrivi a piedi in pochi minuti, a qualsiasi ora: acqua, bibite fredde, energy drink, snack, tramezzini e prodotti di prima necessità."},
+  "napoli": {"nome": "Napoli", "frase": "Siamo a Casavatore, attaccati alla zona nord di Napoli",
+    "vicino": "Per chi cerca un h24 a Napoli nord, Pop Stop è a Casavatore, al confine con Secondigliano, San Pietro a Patierno e Capodichino.",
+    "extra": "Di notte, quando in città trovi quasi tutto chiuso, i nostri distributori sono accesi. Con Glovo, Deliveroo, Just Eat e Alfonsino consegniamo nelle zone coperte dalle app."},
+  "capodichino": {"nome": "Capodichino", "frase": "Capodichino e l'aeroporto sono a pochi minuti da Casavatore",
+    "vicino": "Dall'aeroporto di Capodichino e da Viale Maddalena arrivi a Casavatore in pochi minuti, passando per San Pietro a Patierno.",
+    "extra": "Volo atterrato tardi, turno in aeroporto o viaggio all'alba? Da Pop Stop h24 trovi acqua, caffè freddo, energy drink e snack anche alle 4 del mattino."},
+  "poggioreale": {"nome": "Poggioreale", "frase": "Poggioreale è nella zona est di Napoli, non lontano da Casavatore",
+    "vicino": "Da Poggioreale e dal Centro Direzionale arrivi a Casavatore passando per Capodichino.",
+    "extra": "Fame o sete di notte a Poggioreale? Controlla sull'app se consegniamo al tuo indirizzo, oppure passa dai nostri distributori sempre aperti."},
+  "frattamaggiore": {"nome": "Frattamaggiore", "frase": "Frattamaggiore è a nord, passando per Arzano",
+    "vicino": "Da Frattamaggiore arrivi a Casavatore in pochi minuti passando per Arzano e Casoria.",
+    "extra": "A Frattamaggiore la sera chiude quasi tutto presto: da noi i distributori restano accesi con bibite, energy drink, patatine, Takis e snack dal mondo."},
+  "grumo-nevano": {"nome": "Grumo Nevano", "frase": "Grumo Nevano è a nord, vicino a Frattamaggiore e Arzano",
+    "vicino": "Da Grumo Nevano arrivi a Casavatore passando per Arzano, in un quarto d'ora o meno.",
+    "extra": "Serata tra amici o studio fino a tardi a Grumo Nevano? Energy drink, snack e bibite fredde sono sempre nelle nostre macchine, e con le app te li portano dove arrivano."},
+  "melito": {"nome": "Melito di Napoli", "frase": "Melito è a ovest, a pochi chilometri da Casavatore",
+    "vicino": "Da Melito di Napoli arrivi a Casavatore passando per Arzano o per l'asse mediano.",
+    "extra": "Per chi vive a Melito siamo un punto h24 comodo per acqua, bibite, energy drink, dolci e prodotti utili, giorno e notte."},
+  "mugnano": {"nome": "Mugnano di Napoli", "frase": "Mugnano è a ovest, vicino a Melito e Secondigliano",
+    "vicino": "Da Mugnano di Napoli arrivi a Casavatore passando per Secondigliano in pochi minuti di auto.",
+    "extra": "Quando a Mugnano è tutto chiuso, Pop Stop h24 è aperto: snack, bibite fredde, tramezzini e beni di prima necessità a qualsiasi ora."},
+  "cardito": {"nome": "Cardito", "frase": "Cardito è a nord, passando per Afragola o Frattamaggiore",
+    "vicino": "Da Cardito arrivi a Casavatore passando per Afragola e Casoria.",
+    "extra": "Turno di notte o viaggio all'alba da Cardito? Fermati da noi per acqua, caffè freddo, energy drink e qualcosa da mangiare."},
+  "crispano": {"nome": "Crispano", "frase": "Crispano è a nord, vicino a Cardito e Frattamaggiore",
+    "vicino": "Da Crispano arrivi a Casavatore passando per Frattamaggiore e Arzano.",
+    "extra": "A Crispano di notte non c'è molto aperto: da Pop Stop h24 i distributori restano accesi 24 ore su 24, festivi compresi."},
+  "sant-antimo": {"nome": "Sant'Antimo", "frase": "Sant'Antimo è a nord-ovest, passando per Arzano",
+    "vicino": "Da Sant'Antimo arrivi a Casavatore passando per Casandrino e Arzano.",
+    "extra": "Fame di notte a Sant'Antimo? Snack, Takis, bibite americane e giapponesi, energy drink e tramezzini ti aspettano nei nostri distributori."},
+  "casandrino": {"nome": "Casandrino", "frase": "Casandrino è a nord-ovest, vicino ad Arzano",
+    "vicino": "Da Casandrino arrivi a Casavatore passando per Arzano in pochi minuti.",
+    "extra": "Per Casandrino siamo un punto h24 comodo per una bibita, un energy drink o uno snack a qualsiasi ora del giorno e della notte."},
+  "volla": {"nome": "Volla", "frase": "Volla è a est, oltre Casalnuovo",
+    "vicino": "Da Volla arrivi a Casavatore passando per Casalnuovo o per Poggioreale.",
+    "extra": "Se a Volla cerchi qualcosa aperto di notte, controlla sull'app se consegniamo al tuo indirizzo o passa dai nostri distributori sempre accesi."},
   "casoria": {"nome": "Casoria", "frase": "Casoria è attaccata a Casavatore",
     "vicino": "Da Casoria ci raggiungi in pochi minuti: siamo su Viale Guglielmo Marconi, a Casavatore.",
     "extra": "Studi fino a tardi, turno di notte, serata con gli amici a Casoria? Apri l'app, scrivi il tuo indirizzo e controlla se il tuo palazzo è nella zona di consegna."},
@@ -174,7 +213,7 @@ def store_ld():
       "openingHoursSpecification": [{"@type": "OpeningHoursSpecification",
           "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
           "opens": "00:00", "closes": "23:59"}],
-      "areaServed": [{"@type": "City", "name": n} for n in ["Casavatore", "Casoria", "Arzano", "Afragola", "Casalnuovo di Napoli", "Napoli"]],
+      "areaServed": [{"@type": "City", "name": v["nome"]} for v in ZONE.values()],
       "hasMap": f'https://www.google.com/maps/search/?api=1&query=PopStop%20H24&query_place_id={S["place_id"]}',
       "sameAs": list(S["social"].values()) + list(S.get("schede", {}).values()) + [u for _, u in APP.values()],
       "potentialAction": {"@type": "OrderAction", "target": [u for _, u in APP.values()],
@@ -616,8 +655,8 @@ def home():
 </div></section>'''
     ld = [store_ld(), {"@type": "WebSite", "@id": BASE + "#sito", "url": BASE, "name": "Pop Stop h24", "alternateName": ["PopStop H24", "Pop Stop h24 Casavatore", "popstoph24"], "inLanguage": "it-IT",
           "publisher": {"@id": BASE + "#negozio"}}, faq_ld(FAQ_HOME)]
-    write("index.html", layout("", "Pop Stop h24 Casavatore | Distributori aperti 24 ore su 24",
-        f"Distributori automatici aperti 24 ore a Casavatore (Napoli nord): {NPROD} prodotti tra snack, bibite, energy drink e tramezzini. Consegna con Glovo, Just Eat e Deliveroo.",
+    write("index.html", layout("", "Pop Stop h24 Casavatore | H24 aperto 24 ore su 24 a Napoli nord",
+        f"L'h24 di Casavatore, Casoria, Arzano e Napoli nord: distributori aperti 24 ore con {NPROD} prodotti tra snack, bibite, energy drink e tramezzini. Consegna con Glovo, Just Eat, Deliveroo e Alfonsino.",
         body, ld, 0))
 
 # ---------------- CONSEGNA ----------------
@@ -931,6 +970,7 @@ def categoria(c):
 def zona(slug, z):
     d = 2; r = rel(d); n = z["nome"]
     faq = [
+      (f"C'è un h24 a {n} o vicino?", f"Sì: Pop Stop h24, in {E(INDIRIZZO_FULL)}. {z['frase']}. È aperto 24 ore su 24, 7 giorni su 7, festivi compresi, e consegna con Glovo, Just Eat, Deliveroo e Alfonsino."),
       (f"C'è un posto aperto 24 ore vicino a {n}?", f"Sì: Pop Stop h24, in {E(INDIRIZZO_FULL)}. {z['frase']}: distributori automatici aperti giorno e notte, 7 giorni su 7."),
       (f"Pop Stop h24 consegna a {n}?", f"Consegniamo con Glovo, Just Eat, Deliveroo e Alfonsino quando l'app è disponibile al tuo indirizzo di {n}. Inserisci l'indirizzo nell'app per vedere se arriviamo."),
       (f"Cosa posso comprare di notte a {n}?", "Energy drink, bibite, acqua, patatine, Takis, tramezzini, dolci, caramelle e prodotti utili come igiene personale: tutto quello che c'è nelle nostre macchine."),
@@ -938,8 +978,8 @@ def zona(slug, z):
     body = f'''
 <div class="wrap crumbs"><a href="{r}">Home</a> › <a href="{r}consegna-a-domicilio/">Consegna</a> › {E(n)}</div>
 <section class="page-hero"><div class="wrap">
-  <span class="kicker">📍 {E(n)} · Napoli nord</span>
-  <h1>Aperto 24 ore vicino a {E(n)}: snack e bibite a domicilio o in sede</h1>
+  <span class="kicker">📍 h24 {E(n)} · Napoli nord</span>
+  <h1>H24 a {E(n)}: aperto 24 ore su 24, anche a domicilio</h1>
   <p class="lead">{E(z["vicino"])} {E(z["extra"])}</p>
   <div class="ctas"><a class="btn y" href="#app">🛵 Ordina a {E(n)}</a><a class="btn t" href="{MAPS_DIR}" rel="noopener" target="_blank">📍 Portami da Pop Stop</a></div>
 </div></section>
@@ -959,8 +999,8 @@ def zona(slug, z):
 </div></section>'''
     ld = [store_ld(), crumbs_ld([("Home", ""), ("Consegna a domicilio", "consegna-a-domicilio/"), (n, f"zona/{slug}/")]), faq_ld(faq)]
     write(f"zona/{slug}/index.html", layout(f"zona/{slug}/",
-        f"Aperto 24 ore vicino a {n} | Pop Stop h24",
-        f"Aperto di notte vicino a {n}: Pop Stop h24 a Casavatore, distributori automatici 24 ore su 24 e consegna con Glovo, Just Eat e Deliveroo.",
+        f"H24 {n}: aperto 24 ore, snack e bibite anche di notte | Pop Stop h24",
+        f"Cerchi un h24 a {n}? Pop Stop h24 è aperto 24 ore su 24 a Casavatore, con distributori automatici e consegna a domicilio con Glovo, Just Eat, Deliveroo e Alfonsino.",
         body, ld, d))
 
 # ---------------- 404 ----------------
