@@ -161,8 +161,6 @@ def layout(path, title, desc, body, ld, depth, active=""):
         href = (home + p) if p.startswith("#") else r + p
         cur = ' aria-current="page"' if p == active else ""
         nav.append(f'<a href="{href}"{cur}>{n}</a>')
-    if path == "":
-        ld = [{"@type": "WebSite", "@id": BASE + "#website", "name": "Pop Stop h24", "alternateName": ["PopStop H24", "Pop Stop h24 Casavatore", "popstoph24"], "url": BASE, "inLanguage": "it-IT"}] + list(ld)
     graph = {"@context": "https://schema.org", "@graph": ld}
     cfg = {"stock": r + "stock.json", "ordine": ORDINE, "icone": ICONE, "img": IMG}
     socials = "".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())
@@ -439,7 +437,7 @@ def home():
   <div class="head reveal"><div><span class="eyebrow">Social</span><h2>Seguici: reel nuovi ogni giorno</h2></div></div>
   <div class="socials">{"".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())}</div>
 </div></section>'''
-    ld = [store_ld(), {"@type": "WebSite", "@id": BASE + "#sito", "url": BASE, "name": "Pop Stop h24", "inLanguage": "it-IT",
+    ld = [store_ld(), {"@type": "WebSite", "@id": BASE + "#sito", "url": BASE, "name": "Pop Stop h24", "alternateName": ["PopStop H24", "Pop Stop h24 Casavatore", "popstoph24"], "inLanguage": "it-IT",
           "publisher": {"@id": BASE + "#negozio"}}, faq_ld(FAQ_HOME)]
     write("index.html", layout("", "Pop Stop h24 Casavatore | Distributori aperti 24 ore su 24",
         f"Distributori automatici aperti 24 ore a Casavatore (Napoli nord): {NPROD} prodotti tra snack, bibite, energy drink e tramezzini. Consegna con Glovo, Just Eat e Deliveroo.",
