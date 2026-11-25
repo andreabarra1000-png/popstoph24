@@ -340,7 +340,7 @@ def home():
     </div>
     <div class="facts"><span><b>24/7</b> anche nei festivi</span><span><b data-count>{NPROD}</b> prodotti in macchina</span><span><b>4</b> app di consegna</span></div>
   </div>
-  <div class="popwrap"><div class="bubble">Io non dormo mai! Sono le <b data-ora>24h</b> 😎</div><img class="pop" src="assets/pop.svg" alt="POP, la mascotte di Pop Stop h24" width="330" height="429"></div>
+  <a class="popwrap" href="gioco/" aria-label="Gioca con POP: riempi le macchine prima delle 6"><div class="bubble">Io non dormo mai! Sono le <b data-ora>24h</b> 😎</div><img class="pop" src="assets/pop.svg" alt="POP, la mascotte di Pop Stop h24" width="330" height="429"><span class="sticker p playme">🎮 Toccami e gioca!</span></a>
 </div></section>
 <div class="ticker" aria-hidden="true"><div>{TICKER}{TICKER}</div></div>
 
@@ -663,6 +663,7 @@ def gioco():
     body = f'''
 <div class="gioco" id="gioco">
   <section class="gscreen" id="g-start">
+    <div class="gfloat" aria-hidden="true"><span>🥤</span><span>⚡</span><span>🍫</span><span>🍟</span><span>🥪</span><span>💧</span><span>🍬</span><span>☕</span></div>
     <img class="pop" src="{r}assets/pop.svg" alt="POP, la mascotte di Pop Stop h24" width="220" height="286">
     <span class="sticker p">Gioco di POP</span>
     <h1>Riempi le macchine prima delle 6!</h1>
@@ -677,12 +678,14 @@ def gioco():
   </section>
 
   <section id="g-play" hidden>
+    <div class="gsky" id="g-sky" aria-hidden="true"><i class="sun"></i><i class="moon"></i><b class="st"></b></div>
     <div class="ghud">
       <div class="box clock"><small>Ora</small><span id="g-ora">05:00</span></div>
       <div class="box"><small>Livello</small><span id="g-liv">1</span></div>
       <div class="box"><small>Punti</small><span id="g-punti">0</span></div>
       <button id="g-audio" type="button" aria-label="Togli i suoni">🔊</button>
       <div class="gbar" id="g-bar"><i></i></div>
+      <div class="gcombo" id="g-combo" aria-live="polite"></div>
     </div>
     <div class="gstage">
       <div class="ggrid" id="g-grid"></div>

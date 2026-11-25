@@ -23,7 +23,7 @@
     ora:$("#g-ora"),punti:$("#g-punti"),liv:$("#g-liv"),bar:$("#g-bar i"),
     grid:$("#g-grid"),tray:$("#g-tray"),pop:$("#g-pop"),fum:$("#g-fumetto"),
     fin:$("#g-fin"),record:$("#g-record"),share:$("#g-share"),audio:$("#g-audio"),
-    tit:$("#g-tit")
+    tit:$("#g-tit"),combo:$("#g-combo")
   };
 
   var S=null,timer=null,best=0,muto=false,actx=null;
@@ -43,6 +43,51 @@
   }
   function vibra(ms){try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}}
   function aggiornaAudio(){el.audio.textContent=muto?"🔇":"🔊";el.audio.setAttribute("aria-label",muto?"Attiva i suoni":"Togli i suoni")}
+
+  /* ---- effetti ---- */
+  var fxLayer=document.createElement("div");fxLayer.className="gfx";document.body.appendChild(fxLayer);
+  function centro(el){var r=el.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}}
+  function vola(emoji,da,a,cb){
+    var f=document.createElement("div");f.className="gfly";f.textContent=emoji;fxLayer.appendChild(f);
+    var dx=a.x-da.x,dy=a.y-da.y;
+    if(f.animate){
+      var an=f.animate([
+        {transform:"translate("+(da.x-20)+"px,"+(da.y-20)+"px) scale(1) rotate(0deg)"},
+        {transform:"translate("+(da.x-20+dx*.5)+"px,"+(da.y-20+dy*.5-70)+"px) scale(1.5) rotate(-20deg)",offset:.5},
+        {transform:"translate("+(a.x-20)+"px,"+(a.y-20)+"px) scale(.9) rotate(10deg)"}
+      ],{duration:320,easing:"cubic-bezier(.3,.7,.4,1)"});
+      an.onfinish=function(){f.remove();cb&&cb()};
+    }else{f.remove();cb&&cb()}
+  }
+  function testo(t,p,cls){
+    var f=document.createElement("div");f.className="gpts "+(cls||"");f.textContent=t;
+    f.style.left=p.x+"px";f.style.top=p.y+"px";fxLayer.appendChild(f);
+    setTimeout(function(){f.remove()},900);
+  }
+  function scintille(p,n,col){
+    for(var i=0;i<(n||8);i++){
+      var d=document.createElement("i");d.className="gspark";
+      d.style.left=p.x+"px";d.style.top=p.y+"px";d.style.background=col||["#FFD23F","#19d6c8","#ff4f8b","#3ee07a"][i%4];
+      var ang=Math.random()*Math.PI*2,dist=30+Math.random()*40;
+      d.style.setProperty("--dx",Math.cos(ang)*dist+"px");d.style.setProperty("--dy",Math.sin(ang)*dist+"px");
+      fxLayer.appendChild(d);setTimeout(function(e){return function(){e.remove()}}(d),600);
+    }
+  }
+  function coriandoli(){
+    var col=["#FFD23F","#19d6c8","#ff4f8b","#3ee07a","#7b2ff7","#ff9a3c"];
+    for(var i=0;i<70;i++){
+      var c=document.createElement("i");c.className="gconf";
+      c.style.left=(Math.random()*100)+"vw";c.style.background=col[i%col.length];
+      c.style.animationDelay=(Math.random()*.4)+"s";c.style.animationDuration=(1.4+Math.random()*1.2)+"s";
+      c.style.setProperty("--r",(Math.random()*720-360)+"deg");c.style.setProperty("--x",(Math.random()*120-60)+"px");
+      fxLayer.appendChild(c);setTimeout(function(e){return function(){e.remove()}}(c),3000);
+    }
+  }
+  function cielo(frac){
+    var sky=document.getElementById("g-sky");if(!sky) return;
+    var t=1-frac; // 0 notte -> 1 alba
+    sky.style.setProperty("--t",t.toFixed(3));
+  }
 
   var frasiOk=["Grande!","Vai così!","Perfetto!","Che velocità!","Bravo!","Ottimo!"];
   var frasiNo=["Lì no!","Quello non ci va!","Ops, scomparto sbagliato!"];
@@ -73,9 +118,10 @@
     for(var i=idx.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=idx[i];idx[i]=idx[j];idx[j]=t}
     idx.slice(0,L.vuoti).forEach(function(i){S.slot[i].pieno=false});
     S.tray=[];for(var k=0;k<5;k++) S.tray.push(pesca());
-    S.sel=-1;
+    S.sel=-1;S.combo=0;el.combo.textContent="";cielo(1);
     disegna();
     el.liv.textContent=S.liv;
+    var lv=document.createElement("div");lv.className="glvl";lv.innerHTML="<small>Livello</small>"+S.liv;fxLayer.appendChild(lv);setTimeout(function(){lv.remove()},1400);
     dici(S.liv===1?"Riempi tutto prima delle 6!":"Livello "+S.liv+"! Più veloce!");
     clearInterval(timer);S.t0=performance.now();S.last=S.t0;
     timer=setInterval(tick,100);
@@ -104,12 +150,14 @@
         dici("Qualcuno ha preso "+tipo[s.k].n.toLowerCase()+"!","fame");
         suono(220,.15,"triangle");
         disegna();
+        var sl=el.grid.querySelector('[data-i="'+S.slot.indexOf(s)+'"]');
+        if(sl){var c=centro(sl);testo("😋",c,"mano");}
       }
     }
     var frac=Math.max(0,S.resta/S.durata);
     var min=Math.round((1-frac)*60);
     el.ora.textContent="05:"+("0"+Math.min(59,min)).slice(-2);
-    el.bar.style.transform="scaleX("+frac+")";
+    el.bar.style.transform="scaleX("+frac+")";cielo(frac);
     el.bar.parentNode.classList.toggle("urgente",frac<.25);
     if(S.resta<=0) fine(false);
   }
@@ -148,15 +196,21 @@
       S.sel=j;
     }
     if(S.tray[S.sel]!==s.k){
-      S.combo=0;S.resta=Math.max(0,S.resta-1.5);
+      S.combo=0;S.resta=Math.max(0,S.resta-1.5);el.combo.textContent="";
+      el.grid.classList.remove("scuoti");void el.grid.offsetWidth;el.grid.classList.add("scuoti");
+      var pe=el.grid.querySelector('[data-i="'+i+'"]');if(pe)testo("-1,5 s",centro(pe),"male");
       dici(frasiNo[Math.floor(Math.random()*frasiNo.length)],"no");
       suono(140,.18,"sawtooth");vibra(80);
       var b=el.grid.querySelector('[data-i="'+i+'"]');if(b){b.classList.add("errore");setTimeout(function(){b.classList.remove("errore")},350)}
       return;
     }
+    var bt=el.tray.querySelector('[data-t="'+S.sel+'"]'),bs=el.grid.querySelector('[data-i="'+i+'"]');
+    var da=bt?centro(bt):null,a=bs?centro(bs):null;
     s.pieno=true;s.nuovo=true;S.caricati++;
     S.combo++;
     var p=10+Math.min(S.combo,10)*2;S.punti+=p;
+    if(da&&a){vola(tipo[s.k].e,da,a,function(){testo("+"+p,a,S.combo>=5?"hot":"");scintille(a,S.combo>=5?12:7)})}
+    el.combo.textContent=S.combo>1?"🔥 x"+S.combo:"";el.combo.classList.remove("bump");void el.combo.offsetWidth;if(S.combo>1)el.combo.classList.add("bump");
     S.tray[S.sel]=pesca();S.sel=-1;
     suono(520+Math.min(S.combo,10)*60,.08);
     if(S.combo>1&&S.combo%5===0) dici("Combo x"+S.combo+"!","ok");
@@ -169,7 +223,8 @@
     clearInterval(timer);
     var bonus=Math.round(S.resta)*5;S.punti+=bonus;
     el.punti.textContent=S.punti;
-    dici("Macchine piene! +"+bonus+" bonus","ok");
+    dici("Macchine piene! +"+bonus+" bonus","ok");coriandoli();
+    el.grid.classList.add("festa");setTimeout(function(){el.grid.classList.remove("festa")},1400);
     suono(784,.12);setTimeout(function(){suono(988,.12)},120);setTimeout(function(){suono(1318,.2)},240);
     setTimeout(nuovoLivello,1500);
   }
@@ -181,6 +236,7 @@
     el.tit.textContent=S.liv>1?"Sono le 6: arriva la fila del mattino!":"Sono le 6 e le macchine non sono piene!";
     el.fin.innerHTML="<b>"+S.punti+"</b> punti · livello "+S.liv+" · "+S.caricati+" prodotti caricati";
     el.record.textContent=record?"🏆 Nuovo record!":"Record: "+best;
+    if(record&&S.punti>0) setTimeout(coriandoli,300);
     var msg="Ho fatto "+S.punti+" punti a «Riempi le macchine» di POP 🟦 Mi batti? "+location.href.split("#")[0];
     el.share.href="https://wa.me/?text="+encodeURIComponent(msg);
     suono(330,.2,"triangle");setTimeout(function(){suono(262,.3,"triangle")},200);
