@@ -665,3 +665,29 @@ a.popwrap.corsa .playme{top:5%;bottom:auto;right:-3%;font-size:.8rem}
 .filmcard:hover{transform:translate(-2px,-2px)}
 .filmcard .fe{font-size:2rem}.filmcard b{font:800 1rem var(--fd)}.filmcard small{color:#cfe3e6}
 @media (max-width:700px){.gtabs{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.gtabs::-webkit-scrollbar{display:none}.gtabs a{flex:0 0 auto}}
+/* === Armonia: app di consegna e hero nello stile "sticker" del sito === */
+.app{--c:#19d6c8;background:var(--card);color:#fff;border:3px solid #061219;box-shadow:5px 5px 0 var(--c);border-radius:20px;min-height:0;padding:18px;gap:14px;justify-content:flex-start}
+.app::after{display:none}
+.app.glovo{--c:#ffc244;background:var(--card)}.app.deliveroo{--c:#00ccbc;background:var(--card)}.app.justeat{--c:#ff8000;background:var(--card)}.app.alfonsino{--c:#ff5a4e;background:var(--card);color:#fff}
+.app .ab{display:grid;place-items:center;width:46px;height:46px;flex:0 0 46px;border-radius:14px;background:var(--c);color:#061219;border:2.5px solid #061219;font:800 1.4rem var(--fd);transform:rotate(-4deg)}
+.app small{color:#cfe3e6;opacity:1;font-weight:600;font-size:.8rem}
+.app h3{font-size:1.35rem;color:#fff;margin-top:2px}
+.app .go{margin-top:auto}
+.app .go i{background:var(--c);color:#061219;border:2.5px solid #061219;width:40px;height:40px;font-size:1.1rem}
+.app:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--c)}
+@media (max-width:900px){
+  .apps{grid-template-columns:1fr;gap:12px}
+  .app{flex-direction:row;align-items:center;padding:12px 14px;min-height:0}
+  .app h3{font-size:1.2rem}
+  .app .go{margin:0 0 0 auto}
+}
+@media (max-width:700px){
+  .hero h1{font-size:clamp(2rem,9.5vw,2.6rem);margin:10px 0 12px;line-height:1.08}
+  .hero h1 .n{box-shadow:3px 3px 0 #061219}
+  .lead{font-size:1rem}
+  .now{display:inline-block;font-size:.95rem;background:var(--card);border:2.5px solid #061219;border-radius:999px;padding:6px 14px;box-shadow:3px 3px 0 rgba(25,214,200,.45)}
+  .hero .ctas{gap:10px;margin-top:20px}
+  .hero .ctas .btn{min-height:52px;border:3px solid #061219;box-shadow:4px 4px 0 #061219;font-size:1rem}
+  .hero .ctas .btn.o{background:var(--card);box-shadow:4px 4px 0 rgba(25,214,200,.45)}
+  .head h2{font-size:clamp(1.6rem,7vw,2.2rem)}
+}

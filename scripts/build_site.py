@@ -111,7 +111,7 @@ def rel(depth):
 def app_cards(cls="apps"):
     out = [f'<div class="{cls}">']
     for k, (nome, url) in APP.items():
-        out.append(f'<a class="app {k}" href="{url}" rel="noopener" target="_blank" data-app="{k}"><div><small>Ordina su</small><h3>{nome}</h3></div><div class="go">Ordina ora <i>→</i></div></a>')
+        out.append(f'<a class="app {k}" href="{url}" rel="noopener" target="_blank" data-app="{k}"><span class="ab" aria-hidden="true">{nome[0]}</span><div><small>Ordina su</small><h3>{nome}</h3></div><div class="go"><i>→</i></div></a>')
     out.append("</div>")
     return "".join(out)
 
