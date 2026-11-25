@@ -49,6 +49,26 @@
     var b=$(".bubble",pw);if(b)b.innerHTML="Andiamo a giocare! 🏃";
     setTimeout(function(){location.href=u},700);
   })}
+  /* POP che corre: frasi e contachilometri */
+  var fr=$("[data-pop-frasi]");
+  if(fr){
+    var FR=[
+      "Corri, POP, corri! 🏃",
+      "La vita è come una scatola di snack: non sai mai quello che ti capita 🍫",
+      function(){return "Sono le "+oraRoma().txt+" e sto ancora correndo 💨"},
+      "Ho corso fino a Secondigliano… e già che c'ero ho continuato 🌴",
+      "Sono un po' stanco… ma Pop Stop non chiude mai 😅",
+      "Mamma diceva: le macchine piene non si lasciano mai 🧃"
+    ],fi=0;
+    setInterval(function(){fi=(fi+1)%FR.length;fr.classList.add("cambia");setTimeout(function(){var x=FR[fi];fr.textContent=typeof x==="function"?x():x;fr.classList.remove("cambia")},260)},4200);
+  }
+  var gg=$("[data-giorni]"),km=$("[data-km]");
+  if(gg||km){
+    var inizio=Date.UTC(2026,7,28,8,0,0);
+    function conta(){var ms=Date.now()-inizio;if(gg)gg.textContent=Math.floor(ms/864e5);if(km)km.textContent=(ms/36e5*8).toLocaleString("it-IT",{minimumFractionDigits:2,maximumFractionDigits:2})}
+    conta();setInterval(conta,1000);
+  }
+
   /* contatori */
   if("IntersectionObserver" in window){
     var co=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;co.unobserve(e.target);

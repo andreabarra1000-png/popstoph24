@@ -104,7 +104,9 @@ def crumbs_ld(items):
 def faq_html(faq):
     return '<div class="faq">' + "".join(f"<details><summary>{E(q)}</summary><p>{a}</p></details>" for q, a in faq) + "</div>"
 
-def pop_svg(cls="pop", label="POP, la mascotte di Pop Stop h24"):
+CAP = '''<g class="p-cap"><path d="M38 22 Q100 -30 162 22 Z" fill="#e8133b" stroke="#061219" stroke-width="5" stroke-linejoin="round"/><path d="M150 18 Q190 16 198 30 Q170 30 146 26 Z" fill="#c40f31" stroke="#061219" stroke-width="5" stroke-linejoin="round"/><circle cx="100" cy="-3" r="5" fill="#c40f31" stroke="#061219" stroke-width="3"/></g>'''
+
+def pop_svg(cls="pop", label="POP, la mascotte di Pop Stop h24", cap=False):
     aria = f'role="img" aria-label="{E(label)}"' if label else 'aria-hidden="true"'
     return f'''<svg class="{cls}" viewBox="0 0 200 260" {aria}>
 <ellipse class="p-ombra" cx="100" cy="250" rx="70" ry="8" fill="#000" opacity=".25"/>
@@ -126,7 +128,7 @@ def pop_svg(cls="pop", label="POP, la mascotte di Pop Stop h24"):
 <rect x="138" y="126" width="24" height="92" rx="8" fill="#061219"/>
 <g class="p-led" fill="#19d6c8"><circle cx="145" cy="138" r="3"/><circle cx="155" cy="138" r="3"/><circle cx="145" cy="148" r="3"/><circle cx="155" cy="148" r="3"/><circle cx="145" cy="158" r="3"/><circle cx="155" cy="158" r="3"/></g>
 <rect x="142" y="172" width="16" height="6" rx="3" fill="#FFD23F"/><rect x="142" y="196" width="16" height="14" rx="4" fill="#0b3b44"/>
-</g></svg>'''
+{CAP if cap else ''}</g></svg>'''
 
 def tg_block(r):
     novi = [p["n"] for p in PRODOTTI if re.search(r"nutella peanut|winter edition|iced gummy|nutella biscuits natale|kinder joy tripack|takis", p["n"], re.I)][:5]
@@ -146,7 +148,6 @@ def tg_block(r):
     return f'''<div class="tg" role="region" aria-label="Ultime notizie da Pop Stop h24">
   <span class="tg-lab"><i></i>ULTIM'ORA</span>
   <div class="tg-run"><div class="tg-track">{track}{track}</div></div>
-  <a class="runner" href="{r}gioco/" aria-label="Gioca con POP" tabindex="-1">{pop_svg("pop mini run", "")}<b class="dust"></b></a>
 </div>'''
 
 NAV = [("Ordina", "consegna-a-domicilio/"), ("Cosa c'è", "prodotti/"), ("Snack dal mondo", "snack-americani-napoli/"), ("Gioca 🎮", "gioco/"),
@@ -386,7 +387,13 @@ def home():
     </div>
     <div class="facts"><span><b>24/7</b> anche nei festivi</span><span><b data-count>{NPROD}</b> prodotti in macchina</span><span><b>4</b> app di consegna</span></div>
   </div>
-  <a class="popwrap" href="gioco/" aria-label="Gioca con POP: riempi le macchine prima delle 6"><div class="bubble">Io non dormo mai! Sono le <b data-ora>24h</b> 😎</div>{pop_svg("pop hero")}<span class="sticker p playme">🎮 Toccami e gioca!</span></a>
+  <a class="popwrap corsa" href="gioco/" aria-label="Gioca con POP: riempi le macchine prima delle 6">
+    <div class="bubble" data-pop-frasi>Corri, POP, corri! 🏃</div>
+    <div class="scena" aria-hidden="true"><i class="nuvola n1"></i><i class="nuvola n2"></i><i class="palo p1">🌴</i><i class="palo p2">🏠</i><i class="palo p3">🌲</i><i class="strada"></i></div>
+    <div class="corridore">{pop_svg("pop hero run", cap=True)}<b class="dust d1"></b><b class="dust d2"></b><b class="dust d3"></b></div>
+    <div class="contakm">🏃 POP corre da <b data-giorni>90</b> giorni senza fermarsi · <b data-km>17.000</b> km</div>
+    <span class="sticker p playme">🎮 Toccami e gioca!</span>
+  </a>
 </div></section>
 
 <section class="s" id="ordina"><div class="wrap">
