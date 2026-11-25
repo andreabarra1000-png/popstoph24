@@ -604,3 +604,53 @@ a.popwrap.corsa .playme{top:5%;bottom:auto;right:-3%;font-size:.8rem}
 .corri.in-corsa .csalta{display:flex}
 .giochi2{display:grid;gap:14px}.giochi2>h2{margin:0}
 @media (min-width:900px){.giochi2{grid-template-columns:1fr 1fr}.giochi2>h2{grid-column:1/-1}}
+
+/* ===== Ottimizzazione schermi: telefoni piccoli/vecchi, fold, dual screen, PC grandi ===== */
+/* Fallback per browser vecchi (senza inset/aspect-ratio) */
+.scena,.fondo,.cover,.pioggia{top:0;right:0;bottom:0;left:0}
+.scena{top:16%;bottom:6%}
+@supports not (aspect-ratio:1){a.popwrap.corsa{height:min(434px,94vw)}}
+@supports not (gap:1px){.chud>*+*{margin-left:8px}.gtabs a{margin:4px}}
+/* Schermi piccolissimi: cover del Fold, vecchi telefoni da 320 */
+@media (max-width:360px){
+  .contakm{white-space:normal;text-align:center;width:92%;line-height:1.25;font-size:.68rem}
+  a.popwrap.corsa .bubble{font-size:.74rem;max-width:56%;padding:6px 8px}
+  a.popwrap.corsa .playme{font-size:.68rem;padding:5px 8px}
+  .tappa{font-size:.58rem}
+  .dock{gap:5px;padding:6px;left:6px;right:6px}
+  .dock a{font-size:.7rem;padding-left:2px;padding-right:2px;min-width:0}
+  .gtabs a{font-size:.78rem;padding:7px 10px}
+  .csalta{width:62px;height:62px;font-size:1.4rem}
+  .chud{font-size:.72rem;gap:5px}.chud>span{padding:3px 7px}
+}
+@media (max-width:300px){
+  .dock a{font-size:.62rem}
+  .cover .how{display:none}
+  body{font-size:15px}
+}
+/* Schermi bassi (telefono in orizzontale, Duo aperto in orizzontale) */
+@media (max-height:500px) and (orientation:landscape){
+  .dock{display:none}
+  a.popwrap.corsa{width:min(320px,40vw)}
+}
+/* Fold aperto / tablet quasi quadrati */
+@media (min-width:700px) and (max-width:1000px) and (min-aspect-ratio:3/4) and (max-aspect-ratio:4/3){
+  a.popwrap.corsa{width:min(380px,44vw)}
+}
+/* Dual screen (Surface Duo e simili): niente contenuti sotto la cerniera */
+@media (horizontal-viewport-segments:2){
+  .hero .wrap{grid-template-columns:env(viewport-segment-width 0 0,50%) env(viewport-segment-width 1 0,50%);column-gap:calc(env(viewport-segment-left 1 0,50%) - env(viewport-segment-right 0 0,50%) + 0px);padding:0}
+  .hero .wrap>*{padding:0 20px}
+}
+@media (vertical-viewport-segments:2){
+  .hero{padding-bottom:calc(env(viewport-segment-top 0 1,0px) - env(viewport-segment-bottom 0 0,0px) + 20px)}
+}
+/* Schermi grandi: PC 2K/4K, tri-fold, TV */
+@media (min-width:1700px){body:not(.pg-gioco){zoom:1.2}}
+@media (min-width:2200px){body:not(.pg-gioco){zoom:1.45}}
+@media (min-width:3000px){body:not(.pg-gioco){zoom:1.9}}
+@media (min-width:1700px){.corri,.gioco{max-width:1300px}}
+/* Telefoni lenti o risparmio energetico: animazioni più leggere */
+.leggero .piuma,.leggero .pioggia,.leggero .hfloat,.leggero .nuvola,.leggero .corridore .dust{animation:none!important;display:none}
+.leggero .f-deserto svg,.leggero .collina,.leggero .albero{animation-duration:30s!important}
+@media (prefers-reduced-motion:reduce){.scena *,.corridore *{animation-duration:3s!important}.piuma,.pioggia{display:none}}

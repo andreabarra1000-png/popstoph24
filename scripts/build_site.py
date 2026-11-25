@@ -193,7 +193,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
 <link rel="stylesheet" href="{r}assets/style.css">
 <script type="application/ld+json">{json.dumps(graph, ensure_ascii=False)}</script>
 </head>
-<body>
+<body{' class="pg-gioco"' if path.startswith("gioco") else ""}>
 <a class="sr" href="#main">Vai al contenuto</a>
 <header class="top"><div class="wrap">
   <a class="logo" href="{home}" aria-label="Pop Stop h24, home"><b>24</b><span>Pop Stop <em>h24</em></span></a>

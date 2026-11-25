@@ -1,5 +1,6 @@
 (function(){
   "use strict";
+  try{var nav0=navigator,cx=nav0.connection||{};if((nav0.deviceMemory&&nav0.deviceMemory<=2)||(nav0.hardwareConcurrency&&nav0.hardwareConcurrency<=2)||cx.saveData)document.documentElement.classList.add("leggero")}catch(e){}
   var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
   var CFG=window.POP||{};
 
