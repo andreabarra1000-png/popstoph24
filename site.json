@@ -43,5 +43,24 @@
     "Yelp": "https://www.yelp.it/biz/pop-stop-h24-casavatore",
     "Cylex": "https://www.cylex-italia.it/casavatore/pop-stop-h24-16548132.html",
     "OpenStreetMap": "https://www.openstreetmap.org/node/14404333381"
-  }
+  },
+  "piu_presi": [
+    "Red Bull 250 ml",
+    "Kinder Bueno White 39 g",
+    "CocaCola Original Taste 330 ml",
+    "Acqua Sorgesana Naturale 500 ml",
+    "CocaCola Zero Zuccheri 330 ml",
+    "Air Action Vigorsol Chewing Gum 14 g",
+    "Estathé al Limone 330 ml",
+    "Estathé alla Pesca 330 ml",
+    "Kinder Bueno 43 g",
+    "Nesquik Shake Latte e Cacao",
+    "CocaCola Zero Senza Caffeina 330 ml",
+    "Pepsi 330 ml",
+    "Kinder Cioccolato Barrette",
+    "Bounty 57 g",
+    "Milka Choco Brownie 25 g",
+    "Takis Blues Heat 55 g"
+  ],
+  "piu_presi_periodo": "19/10–17/11/2026"
 }

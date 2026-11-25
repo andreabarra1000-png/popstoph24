@@ -346,3 +346,4 @@ body.inplay .gpop,body.inplay .fum{display:block}
 body.inplay main{min-height:calc(100vh - 64px)}
 .bubble{z-index:2;left:-26%;top:-6%;max-width:58%}
 @media (max-width:860px){.bubble{left:-40%;right:auto;top:-2%;width:150px;max-width:none;font-size:.85rem;padding:9px 11px}}
+html{overflow-x:hidden}.ticker{margin:6px -6px 0}

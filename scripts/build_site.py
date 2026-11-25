@@ -45,6 +45,18 @@ ZONE = {
   "secondigliano": {"nome": "Secondigliano", "frase": "Secondigliano confina con Casavatore",
     "vicino": "Da Secondigliano e dalla zona nord di Napoli arrivi a Casavatore in pochi minuti di auto o scooter.",
     "extra": "Per Napoli nord siamo il punto aperto 24 ore più comodo per uno spuntino, una bibita o qualcosa di urgente come acqua e igiene."},
+  "afragola": {"nome": "Afragola", "frase": "Afragola è a pochi minuti da Casavatore",
+    "vicino": "Da Afragola, passando per Casoria, arrivi a Casavatore in un quarto d'ora o poco più.",
+    "extra": "Dopo una serata o un turno di notte ad Afragola, da noi trovi sempre bibite fresche, energy drink, tramezzini e dolci: e se l'app consegna al tuo indirizzo, te li portano a casa."},
+  "casalnuovo": {"nome": "Casalnuovo di Napoli", "frase": "Casalnuovo è nell'area nord-est, non lontano da Casavatore",
+    "vicino": "Da Casalnuovo di Napoli arrivi a Viale Guglielmo Marconi a Casavatore passando per Casoria.",
+    "extra": "Studio fino a tardi, partita alla PlayStation o fame improvvisa a Casalnuovo? Controlla sull'app se consegniamo al tuo indirizzo: energy drink, patatine, Takis e snack dal mondo."},
+  "scampia": {"nome": "Scampia", "frase": "Scampia è nella zona nord di Napoli, vicino a Casavatore",
+    "vicino": "Da Scampia e Piscinola arrivi a Casavatore in pochi minuti, passando per Secondigliano.",
+    "extra": "Quando a Scampia è tutto chiuso, i distributori di Pop Stop sono accesi: acqua, bibite, energy drink, dolci, tramezzini e prodotti utili, giorno e notte."},
+  "miano": {"nome": "Miano", "frase": "Miano confina con Secondigliano, a due passi da Casavatore",
+    "vicino": "Da Miano e dal Rione Don Guanella arrivi a Casavatore in pochi minuti di auto o scooter.",
+    "extra": "Per chi vive a Miano siamo il punto aperto 24 ore più vicino nella zona nord: snack, bibite fredde e beni di prima necessità a qualsiasi ora."},
   "san-pietro-a-patierno": {"nome": "San Pietro a Patierno", "frase": "San Pietro a Patierno e Capodichino sono a pochi minuti",
     "vicino": "Da San Pietro a Patierno, Capodichino e dall'aeroporto passi da Casavatore in pochi minuti.",
     "extra": "Atterrato tardi a Capodichino o rientri dal lavoro di notte? Da noi trovi sempre bibite, acqua, snack e dolci, anche alle 4 del mattino."},
@@ -73,7 +85,7 @@ def store_ld():
       "openingHoursSpecification": [{"@type": "OpeningHoursSpecification",
           "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
           "opens": "00:00", "closes": "23:59"}],
-      "areaServed": [{"@type": "City", "name": n} for n in ["Casavatore", "Casoria", "Arzano", "Napoli"]],
+      "areaServed": [{"@type": "City", "name": n} for n in ["Casavatore", "Casoria", "Arzano", "Afragola", "Casalnuovo di Napoli", "Napoli"]],
       "hasMap": f'https://www.google.com/maps/search/?api=1&query=PopStop%20H24&query_place_id={S["place_id"]}',
       "sameAs": list(S["social"].values()) + list(S.get("schede", {}).values()) + [u for _, u in APP.values()],
       "potentialAction": {"@type": "OrderAction", "target": [u for _, u in APP.values()],
@@ -149,7 +161,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
     <a href="{TEL}" style="display:inline">Tel. e WhatsApp {S["telefono_vis"]}</a></p>
     <div class="zones" style="margin-top:16px">{zone_links}</div>
   </div>
-  <div><h3>Sito</h3><a href="{home}">Home</a><a href="{r}consegna-a-domicilio/">Consegna a domicilio</a><a href="{r}prodotti/">Cosa c'è nelle macchine</a><a href="{r}snack-americani-napoli/">Snack dal mondo</a><a href="{REVIEW}" rel="noopener" target="_blank">Lascia una recensione</a></div>
+  <div><h3>Sito</h3><a href="{home}">Home</a><a href="{r}consegna-a-domicilio/">Consegna a domicilio</a><a href="{r}prodotti/">Cosa c'è nelle macchine</a><a href="{r}snack-americani-napoli/">Snack dal mondo</a><a href="{r}aperto-24-ore-napoli-nord/">Aperto di notte a Napoli nord</a><a href="{r}energy-drink-a-domicilio/">Energy drink a domicilio</a><a href="{r}gioco/">Il gioco di POP</a><a href="{REVIEW}" rel="noopener" target="_blank">Lascia una recensione</a></div>
   <div><h3>Seguici</h3>{"".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())}</div>
   <div><h3>Trovaci anche su</h3>{"".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S.get("schede", {}).items())}</div>
 </div>
@@ -346,6 +358,7 @@ def home():
   {feat_block(r)}
   <div style="margin-top:24px"><a class="btn o" href="prodotti/">Vedi tutti i {NPROD} prodotti →</a></div>
 </div></section>
+{presi_block(r)}
 
 <section class="s"><div class="wrap">
   <div class="head reveal"><div><span class="eyebrow">Come funziona</span><h2>Facile come un pop.</h2></div></div>
@@ -484,6 +497,69 @@ def mondo():
         f"Dove trovare Dr Pepper, Takis, Fanta americane, bibite asiatiche e Starbucks vicino Napoli a qualsiasi ora: {len(prods)} prodotti dal mondo nei distributori h24 di Pop Stop a Casavatore.",
         body, ld, d, "snack-americani-napoli/"))
 
+# ---------------- PAGINE A TEMA ----------------
+TEMI = {
+  "aperto-24-ore-napoli-nord": {
+    "titolo": "Cosa c'è aperto di notte a Napoli nord? Pop Stop h24 a Casavatore",
+    "desc": "Cerchi un posto aperto di notte a Napoli nord, Casoria o Casavatore? Pop Stop h24 è aperto 24 ore su 24: distributori automatici con bibite, acqua, energy drink, snack, tramezzini e prodotti utili.",
+    "kicker": "🌙 Aperto anche di notte", "h1": "Aperto 24 ore a Napoli nord: anche alle 3 di notte",
+    "lead": "Bar chiusi, supermercati chiusi, distributori di benzina con lo shop spento? A Casavatore c'è Pop Stop h24: 4 distributori automatici sempre accesi, 365 giorni l'anno, festivi e Capodanno compresi.",
+    "rx": r"acqua|red bull|monster|coca|tramezzino|pan soffice|control|lycia|tampax|gillette",
+    "lista": "Le cose più utili di notte",
+    "testo": ["Di notte servono soprattutto acqua, una bibita fredda, un energy drink per il turno o il viaggio, qualcosa da mangiare come un tramezzino o uno snack, e a volte prodotti di prima necessità: da noi ci sono tutti, nelle macchine di Viale Guglielmo Marconi 79/81.",
+              "Siamo comodi per chi arriva da Casoria, Arzano, Secondigliano, Capodichino, Afragola e da tutta la zona nord di Napoli. Si paga direttamente alla macchina.",
+              "Se non vuoi uscire, ordina su Glovo, Just Eat, Deliveroo o Alfonsino: le consegne dipendono dagli orari e dalla zona coperta dall'app."]},
+  "energy-drink-a-domicilio": {
+    "titolo": "Energy drink a domicilio a Casavatore e Napoli nord, anche di notte | Pop Stop h24",
+    "desc": "Red Bull, Monster e Powerade a domicilio con Glovo, Just Eat, Deliveroo e Alfonsino, o nei distributori aperti 24 ore di Pop Stop h24 a Casavatore. Anche le edizioni speciali.",
+    "kicker": "⚡ Energy drink", "h1": "Energy drink a domicilio o h24 a Casavatore",
+    "lead": "Red Bull in tante edizioni, Monster, Powerade e bevande per lo sport: nei nostri distributori ci sono sempre, e con le app di consegna te li portano a casa quando il servizio è attivo nella tua zona.",
+    "rx": r"red bull|monster|powerade",
+    "lista": "Gli energy drink nelle macchine adesso",
+    "testo": ["Le edizioni colorate di Red Bull cambiano spesso: qui sopra vedi quelle che ci sono davvero adesso nelle macchine, con la posizione esatta.",
+              "Per lo studio, il lavoro di notte, la palestra o un viaggio lungo: passa da Viale Guglielmo Marconi 79/81 a Casavatore a qualsiasi ora, oppure ordina dall'app."]},
+}
+
+def tema(slug, t):
+    d = 1; r = rel(d)
+    prods = [p for p in PRODOTTI if re.search(t["rx"], p["n"], re.I)]
+    body = f'''
+<div class="wrap crumbs"><a href="{r}">Home</a> › {E(t["h1"])}</div>
+<section class="page-hero"><div class="wrap">
+  <span class="kicker">{t["kicker"]}</span>
+  <h1>{E(t["h1"])}</h1>
+  <p class="lead">{E(t["lead"])}</p>
+  <div class="ctas"><a class="btn y" href="{r}consegna-a-domicilio/#app">🛵 Ordina a domicilio</a><a class="btn t" href="{MAPS_DIR}" rel="noopener" target="_blank">📍 Portami da Pop Stop</a></div>
+</div></section>
+<section class="s" style="padding-top:10px"><div class="wrap">
+  <div class="head"><div><span class="eyebrow">Nelle macchine adesso</span><h2>{E(t["lista"])}</h2></div></div>
+  {plist_static(prods)}
+  <div class="prose" style="margin-top:34px">{"".join("<p>"+E(x)+"</p>" for x in t["testo"])}</div>
+</div></section>
+<section class="s alt" id="app"><div class="wrap">
+  <div class="head"><div><span class="eyebrow">Consegna a domicilio</span><h2>Scegli la tua app</h2></div><p>Quando l'app consegna al tuo indirizzo.</p></div>
+  {app_cards()}
+  <div style="margin-top:22px">{zones_block(r)}</div>
+</div></section>
+{visit_block(r)}'''
+    ld = [store_ld(), crumbs_ld([("Home", ""), (t["h1"], slug + "/")]),
+          {"@type": "ItemList", "name": t["lista"], "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": p["n"]} for i, p in enumerate(prods)]}]
+    write(f"{slug}/index.html", layout(f"{slug}/", t["titolo"], t["desc"], body, ld, d))
+
+def presi_block(r):
+    nomi = S.get("piu_presi", [])
+    trov = []
+    for n in nomi:
+        for p in PRODOTTI:
+            if p["n"].lower() == n.lower():
+                trov.append(p); break
+    if not trov: return ""
+    return f'''<section class="s"><div class="wrap">
+  <div class="head reveal"><div><span class="eyebrow">I più presi</span><h2>I preferiti di Casavatore 🔥</h2></div>
+  <p>I prodotti più venduti nelle nostre macchine nell'ultimo mese. Toccane uno: vedi dov'è e ordinalo sulle app.</p></div>
+  <ul class="plist">{"".join(card(p) for p in trov[:12])}</ul>
+</div></section>'''
+
 # ---------------- ZONE ----------------
 def zona(slug, z):
     d = 2; r = rel(d); n = z["nome"]
@@ -598,7 +674,7 @@ def gioco():
         body, ld, 1, active="gioco/"))
 
 def tecnici():
-    pages = ["", "consegna-a-domicilio/", "prodotti/", "snack-americani-napoli/", "gioco/"] + [f"zona/{k}/" for k in ZONE]
+    pages = ["", "consegna-a-domicilio/", "prodotti/", "snack-americani-napoli/", "gioco/"] + [f"{k}/" for k in TEMI] + [f"zona/{k}/" for k in ZONE]
     urls = "".join(f"  <url><loc>{BASE}{p}</loc><lastmod>{OGGI}</lastmod></url>\n" for p in pages)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
     write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /scripts/\nSitemap: {BASE}sitemap.xml\n")
@@ -618,6 +694,8 @@ def tecnici():
 """)
 
 home(); consegna(); prodotti(); mondo(); gioco()
+for k, v in TEMI.items():
+    tema(k, v)
 for k, v in ZONE.items():
     zona(k, v)
 page404(); tecnici()
