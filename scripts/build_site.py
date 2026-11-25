@@ -35,6 +35,37 @@ WA_ASS = f'https://wa.me/{S["whatsapp"]}?text=' + quote("Ciao Pop Stop h24, ho b
 TEL = "tel:" + S["telefono"].replace(" ", "")
 APP = S["app"]
 
+def _norm_dr(x):
+    import unicodedata
+    x = unicodedata.normalize("NFKD", x).encode("ascii", "ignore").decode().lower().replace("&", "e").replace("'", "")
+    x = re.sub(r"(\d)\s*(ml|g|pz|x)\b", r"\1\2", x)
+    return " ".join(re.sub(r"[^a-z0-9 ]", " ", x).split())
+
+def deliveroo_map():
+    """Collega ogni prodotto del sito alla sua scheda su Deliveroo (deliveroo.tsv: id<TAB>nome sul menu)."""
+    righe = {}
+    try:
+        for l in open(os.path.join(ROOT, "deliveroo.tsv"), encoding="utf-8"):
+            if "\t" in l:
+                i, n = l.rstrip("\n").split("\t", 1)
+                righe[_norm_dr(n)] = i
+    except OSError:
+        return {}
+    out = {}
+    for p in STOCK["prodotti"]:
+        k = _norm_dr(p["n"])
+        if k in righe:
+            out[p["n"]] = righe[k]
+            continue
+        # nome sul menu senza grammatura: accetta solo se è l'inizio esatto del nome
+        cand = [n for n in righe if len(n) >= 10 and (k.startswith(n + " ") or n.startswith(k + " "))]
+        if cand:
+            cand.sort(key=len, reverse=True)
+            if len(cand) == 1 or len(cand[0]) > len(cand[1]):
+                out[p["n"]] = righe[cand[0]]
+    return out
+DR = deliveroo_map()
+
 ZONE = {
   "casoria": {"nome": "Casoria", "frase": "Casoria è attaccata a Casavatore",
     "vicino": "Da Casoria ci raggiungi in pochi minuti: siamo su Viale Guglielmo Marconi, a Casavatore.",
@@ -166,7 +197,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
         cur = ' aria-current="page"' if p == active else ""
         nav.append(f'<a href="{href}"{cur}>{n}</a>')
     graph = {"@context": "https://schema.org", "@graph": ld}
-    cfg = {"stock": r + "stock.json", "ordine": ORDINE, "icone": ICONE, "img": IMG}
+    cfg = {"stock": r + "stock.json", "ordine": ORDINE, "icone": ICONE, "img": IMG, "dr": DR, "drurl": APP["deliveroo"][1]}
     socials = "".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())
     zone_links = "".join(f'<a href="{r}zona/{k}/">{v["nome"]}</a>' for k, v in ZONE.items())
     return f'''<!DOCTYPE html>
@@ -230,8 +261,9 @@ def layout(path, title, desc, body, ld, depth, active=""):
   <h3 id="sh-n">Prodotto</h3>
   <p id="sh-s">Disponibile</p></div></div>
   <p class="shm" id="sh-m"></p>
-  <a class="btn t wide" href="{MAPS_DIR}" rel="noopener" target="_blank">📍 Vieni a prenderlo ora</a>
-  <p style="margin:8px 0 10px">Oppure fattelo portare a casa:</p>
+  <a class="btn y wide" id="sh-ord" href="{APP["deliveroo"][1]}" rel="noopener" target="_blank">🛵 Ordina questo prodotto a domicilio</a>
+  <a class="btn t wide" href="{MAPS_DIR}" rel="noopener" target="_blank" style="margin-top:8px">📍 Vieni a prenderlo ora</a>
+  <p style="margin:8px 0 10px">Oppure apri il negozio su un'altra app:</p>
   <div class="appsmini">{"".join(f'<a class="{k}" href="{u}" rel="noopener" target="_blank">{n}</a>' for k, (n, u) in APP.items())}</div>
   <p style="font-size:.85rem;margin:0">Il menu delle app può variare rispetto alle macchine.</p>
 </div></div>

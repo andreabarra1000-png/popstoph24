@@ -105,6 +105,8 @@
     var bi=$("#sh-i",sheet);bi.innerHTML="";bi.className="pimg big";
     if(img){var im=document.createElement("img");im.src=CFG.img.replace("{}",img);im.alt=nome;bi.appendChild(im)}else{bi.textContent="🛒";bi.className="pimg big ph"}
     $("#sh-m",sheet).textContent=dove?"📍 Lo trovi in: "+dove:"";
+    var so=$("#sh-ord",sheet);
+    if(so){var id=(CFG.dr||{})[nome];so.href=CFG.drurl+(id?"?item-id="+id:"");so.textContent=id?"🛵 Ordina "+nome.replace(/\s+\d[\d,.]*\s*(ml|g|pz|x)?\b.*$/i,"")+" a domicilio":"🛵 Ordina a domicilio"}
     $("#sh-s",sheet).textContent=stato==="ultimi"?"Ultimi pezzi nelle macchine: corri!":"Disponibile ora nelle macchine di Casavatore";
     sheet.classList.add("on");sheet.setAttribute("aria-hidden","false");
     setTimeout(function(){$(".x",sheet).focus()},50);
