@@ -92,7 +92,7 @@ def crumbs_ld(items):
 def faq_html(faq):
     return '<div class="faq">' + "".join(f"<details><summary>{E(q)}</summary><p>{a}</p></details>" for q, a in faq) + "</div>"
 
-NAV = [("Ordina", "consegna-a-domicilio/"), ("Cosa c'è", "prodotti/"), ("Snack dal mondo", "snack-americani-napoli/"),
+NAV = [("Ordina", "consegna-a-domicilio/"), ("Cosa c'è", "prodotti/"), ("Snack dal mondo", "snack-americani-napoli/"), ("Gioca 🎮", "gioco/"),
        ("Come arrivare", "#vieni"), ("Assistenza", "#assistenza")]
 
 def layout(path, title, desc, body, ld, depth, active=""):
@@ -310,6 +310,8 @@ FAQ_HOME = [
   ("Dove si trova Pop Stop h24?", f"In {E(INDIRIZZO_FULL)}, nella zona nord di Napoli, vicino a Casoria, Arzano e Secondigliano. Puoi aprire il percorso con Google Maps, Waze o Apple Mappe da questo sito."),
 ]
 
+TICKER = "".join(f"<span>{t}</span>" for t in ["Aperto 24/7 ✦", "Snack dal mondo ✦", "Energy drink ✦", "Tramezzini ✦", "Anche di notte ✦", "Ordina sulle app ✦", "Casavatore ✦"])
+
 def home():
     r = ""
     body = f'''
@@ -326,8 +328,9 @@ def home():
     </div>
     <div class="facts"><span><b>24/7</b> anche nei festivi</span><span><b data-count>{NPROD}</b> prodotti in macchina</span><span><b>4</b> app di consegna</span></div>
   </div>
-  {clock_svg()}
+  <div class="popwrap"><div class="bubble">Io non dormo mai! Sono le <b data-ora>24h</b> 😎</div><img class="pop" src="assets/pop.svg" alt="POP, la mascotte di Pop Stop h24" width="330" height="429"></div>
 </div></section>
+<div class="ticker" aria-hidden="true"><div>{TICKER}{TICKER}</div></div>
 
 <section class="s" id="ordina"><div class="wrap">
   <div class="head reveal"><div><span class="eyebrow">Consegna a domicilio</span><h2>Fame? Te lo portiamo noi.</h2></div>
@@ -351,6 +354,10 @@ def home():
     <div class="step reveal"><h3>Scegli dalla macchina</h3><p>4 distributori con bibite fresche, energy drink, snack dolci e salati, tramezzini e prodotti utili.</p></div>
     <div class="step reveal"><h3>Oppure ordina da casa</h3><p>Su Glovo, Just Eat, Deliveroo o Alfonsino, quando l'app consegna nella tua zona.</p></div>
   </div>
+</div></section>
+
+<section class="s"><div class="wrap">
+  <a class="gamecta reveal" href="gioco/"><img src="assets/pop.svg" alt="" width="110" height="143"><div><span class="sticker">Nuovo gioco</span><h2 style="margin-top:10px">Riempi le macchine prima delle 6!</h2><p>Aiuta POP a caricare i distributori prima che arrivi la fila del mattino. Quanti punti fai?</p></div><span class="btn">🎮 Gioca</span></a>
 </div></section>
 
 {visit_block(r)}
@@ -530,8 +537,68 @@ def page404():
     write("404.html", html_)
 
 # ---------------- file tecnici ----------------
+def gioco():
+    r = rel(1)
+    body = f'''
+<div class="gioco" id="gioco">
+  <section class="gscreen" id="g-start">
+    <img class="pop" src="{r}assets/pop.svg" alt="POP, la mascotte di Pop Stop h24" width="220" height="286">
+    <span class="sticker p">Gioco di POP</span>
+    <h1>Riempi le macchine prima delle 6!</h1>
+    <p>Sono le 5 del mattino: alle 6 arriva la fila di chi va a lavoro. Aiuta POP a riempire tutti gli scomparti vuoti dei 4 distributori prima che suoni l'ora. Occhio: anche di notte c'è chi ha fame e svuota gli scomparti!</p>
+    <div class="how">
+      <div>1️⃣ Tocca un prodotto nel <b>carrello</b> a destra.</div>
+      <div>2️⃣ Tocca uno <b>scomparto vuoto</b> dello stesso prodotto: si illumina di giallo.</div>
+      <div>3️⃣ Riempi tutto prima delle 6: più sei veloce, più punti fai. Se sbagli perdi tempo!</div>
+    </div>
+    <button class="btn y" type="button" data-via>▶ Gioca</button>
+    <p id="g-best" style="margin-top:14px;font-weight:700;color:var(--y)"></p>
+  </section>
+
+  <section id="g-play" hidden>
+    <div class="ghud">
+      <div class="box clock"><small>Ora</small><span id="g-ora">05:00</span></div>
+      <div class="box"><small>Livello</small><span id="g-liv">1</span></div>
+      <div class="box"><small>Punti</small><span id="g-punti">0</span></div>
+      <button id="g-audio" type="button" aria-label="Togli i suoni">🔊</button>
+      <div class="gbar" id="g-bar"><i></i></div>
+    </div>
+    <div class="gstage">
+      <div class="ggrid" id="g-grid"></div>
+      <div class="gtray"><h3>Carrello</h3><div id="g-tray" style="display:flex;flex-direction:column;gap:8px"></div></div>
+    </div>
+  </section>
+
+  <section class="gscreen gend" id="g-end" hidden>
+    <img class="pop" src="{r}assets/pop.svg" alt="" width="220" height="286">
+    <h1 id="g-tit">Sono le 6!</h1>
+    <p class="score" id="g-fin"></p>
+    <p id="g-record" style="font-weight:800;color:var(--y)"></p>
+    <div class="row">
+      <button class="btn y" type="button" data-via>🔁 Rigioca</button>
+      <a class="btn wa" id="g-share" href="#" rel="noopener" target="_blank">💬 Sfida un amico</a>
+    </div>
+    <p style="margin-top:26px">Ti è venuta fame? Le macchine vere sono piene e aperte 24 ore su 24.</p>
+    <div class="row">
+      <a class="btn t" href="{r}consegna-a-domicilio/#app">🛵 Ordina a domicilio</a>
+      <a class="btn o" href="{MAPS_DIR}" rel="noopener" target="_blank">📍 Portami da Pop Stop</a>
+    </div>
+  </section>
+  <img class="gpop" id="g-pop" src="{r}assets/pop.svg" alt="" width="74" height="96">
+  <div class="fum" id="g-fumetto" aria-live="polite"></div>
+</div>
+<script src="{r}assets/gioco.js" defer></script>'''
+    ld = [crumbs_ld([("Home", ""), ("Gioco", "gioco/")]),
+          {"@type": "VideoGame", "name": "Riempi le macchine – il gioco di POP", "url": BASE + "gioco/", "inLanguage": "it-IT",
+           "genre": "Arcade", "gamePlatform": "Web browser", "applicationCategory": "Game", "operatingSystem": "Any",
+           "description": "Mini gioco gratuito di Pop Stop h24: aiuta la mascotte POP a riempire i distributori automatici prima delle 6 del mattino.",
+           "publisher": {"@id": BASE + "#negozio"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}]
+    write("gioco/index.html", layout("gioco/", "Gioco: Riempi le macchine prima delle 6! – Pop Stop h24",
+        "Il mini gioco gratuito di Pop Stop h24: aiuta POP a riempire i distributori automatici prima che arrivi la fila del mattino. Gioca dal telefono e sfida gli amici.",
+        body, ld, 1, active="gioco/"))
+
 def tecnici():
-    pages = ["", "consegna-a-domicilio/", "prodotti/", "snack-americani-napoli/"] + [f"zona/{k}/" for k in ZONE]
+    pages = ["", "consegna-a-domicilio/", "prodotti/", "snack-americani-napoli/", "gioco/"] + [f"zona/{k}/" for k in ZONE]
     urls = "".join(f"  <url><loc>{BASE}{p}</loc><lastmod>{OGGI}</lastmod></url>\n" for p in pages)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
     write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /scripts/\nSitemap: {BASE}sitemap.xml\n")
@@ -550,7 +617,7 @@ def tecnici():
 - Sito: {BASE} · Prodotti: {BASE}prodotti/ · Consegna: {BASE}consegna-a-domicilio/
 """)
 
-home(); consegna(); prodotti(); mondo()
+home(); consegna(); prodotti(); mondo(); gioco()
 for k, v in ZONE.items():
     zona(k, v)
 page404(); tecnici()
