@@ -42,7 +42,8 @@
 
   function riga(x, pos){
     var me = mio && x.n===mio.n ? " me" : "";
-    var ig = x.ig ? ' <a href="https://instagram.com/'+encodeURIComponent(x.ig)+'" target="_blank" rel="noopener nofollow">@'+x.ig+'</a>' : "";
+    var ig = x.ig ? ' <a href="https://instagram.com/'+encodeURIComponent(x.ig)+'" target="_blank" rel="noopener nofollow" title="Instagram">📸@'+x.ig+'</a>' : "";
+    if(x.tk) ig += ' <a href="https://www.tiktok.com/@'+encodeURIComponent(x.tk)+'" target="_blank" rel="noopener nofollow" title="TikTok">🎵@'+x.tk+'</a>';
     var medaglia = pos===1?"🥇":pos===2?"🥈":pos===3?"🥉":pos+"°";
     return '<li class="'+me+'"><b>'+medaglia+'</b><span>'+x.n.replace(/</g,"")+ig+'</span><em>'+x.p+'</em></li>';
   }
@@ -59,28 +60,30 @@
     box.innerHTML = '<h3>🏆 Classifica</h3>'+
       '<form><input name="n" maxlength="14" placeholder="Il tuo nome" autocomplete="nickname" required>'+
       '<input name="ig" maxlength="31" placeholder="@instagram (facoltativo)" autocapitalize="off">'+
+      '<input name="tk" maxlength="25" placeholder="@tiktok (facoltativo)" autocapitalize="off">'+
       '<button type="submit">Entra in classifica</button></form>'+
       '<p class="msg" aria-live="polite"></p>'+
       '<div class="tabs"><button type="button" data-v="settimana">Questa settimana</button><button type="button" data-v="sempre">Di sempre</button></div>'+
-      '<ol></ol><small>I primi della settimana li annunciamo su Instagram @popstoph24 ogni lunedì. Niente parolacce: i nomi offensivi vengono tolti.</small>';
+      '<ol></ol><small>I primi della settimana li annunciamo su Instagram e TikTok di Pop Stop ogni lunedì, taggando chi ha messo il suo account. Niente parolacce: i nomi offensivi vengono tolti.</small>';
     var ref = end.querySelector(".row") || end.lastElementChild;
     ref.parentNode.insertBefore(box, ref.nextSibling);
     box.querySelectorAll(".tabs button").forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); vista=b.dataset.v; lista(box); }); });
     box.addEventListener("click", function(e){ e.stopPropagation(); });
     box.addEventListener("touchstart", function(e){ e.stopPropagation(); }, {passive:true});
     var f = box.querySelector("form");
-    if(mio){ f.n.value = mio.n; f.ig.value = mio.ig ? "@"+mio.ig : ""; }
+    if(mio){ f.n.value = mio.n; f.ig.value = mio.ig ? "@"+mio.ig : ""; f.tk.value = mio.tk ? "@"+mio.tk : ""; }
     f.addEventListener("submit", function(e){
       e.preventDefault(); e.stopPropagation();
       var msg = box.querySelector(".msg"); msg.className = "msg";
-      var n = pulisci(f.n.value, 14), ig = pulisci(f.ig.value, 31).replace(/^@/,"").toLowerCase();
+      var n = pulisci(f.n.value, 14), ig = pulisci(f.ig.value, 31).replace(/^@/,"").toLowerCase(), tk = pulisci(f.tk.value, 25).replace(/^@/,"").toLowerCase();
       if(!nomeOk(n)){ msg.className="msg err"; msg.textContent="Scegli un nome di 3-14 lettere, senza parolacce né link."; return; }
       if(!igOk(ig)){ msg.className="msg err"; msg.textContent="Il nome Instagram non sembra valido."; return; }
+      if(!igOk(tk)){ msg.className="msg err"; msg.textContent="Il nome TikTok non sembra valido."; return; }
       var p = box.dataset.punti|0;
       if(p <= 0){ msg.className="msg err"; msg.textContent="Fai almeno un punto per entrare in classifica!"; return; }
       f.querySelector("button").disabled = true; msg.textContent = "Salvo…";
-      mio = {n:n, ig:ig}; try{ localStorage.setItem("pop-classifica-io", JSON.stringify(mio)); }catch(_){}
-      post({g:GIOCO, n:n, ig:ig, p:p}).then(function(r){
+      mio = {n:n, ig:ig, tk:tk}; try{ localStorage.setItem("pop-classifica-io", JSON.stringify(mio)); }catch(_){}
+      post({g:GIOCO, n:n, ig:ig, tk:tk, p:p}).then(function(r){
         if(r.err){ msg.className="msg err"; msg.textContent=r.err; f.querySelector("button").disabled=false; return; }
         dati = r; lista(box);
         msg.textContent = r.pos ? "Sei "+r.pos+"° questa settimana! "+(r.pos<=3?"🔥 Sei sul podio!":"Riprova per salire 💪") : "Salvato!";
