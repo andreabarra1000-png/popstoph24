@@ -100,6 +100,13 @@
   /* scheda prodotto */
   var sheet=$("#sheet");
   function apri(nome,stato,img,dove,cat){
+    var dr0=(CFG.dr||{})[nome];
+    $$(".appsmini a[data-app]",sheet).forEach(function(a){
+      var k=a.getAttribute("data-app");
+      if(k==="deliveroo")a.href=CFG.drurl+(dr0?"?item-id="+dr0:"");
+      else if(k==="justeat"){var c=cat||"";if(c==="Bibite"&&/estath|santal|santàl|th[eè] |succoso/i.test(nome))c="Bibite dolci";var jc=(CFG.je||{})[c];a.href=CFG.jeurl+(jc?"#categoria_"+jc:"")}
+    });
+    var hi=$("#sh-hint",sheet);if(hi)hi.textContent="Deliveroo apre direttamente il prodotto"+(cat?", Just Eat la sua categoria":"")+"; su Glovo e Alfonsino cercalo nel menu.";
     if(!sheet)return;
     $("#sh-n",sheet).textContent=nome;
     var bi=$("#sh-i",sheet);bi.innerHTML="";bi.className="pimg big";
@@ -118,7 +125,7 @@
   }
   document.addEventListener("click",function(e){
     var b=e.target.closest("[data-p]");
-    if(b){e.preventDefault();apri(b.dataset.p,b.dataset.s,b.dataset.i,b.dataset.d)}
+    if(b){e.preventDefault();apri(b.dataset.p,b.dataset.s,b.dataset.i,b.dataset.d,b.dataset.c)}
   });
 
   /* elenco prodotti dal vivo */
@@ -148,7 +155,7 @@
         g[c].forEach(function(p){
           var li=document.createElement("li"),b=document.createElement("button");
           var d=dove(p.m||[]);
-          b.type="button";b.className="pc";b.dataset.p=p.n;b.dataset.s=p.s;b.dataset.i=p.i||"";b.dataset.d=d;
+          b.type="button";b.className="pc";b.dataset.c=p.c;b.dataset.p=p.n;b.dataset.s=p.s;b.dataset.i=p.i||"";b.dataset.d=d;
           var wi=document.createElement("span");wi.className="pimg";
           if(p.i){var im=document.createElement("img");im.src=CFG.img.replace("{}",p.i);im.alt=p.n;im.loading="lazy";im.width=160;im.height=160;
             im.onerror=function(){var ph=document.createElement("span");ph.className="ph";ph.textContent=ICO[p.c]||"🛒";im.replaceWith(ph)};wi.appendChild(im)}

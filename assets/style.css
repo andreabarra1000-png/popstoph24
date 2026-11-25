@@ -654,3 +654,4 @@ a.popwrap.corsa .playme{top:5%;bottom:auto;right:-3%;font-size:.8rem}
 .leggero .piuma,.leggero .pioggia,.leggero .hfloat,.leggero .nuvola,.leggero .corridore .dust{animation:none!important;display:none}
 .leggero .f-deserto svg,.leggero .collina,.leggero .albero{animation-duration:30s!important}
 @media (prefers-reduced-motion:reduce){.scena *,.corridore *{animation-duration:3s!important}.piuma,.pioggia{display:none}}
+.apphint{font-size:.8rem;color:var(--mut);margin:8px 0 0}

@@ -66,6 +66,13 @@ def deliveroo_map():
     return out
 DR = deliveroo_map()
 
+# Just Eat non ha link al singolo prodotto: si apre il menu già sulla categoria giusta (#categoria_<id>)
+JE_CAT = {"Energy drink": "3467d71a-e195-5483-90ea-4006a6a54df2", "Acqua": "d333fc67-3501-51db-b576-5afba62e2fd4",
+          "Bibite": "3dc857de-622d-5023-a7ef-261741db793f", "Bibite dolci": "9aebab97-9d8d-5950-ae9e-a32af5ac4a2c",
+          "Patatine e snack salati": "e2e95459-e54e-58e7-a1d0-3f547d294e82", "Tramezzini e salato": "e2e95459-e54e-58e7-a1d0-3f547d294e82",
+          "Dolci e cioccolato": "bda934f6-ee6b-57db-902b-edf328f62ae4", "Caffè e latte": "5511ba64-46f0-5294-b739-9b6b563a4ffa",
+          "Caramelle e gomme": "7d61a792-3961-590b-9053-0053e71ec5da", "Igiene e altro": "7166689d-9aee-52ab-83bd-6fbcea3ba1a2"}
+
 ZONE = {
   "casoria": {"nome": "Casoria", "frase": "Casoria è attaccata a Casavatore",
     "vicino": "Da Casoria ci raggiungi in pochi minuti: siamo su Viale Guglielmo Marconi, a Casavatore.",
@@ -197,7 +204,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
         cur = ' aria-current="page"' if p == active else ""
         nav.append(f'<a href="{href}"{cur}>{n}</a>')
     graph = {"@context": "https://schema.org", "@graph": ld}
-    cfg = {"stock": r + "stock.json", "ordine": ORDINE, "icone": ICONE, "img": IMG, "dr": DR, "drurl": APP["deliveroo"][1]}
+    cfg = {"stock": r + "stock.json", "ordine": ORDINE, "icone": ICONE, "img": IMG, "dr": DR, "drurl": APP["deliveroo"][1], "je": JE_CAT, "jeurl": APP["justeat"][1]}
     socials = "".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())
     zone_links = "".join(f'<a href="{r}zona/{k}/">{v["nome"]}</a>' for k, v in ZONE.items())
     return f'''<!DOCTYPE html>
@@ -263,8 +270,9 @@ def layout(path, title, desc, body, ld, depth, active=""):
   <p class="shm" id="sh-m"></p>
   <a class="btn y wide" id="sh-ord" href="{APP["deliveroo"][1]}" rel="noopener" target="_blank">🛵 Ordina questo prodotto a domicilio</a>
   <a class="btn t wide" href="{MAPS_DIR}" rel="noopener" target="_blank" style="margin-top:8px">📍 Vieni a prenderlo ora</a>
-  <p style="margin:8px 0 10px">Oppure apri il negozio su un'altra app:</p>
-  <div class="appsmini">{"".join(f'<a class="{k}" href="{u}" rel="noopener" target="_blank">{n}</a>' for k, (n, u) in APP.items())}</div>
+  <p style="margin:8px 0 10px">Oppure ordinalo con un'altra app:</p>
+  <div class="appsmini">{"".join(f'<a class="{k}" data-app="{k}" href="{u}" rel="noopener" target="_blank">{n}</a>' for k, (n, u) in APP.items())}</div>
+  <p class="apphint" id="sh-hint"></p>
   <p style="font-size:.85rem;margin:0">Il menu delle app può variare rispetto alle macchine.</p>
 </div></div>
 <script>window.POP={json.dumps(cfg, ensure_ascii=False)}</script>
@@ -375,7 +383,7 @@ def card(p):
            if p.get("i") else f'<span class="ph">{ICONE.get(p["c"], "🛒")}</span>')
     d = dove_txt(p.get("m", []))
     st = "Ultimi pezzi" if p["s"] == "ultimi" else "Disponibile"
-    return (f'<li><button type="button" class="pc" data-p="{E(p["n"])}" data-s="{p["s"]}" data-i="{p.get("i","")}" data-d="{E(d)}">'
+    return (f'<li><button type="button" class="pc" data-c="{E(p["c"])}" data-p="{E(p["n"])}" data-s="{p["s"]}" data-i="{p.get("i","")}" data-d="{E(d)}">'
             f'<span class="pimg">{img}</span><span class="pn">{E(p["n"])}</span>'
             f'<span class="pm">📍 {E(d)}</span><span class="st{" u" if p["s"]=="ultimi" else ""}">{st}</span></button></li>')
 
