@@ -161,6 +161,8 @@ def layout(path, title, desc, body, ld, depth, active=""):
         href = (home + p) if p.startswith("#") else r + p
         cur = ' aria-current="page"' if p == active else ""
         nav.append(f'<a href="{href}"{cur}>{n}</a>')
+    if path == "":
+        ld = [{"@type": "WebSite", "@id": BASE + "#website", "name": "Pop Stop h24", "alternateName": ["PopStop H24", "Pop Stop h24 Casavatore", "popstoph24"], "url": BASE, "inLanguage": "it-IT"}] + list(ld)
     graph = {"@context": "https://schema.org", "@graph": ld}
     cfg = {"stock": r + "stock.json", "ordine": ORDINE, "icone": ICONE, "img": IMG}
     socials = "".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())
