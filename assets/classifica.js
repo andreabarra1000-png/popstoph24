@@ -3,7 +3,7 @@
    Legge il punteggio dalla schermata finale di ogni gioco: non tocca la logica dei giochi. */
 (function(){
   "use strict";
-  var API = ""; // es. "https://script.google.com/macros/s/XXXX/exec"
+  var API = "https://script.google.com/macros/s/AKfycbwubOr0FmOYfFl48BdCAa7YCRmdsFqGoT4ohoH-_Sw_A6MX3AAcs2R4U7CbMS1psbZZgQ/exec";
   if(!API) return;
 
   var path = location.pathname.replace(/\/+$/,"").split("/");
