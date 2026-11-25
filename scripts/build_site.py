@@ -361,6 +361,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
     <div class="zones" style="margin-top:16px">{zone_links}</div>
   </div>
   <div><h3>Sito</h3><a href="{home}">Home</a><a href="{r}consegna-a-domicilio/">Consegna a domicilio</a><a href="{r}prodotti/">Cosa c'è nelle macchine</a><a href="{r}snack-americani-napoli/">Snack dal mondo</a><a href="{r}aperto-24-ore-napoli-nord/">Aperto di notte a Napoli nord</a><a href="{r}energy-drink-a-domicilio/">Energy drink a domicilio</a><a href="{r}gioco/">Il gioco di POP</a><a href="{r}gioco/corri/">Corri, POP, corri!</a><a href="{r}gioco/spazio/">POP al cinema</a><a href="{REVIEW}" rel="noopener" target="_blank">Lascia una recensione</a></div>
+  <div><h3>Cerchi…</h3>{"".join(f'<a href="{r}{k}/">{E(n)}</a>' for k, n in TEMI_NOMI.items())}</div>
   <div><h3>Seguici</h3>{"".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())}</div>
   <div><h3>Trovaci anche su</h3>{"".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S.get("schede", {}).items())}</div>
 </div>
@@ -738,6 +739,88 @@ TEMI = {
     "testo": ["Di notte servono soprattutto acqua, una bibita fredda, un energy drink per il turno o il viaggio, qualcosa da mangiare come un tramezzino o uno snack, e a volte prodotti di prima necessità: da noi ci sono tutti, nelle macchine di Viale Guglielmo Marconi 79/81.",
               "Siamo comodi per chi arriva da Casoria, Arzano, Secondigliano, Capodichino, Afragola e da tutta la zona nord di Napoli. Si paga direttamente alla macchina.",
               "Se non vuoi uscire, ordina su Glovo, Just Eat, Deliveroo o Alfonsino: le consegne dipendono dagli orari e dalla zona coperta dall'app."]},
+  "distributori-automatici-napoli": {
+    "titolo": "Distributori automatici a Napoli nord aperti 24 ore | Pop Stop h24",
+    "desc": "Distributori automatici h24 a Casavatore, a due passi da Casoria, Arzano e Secondigliano: bibite, energy drink, snack, tramezzini e prodotti utili, giorno e notte. Paghi con carta o contanti.",
+    "kicker": "🏪 Self-service h24", "h1": "Distributori automatici a Napoli nord, aperti 24 ore",
+    "lead": "Pop Stop h24 è un punto self-service con 4 distributori automatici in Viale Guglielmo Marconi 79/81 a Casavatore. Non chiude mai: entri, scegli e paghi direttamente alla macchina, a qualsiasi ora.",
+    "rx": r".", "max": 24,
+    "lista": "Una parte di quello che trovi nelle macchine",
+    "testo": ["Nei 4 distributori ci sono più di 150 prodotti: acqua e bibite fredde, Red Bull e Monster, caffè freddi Starbucks, patatine e Takis, tramezzini e merende salate, cioccolato, caramelle e prodotti di prima necessità come fazzoletti, assorbenti e preservativi.",
+              "Le macchine sono controllate e ricaricate ogni giorno: sul sito vedi cosa c'è davvero in questo momento e in quale distributore si trova.",
+              "Siamo sulla strada tra Casavatore e Casoria, comodi da Arzano, Secondigliano, San Pietro a Patierno, Capodichino e da tutta Napoli nord. Se non puoi passare, molti prodotti li trovi anche su Glovo, Just Eat, Deliveroo e Alfonsino."],
+    "faq": [("Dove sono i distributori automatici h24 di Pop Stop?", "In Viale Guglielmo Marconi 79/81, 80020 Casavatore (NA), vicino a Casoria e Arzano."),
+            ("Sono davvero aperti di notte?", "Sì, 24 ore su 24, 7 giorni su 7, anche nei festivi."),
+            ("Come si paga ai distributori?", "Direttamente alla macchina, con carta, bancomat, smartphone o contanti."),
+            ("Cosa si trova nei distributori?", "Bibite, acqua, energy drink, caffè freddi, snack dolci e salati, tramezzini, caramelle e prodotti di prima necessità.")]},
+  "market-24-ore-napoli": {
+    "titolo": "Market aperto 24 ore a Napoli nord, anche di notte | Pop Stop h24",
+    "desc": "Cerchi un minimarket aperto 24 ore vicino a Napoli? Pop Stop h24 a Casavatore è sempre aperto: bibite, snack, acqua, tramezzini e beni di prima necessità a qualsiasi ora.",
+    "kicker": "🌙 Sempre aperto", "h1": "Un market aperto 24 ore a Napoli nord",
+    "lead": "Quando il supermercato è chiuso e hai bisogno di qualcosa adesso, Pop Stop h24 a Casavatore c'è: un piccolo market self-service sempre aperto, con le cose che servono davvero di sera e di notte.",
+    "rx": r"acqua|tramezzino|pan soffice|un due tris|tempo|tampax|lycia|control|gillette|veet|coca|latte", "max": 24,
+    "lista": "Le cose che servono a qualsiasi ora",
+    "testo": ["Acqua, latte, una bibita, qualcosa da mangiare al volo, fazzoletti, assorbenti, rasoi, preservativi: nelle nostre macchine trovi i beni di prima necessità anche alle 2 di notte, la domenica e nei giorni di festa.",
+              "Non è un supermercato completo: è un punto rapido, sempre acceso, per quando tutto il resto è chiuso. In due minuti prendi quello che ti serve e vai.",
+              "Se preferisci non uscire, ordina dal negozio Pop Stop h24 su Glovo, Just Eat, Deliveroo o Alfonsino: il rider passa da noi e te lo porta a casa, quando l'app consegna nella tua zona."],
+    "faq": [("C'è un market aperto 24 ore vicino a Casoria e Casavatore?", "Sì: Pop Stop h24, in Viale Guglielmo Marconi 79/81 a Casavatore, è un punto self-service aperto 24 ore su 24."),
+            ("Posso comprare beni di prima necessità di notte?", "Sì: acqua, latte, fazzoletti, assorbenti, rasoi e preservativi sono nelle macchine a qualsiasi ora."),
+            ("Fate consegne a domicilio?", "Sì, tramite Glovo, Just Eat, Deliveroo e Alfonsino, quando l'app è attiva nella tua zona.")]},
+  "snack-di-notte-napoli": {
+    "titolo": "Snack di notte a Napoli: dove mangiare qualcosa a tarda notte | Pop Stop",
+    "desc": "Fame di notte a Napoli nord? Da Pop Stop h24 a Casavatore trovi snack, patatine, cioccolato, tramezzini e bibite fredde a qualsiasi ora, anche a domicilio con le app.",
+    "kicker": "🍫 Fame notturna", "h1": "Snack di notte a Napoli nord: siamo aperti",
+    "lead": "È mezzanotte passata, hai fame e i bar sono chiusi. Da Pop Stop h24 a Casavatore le macchine sono accese: patatine, Takis, Kinder, tramezzini e una bibita fredda, quando vuoi.",
+    "rx": r"takis|pringles|kinder bueno|twix|kitkat|snickers|tramezzino|nutella|oreo|haribo", "max": 24,
+    "lista": "Gli snack preferiti di notte",
+    "testo": ["Dopo il lavoro, dopo una serata, durante lo studio o una partita alla console: gli snack più presi di notte sono Takis e Pringles, Kinder Bueno, KitKat, Twix e i tramezzini Beretta, insieme a un energy drink o a una Coca-Cola.",
+              "Puoi passare in Viale Guglielmo Marconi 79/81 a qualsiasi ora, oppure ordinare dall'app di consegna che preferisci, quando il servizio notturno è disponibile nella tua zona."],
+    "faq": [("Dove trovo snack di notte vicino a Napoli?", "Da Pop Stop h24 a Casavatore: i distributori sono aperti 24 ore su 24."),
+            ("Posso ordinare snack a domicilio di notte?", "Sì, con Glovo, Deliveroo o Alfonsino, quando hanno rider disponibili nella tua zona. Just Eat consegna fino a mezzanotte.")]},
+  "takis-napoli": {
+    "titolo": "Takis a Napoli: Fuego e Blue Heat, anche di notte | Pop Stop h24",
+    "desc": "Dove comprare i Takis a Napoli? Da Pop Stop h24 a Casavatore: Takis Fuego, Blue Heat e altri gusti nei distributori aperti 24 ore, o a domicilio con Glovo, Just Eat e Deliveroo.",
+    "kicker": "🌶️ Takis", "h1": "Takis a Napoli, sempre disponibili",
+    "lead": "I Takis, le chips di tortilla arrotolate e super piccanti diventate famose su TikTok, li trovi da Pop Stop h24 a Casavatore: Fuego al chili e lime, Blue Heat e gli altri gusti che arrivano, a qualsiasi ora.",
+    "rx": r"takis|pringles hot|piccant", "max": 12,
+    "lista": "I Takis nelle macchine adesso",
+    "testo": ["Takis Fuego è il più famoso: chili e lime, piccantezza alta. Blue Heat ha lo stesso carattere ma colora la lingua di blu, perfetto per le sfide con gli amici.",
+              "Li trovi nei distributori di Viale Guglielmo Marconi 79/81 a Casavatore, vicino a Casoria e Napoli nord, oppure a domicilio dal negozio Pop Stop h24 sulle app di consegna. Abbinali a una bibita fredda: ne avrai bisogno."],
+    "faq": [("Dove comprare i Takis a Napoli?", "Da Pop Stop h24 in Viale Guglielmo Marconi 79/81 a Casavatore, nei distributori aperti 24 ore, o a domicilio con Glovo, Just Eat e Deliveroo."),
+            ("Quali gusti di Takis ci sono?", "Di solito Fuego e Blue Heat in due formati; sul sito vedi i gusti disponibili adesso.")]},
+  "dr-pepper-napoli": {
+    "titolo": "Dr Pepper a Napoli: Cherry, Vanilla Float e gusti USA | Pop Stop h24",
+    "desc": "Dove trovare il Dr Pepper a Napoli? Da Pop Stop h24 a Casavatore: Dr Pepper Cherry, Vanilla Float, Creamy Coconut e lattine USA, h24 e a domicilio.",
+    "kicker": "🥤 Dr Pepper", "h1": "Dr Pepper a Napoli: tutti i gusti, anche di notte",
+    "lead": "Il Dr Pepper, la bibita americana con 23 aromi, da noi c'è in tante versioni: Cherry, Cherry Crush, Cream Swirl, Creamy Coconut, Vanilla Float, Blackberry e l'Original in lattina USA.",
+    "rx": r"dr pepper|fanta .*us", "max": 20,
+    "lista": "Dr Pepper e bibite USA nelle macchine",
+    "testo": ["Molti gusti sono edizioni americane da 355 ml che nei supermercati italiani non si trovano: arrivano a rotazione, quindi qui sopra vedi quelli disponibili in questo momento.",
+              "Insieme al Dr Pepper trovi anche le Fanta americane (Peach, Pineapple, Strawberry, Grape, Berry) e le bibite giapponesi. Passa a Casavatore a qualsiasi ora o ordinali a domicilio."],
+    "faq": [("Dove si compra il Dr Pepper a Napoli?", "Da Pop Stop h24 a Casavatore, nei distributori aperti 24 ore o a domicilio con le app di consegna."),
+            ("Avete i Dr Pepper americani?", "Sì, diverse lattine USA da 355 ml come Original, Vanilla Float, Cherry e Blackberry, a rotazione.")]},
+  "bibite-giapponesi-napoli": {
+    "titolo": "Bibite giapponesi e ramune a Napoli, aperto 24 ore | Pop Stop h24",
+    "desc": "Bibite giapponesi e asiatiche a Napoli: ramune High Up, Ocean Bomb e gusti introvabili da Pop Stop h24 a Casavatore, nei distributori h24 e a domicilio.",
+    "kicker": "🍡 Dal Giappone", "h1": "Bibite giapponesi e ramune a Napoli",
+    "lead": "Ramune all'uva, fragola daifuku, limone e miele con i supereroi Marvel, Transformers e Kuromi: le bibite asiatiche che vedi nei video le trovi da Pop Stop h24 a Casavatore.",
+    "rx": r"high up|ocean bomb|mochi", "max": 20,
+    "lista": "Bibite asiatiche nelle macchine adesso",
+    "testo": ["Le lattine High Up sono bibite frizzanti dai gusti tipici giapponesi, come wagashi e daifuku, con grafiche da collezione. Arrivano a rotazione: qui vedi quelle disponibili adesso.",
+              "Sono un'idea perfetta per un regalo strano o una sfida tra amici. Le trovi nei distributori di Viale Guglielmo Marconi 79/81 o a domicilio con le app."],
+    "faq": [("Dove trovo bibite giapponesi a Napoli?", "Da Pop Stop h24 a Casavatore: lattine High Up e altre bibite asiatiche nei distributori aperti 24 ore."),
+            ("Le consegnate a domicilio?", "Sì, con Glovo, Just Eat, Deliveroo e Alfonsino, quando l'app consegna nella tua zona.")]},
+  "acqua-a-domicilio-napoli": {
+    "titolo": "Acqua a domicilio a Casavatore e Casoria, anche di notte | Pop Stop",
+    "desc": "Acqua fresca a domicilio o nei distributori h24 di Pop Stop a Casavatore: Sorgesana, Ferrarelle, Electa e Fiji da mezzo litro, giorno e notte, con Glovo, Just Eat e Deliveroo.",
+    "kicker": "💧 Acqua", "h1": "Acqua fresca a domicilio o h24 a Casavatore",
+    "lead": "Acqua naturale e frizzante sempre fredda nelle nostre macchine, anche di notte: Sorgesana, Ferrarelle, Electa e Fiji in bottiglietta, da prendere al volo o da farsi portare a casa.",
+    "rx": r"acqua|ferrarelle maxima|levissima|lilia", "max": 12,
+    "lista": "L'acqua nelle macchine adesso",
+    "testo": ["L'acqua è il prodotto che prendete di più, di giorno e soprattutto di notte. Per questo i distributori ne sono sempre pieni.",
+              "Se ti serve a domicilio, aggiungila a un ordine su Glovo, Just Eat, Deliveroo o Alfonsino dal negozio Pop Stop h24."],
+    "faq": [("Dove trovo acqua di notte a Casavatore?", "Nei distributori di Pop Stop h24 in Viale Guglielmo Marconi 79/81, aperti 24 ore su 24."),
+            ("Consegnate l'acqua a domicilio?", "Sì, tramite le app di consegna quando il servizio è attivo nella tua zona.")]},
   "energy-drink-a-domicilio": {
     "titolo": "Energy drink a domicilio a Casavatore, anche di notte | Pop Stop",
     "desc": "Red Bull, Monster e Powerade a domicilio con Glovo, Just Eat e Deliveroo, o nei distributori aperti 24 ore di Pop Stop h24 a Casavatore. Anche le edizioni speciali.",
@@ -749,9 +832,18 @@ TEMI = {
               "Per lo studio, il lavoro di notte, la palestra o un viaggio lungo: passa da Viale Guglielmo Marconi 79/81 a Casavatore a qualsiasi ora, oppure ordina dall'app."]},
 }
 
+TEMI_NOMI = {"distributori-automatici-napoli": "Distributori automatici a Napoli nord", "market-24-ore-napoli": "Market aperto 24 ore",
+  "snack-di-notte-napoli": "Snack di notte", "takis-napoli": "Takis a Napoli", "dr-pepper-napoli": "Dr Pepper a Napoli",
+  "bibite-giapponesi-napoli": "Bibite giapponesi", "acqua-a-domicilio-napoli": "Acqua a domicilio",
+  "aperto-24-ore-napoli-nord": "Aperto di notte a Napoli nord", "energy-drink-a-domicilio": "Energy drink a domicilio"}
+
+def altri_temi(slug, r):
+    return " · ".join(f'<a href="{r}{k}/">{E(n)}</a>' for k, n in TEMI_NOMI.items() if k != slug)
+
 def tema(slug, t):
     d = 1; r = rel(d)
-    prods = [p for p in PRODOTTI if re.search(t["rx"], p["n"], re.I)]
+    prods = [p for p in PRODOTTI if re.search(t["rx"], p["n"], re.I)][:t.get("max", 999)]
+    faq = t.get("faq", [])
     body = f'''
 <div class="wrap crumbs"><a href="{r}">Home</a> › {E(t["h1"])}</div>
 <section class="page-hero"><div class="wrap">
@@ -764,14 +856,16 @@ def tema(slug, t):
   <div class="head"><div><span class="eyebrow">Nelle macchine adesso</span><h2>{E(t["lista"])}</h2></div></div>
   {plist_static(prods)}
   <div class="prose" style="margin-top:34px">{"".join("<p>"+E(x)+"</p>" for x in t["testo"])}</div>
+  <div class="prose" style="margin-top:22px"><p>Vedi anche: {altri_temi(slug, r)}</p></div>
 </div></section>
 <section class="s alt" id="app"><div class="wrap">
   <div class="head"><div><span class="eyebrow">Consegna a domicilio</span><h2>Scegli la tua app</h2></div><p>Quando l'app consegna al tuo indirizzo.</p></div>
   {app_cards()}
   <div style="margin-top:22px">{zones_block(r)}</div>
 </div></section>
+{('<section class="s"><div class="wrap"><div class="head"><div><span class="eyebrow">Domande frequenti</span><h2>Domande e risposte</h2></div></div>' + faq_html(faq) + '</div></section>') if faq else ""}
 {visit_block(r)}'''
-    ld = [store_ld(), crumbs_ld([("Home", ""), (t["h1"], slug + "/")]),
+    ld = [store_ld(), crumbs_ld([("Home", ""), (t["h1"], slug + "/")])] + ([faq_ld(faq)] + [] if faq else []) + [
           {"@type": "ItemList", "name": t["lista"], "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": p["n"]} for i, p in enumerate(prods)]}]
     write(f"{slug}/index.html", layout(f"{slug}/", t["titolo"], t["desc"], body, ld, d))
 
