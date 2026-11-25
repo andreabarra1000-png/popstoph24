@@ -222,6 +222,62 @@ def pop_svg(cls="pop", label="POP, la mascotte di Pop Stop h24", cap=False):
 <rect x="142" y="172" width="16" height="6" rx="3" fill="#FFD23F"/><rect x="142" y="196" width="16" height="14" rx="4" fill="#0b3b44"/>
 {CAP if cap else ''}</g></svg>'''
 
+def _popin(x, y, w, cap=False, rot=0, cls="pop gp"):
+    """POP dentro una scena: svg annidato (viewBox 200x260)."""
+    h = w * 1.3
+    inner = pop_svg(cls, "", cap=cap).replace("<svg ", f'<svg x="{x}" y="{y}" width="{w}" height="{h:.0f}" ', 1)
+    if rot:
+        return f'<g transform="rotate({rot} {x + w/2} {y + h/2})">{inner}</g>'
+    return inner
+
+def game_art(k):
+    """Disegno della card gioco in home: POP che fa quel gioco."""
+    K = 'stroke="#061219" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"'
+    if k == "corri":
+        sc = f'<path d="M0 182 H240" stroke="#ffd23f" stroke-width="6" stroke-dasharray="16 12" opacity=".7"/><circle cx="196" cy="40" r="20" fill="#ffd23f" opacity=".9"/>' \
+             f'<g opacity=".8" stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M18 90 H52"/><path d="M8 112 H46"/><path d="M22 134 H50"/></g>' \
+             + _popin(66, 22, 124, cap=True, rot=8, cls="pop gp corre") + \
+             '<g fill="#fff" opacity=".7"><circle cx="70" cy="188" r="6"/><circle cx="54" cy="184" r="4"/><circle cx="42" cy="190" r="3"/></g>'
+    elif k == "riempi":
+        sc = f'<rect x="8" y="58" width="78" height="128" rx="10" fill="#0b3b44" {K}/><rect x="18" y="70" width="58" height="80" rx="6" fill="#e9fbfb" {K}/>' \
+             '<g stroke="#061219" stroke-width="2"><rect x="24" y="76" width="14" height="14" rx="3" fill="#ff4f8b"/><rect x="42" y="76" width="14" height="14" rx="3" fill="#ffd23f"/><rect x="60" y="76" width="10" height="14" rx="3" fill="#7b2ff7"/><rect x="24" y="96" width="14" height="14" rx="3" fill="#19d6c8"/></g>' \
+             + _popin(100, 30, 112) + \
+             f'<g transform="rotate(-10 212 100)"><rect x="198" y="82" width="28" height="38" rx="5" fill="#3ee07a" {K}/><circle cx="212" cy="102" r="7" fill="#ff5a4e" stroke="#061219" stroke-width="3"/><path d="M218 82 L221 68 L230 64" fill="none" {K}/></g>' \
+             '<text x="8" y="40" font-size="20" font-weight="800" fill="#fff" font-family="Bricolage,sans-serif">⏰ 5:59</text>'
+    elif k == "squalo":
+        sc = '<path d="M0 150 Q30 138 60 150 T120 150 T180 150 T240 150 V220 H0 Z" fill="#1f6feb" opacity=".9"/>' \
+             + _popin(78, 30, 92) + \
+             f'<path d="M40 150 Q120 178 200 150 L194 168 Q120 194 46 168 Z" fill="#ff9a3c" {K}/>' \
+             f'<path d="M180 150 L204 104 L214 150 Z" fill="#5b6b7a" {K}/><path d="M0 172 Q30 162 60 172 T120 172 T180 172 T240 172" fill="none" stroke="#fff" stroke-width="4" opacity=".7"/>' \
+             f'<g transform="rotate(20 30 120)"><rect x="20" y="104" width="18" height="30" rx="4" fill="#e8133b" {K}/></g>'
+    elif k == "dino":
+        sc = f'<path d="M150 190 V110 Q150 60 190 58 Q232 58 232 92 L232 104 Q218 112 206 104 L200 120 L200 190 Z" fill="#2e9e4f" {K}/>' \
+             '<circle cx="206" cy="80" r="6" fill="#061219"/><path d="M212 98 l4 6 l4 -6 l4 6" fill="none" stroke="#fff" stroke-width="3"/>' \
+             '<path d="M150 130 L132 134" stroke="#061219" stroke-width="5" stroke-linecap="round"/><path d="M150 150 L134 156" stroke="#061219" stroke-width="5" stroke-linecap="round"/>' \
+             '<text x="168" y="54" font-size="24" font-family="sans-serif">💤</text>' \
+             + _popin(18, 50, 100, rot=-6) + \
+             '<path d="M0 196 H240" stroke="#5a3d1e" stroke-width="10"/>'
+    elif k == "spazio":
+        sc = '<g fill="#fff"><circle cx="20" cy="30" r="2"/><circle cx="60" cy="14" r="1.5"/><circle cx="220" cy="24" r="2"/><circle cx="200" cy="150" r="1.5"/><circle cx="30" cy="170" r="2"/></g>' \
+             '<text x="186" y="70" font-size="26" font-family="sans-serif">⭐</text><text x="14" y="120" font-size="22" font-family="sans-serif">☄️</text>' \
+             '<g transform="rotate(-14 120 110)">' \
+             f'<path d="M92 196 Q100 230 108 196 Z" fill="#ff9a3c"/><path d="M132 196 Q140 230 148 196 Z" fill="#ff9a3c"/><path d="M96 196 Q100 214 104 196 Z" fill="#ffd23f"/><path d="M136 196 Q140 214 144 196 Z" fill="#ffd23f"/>' \
+             f'<rect x="86" y="140" width="24" height="58" rx="10" fill="#c0c8d0" {K}/><rect x="130" y="140" width="24" height="58" rx="10" fill="#c0c8d0" {K}/>' \
+             + _popin(70, 34, 100) + \
+             f'<ellipse cx="120" cy="80" rx="64" ry="62" fill="#bfefff" opacity=".28" stroke="#fff" stroke-width="4"/></g>'
+    elif k == "laser":
+        sc = '<path d="M120 0 V40" stroke="#fff" stroke-width="4"/>' + _popin(78, 34, 84) + \
+             '<rect x="101" y="63" width="18" height="10" rx="4" fill="#061219"/><rect x="121" y="63" width="18" height="10" rx="4" fill="#061219"/><path d="M118 66 H122" stroke="#061219" stroke-width="3"/>' + \
+             '<g stroke="#ff2d3d" stroke-width="4" opacity=".95"><path d="M0 150 L240 120"/><path d="M0 190 L240 200"/><path d="M0 70 L60 240" stroke-dasharray="10 8"/></g>' \
+             f'<rect x="96" y="196" width="48" height="14" rx="3" fill="#ffd23f" {K}/><text x="108" y="194" font-size="20" font-family="sans-serif">🍫</text>'
+    else:  # fantasmi
+        sc = f'<path d="M150 70 Q150 30 186 30 Q222 30 222 70 V130 L210 120 L198 132 L186 120 L174 132 L162 120 L150 130 Z" fill="#fff" {K}/>' \
+             '<circle cx="176" cy="66" r="6" fill="#061219"/><circle cx="198" cy="66" r="6" fill="#061219"/><ellipse cx="187" cy="88" rx="7" ry="9" fill="#061219"/>' \
+             + _popin(14, 50, 100) + \
+             f'<path d="M112 140 L150 112" stroke="#061219" stroke-width="10" stroke-linecap="round"/><path d="M112 140 L150 112" stroke="#ffd23f" stroke-width="5" stroke-linecap="round"/>' \
+             f'<path d="M148 104 L170 92 L176 114 L156 122 Z" fill="#c0c8d0" {K}/><g fill="#19d6c8" opacity=".6"><circle cx="164" cy="100" r="5"/><circle cx="150" cy="96" r="3"/></g>'
+    return f'<svg class="gart" viewBox="0 0 240 220" aria-hidden="true">{sc}</svg>'
+
 def tg_block(r):
     novi = [p["n"] for p in PRODOTTI if re.search(r"nutella peanut|winter edition|iced gummy|nutella biscuits natale|kinder joy tripack|takis", p["n"], re.I)][:5]
     presi = [n for n in S.get("piu_presi", []) if any(p["n"] == n for p in PRODOTTI)][:3]
@@ -512,6 +568,13 @@ def home():
   </a>
 </div></section>
 
+<section class="s giochisub" id="giochi"><div class="wrap">
+  <div class="giochi3 reveal"><h2>🎮 I giochi di POP</h2>
+  <p class="g3sub">7 giochi gratis, si gioca subito dal telefono. Scorri e scegli! 👉</p>
+  <div class="gtasti">{"".join(f'<a class="gtasto g{i}" href="{h}">{game_art(h.split("/")[1] or "riempi")}<b>{E(t)}</b><small>{E(g)}</small><span class="gplay">▶ Gioca</span></a>' for i, (h, e, t, g) in enumerate([("gioco/corri/", "🏃", "Corri, POP, corri!", "Platform"), ("gioco/", "🧃", "Riempi le macchine", "Prima delle 6")] + [(f"gioco/{k}/", e, t, g) for k, e, t, g, *_ in FILM]))}</div>
+</div>
+</div></section>
+
 <section class="s" id="ordina"><div class="wrap">
   <div class="head reveal"><div><span class="eyebrow">Consegna a domicilio</span><h2>Fame? Te lo portiamo noi.</h2></div>
   <p>Scegli la tua app preferita, inserisci l'indirizzo e ordina dal negozio Pop Stop h24. Consegniamo a Casavatore, Casoria, Arzano e Napoli nord quando l'app è disponibile.</p></div>
@@ -535,13 +598,6 @@ def home():
     <div class="step reveal"><h3>Scegli dalla macchina</h3><p>4 distributori con bibite fresche, energy drink, snack dolci e salati, tramezzini e prodotti utili.</p></div>
     <div class="step reveal"><h3>Oppure ordina da casa</h3><p>Su Glovo, Just Eat, Deliveroo o Alfonsino, quando l'app consegna nella tua zona.</p></div>
   </div>
-</div></section>
-
-<section class="s"><div class="wrap">
-  <div class="giochi3 reveal"><h2>🎮 I giochi di POP</h2>
-  <p class="g3sub">Tocca un tasto e gioca subito, gratis, dal telefono.</p>
-  <div class="gtasti">{"".join(f'<a class="gtasto g{i}" href="{h}"><span class="ge">{e}</span><b>{E(t)}</b><small>{E(g)}</small><span class="gplay">▶ Gioca</span></a>' for i, (h, e, t, g) in enumerate([("gioco/corri/", "🏃", "Corri, POP, corri!", "Platform"), ("gioco/", "🧃", "Riempi le macchine", "Prima delle 6")] + [(f"gioco/{k}/", e, t, g) for k, e, t, g, *_ in FILM]))}</div>
-</div>
 </div></section>
 
 {visit_block(r)}

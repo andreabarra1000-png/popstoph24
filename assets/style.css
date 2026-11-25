@@ -720,4 +720,13 @@ a.popwrap.corsa .playme{top:5%;bottom:auto;right:-3%;font-size:.8rem}
 .gtasto.g1{background:linear-gradient(135deg,#ff9a3c,#ff4f8b)}.gtasto.g2{background:linear-gradient(135deg,#0aa8b5,#1f6feb)}
 .gtasto.g3{background:linear-gradient(135deg,#2e9e4f,#0aa8b5)}.gtasto.g4{background:linear-gradient(135deg,#1f2a6b,#7b2ff7)}
 .gtasto.g5{background:linear-gradient(135deg,#333,#c0263d)}.gtasto.g6{background:linear-gradient(135deg,#0b5c8a,#0aa8b5)}
-@media (max-width:699px){.gtasto:last-child:nth-child(odd){grid-column:1/-1;min-height:120px}}
+/* Giochi subito sotto l'hero, card con POP disegnato */
+.giochisub{padding-top:18px}
+.gtasto .gart{width:100%;max-width:170px;height:auto;aspect-ratio:240/220;margin:-4px 0 2px;filter:drop-shadow(0 4px 0 rgba(0,0,0,.25))}
+.gtasto:hover .gart .gp,.gtasto:active .gart .gp{animation:popjump .6s}
+@media (max-width:699px){
+ .gtasti{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding:4px 4px 14px;margin:0 -4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .gtasti::-webkit-scrollbar{display:none}
+ .gtasto{flex:0 0 46%;scroll-snap-align:start;min-height:0}
+}
+@media (max-width:360px){.gtasto{flex-basis:62%}}
