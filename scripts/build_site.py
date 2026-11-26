@@ -616,11 +616,14 @@ def home():
     body = f'''
 <section class="hero"><div class="sky"></div><div class="stars"></div><div class="hfloat" aria-hidden="true"><span>🥤</span><span>⚡</span><span>🍫</span><span>🍟</span><span>🥪</span><span>🍬</span><span>💧</span></div><div class="wrap">
   <div>
+    <span class="sticker hsticker">📍 Casavatore · Napoli nord</span>
     <h1>Distributori automatici aperti <span class="n">24 ore</span> a Casavatore</h1>
-    <p class="lead"><strong>Snack, bibite, energy drink e beni di prima necessità</strong> a qualsiasi ora. Vieni in Viale Marconi o fattelo portare a casa con le app di consegna.</p>
-    <div class="infobox">
-      <p class="ib-top"><span class="kicker">● Casavatore · Napoli nord</span><span class="now">🕓 Sono le <span data-ora>—</span>. <span data-frase style="color:#fff">Siamo aperti.</span></span></p>
-      <div class="facts"><span><b>24/7</b> anche nei festivi</span><span><b data-count>{NPROD}</b> prodotti in macchina</span><span><b>4</b> app di consegna</span></div>
+    <p class="lead hlead"><strong>Snack, bibite, energy drink e beni di prima necessità</strong> a qualsiasi ora. Vieni in Viale Marconi o fattelo portare a casa con le app di consegna.</p>
+    <div class="hnow"><span class="hnow-ic" aria-hidden="true">🕓</span><p>Sono le <b data-ora>—</b>. <span data-frase>Siamo aperti.</span></p></div>
+    <div class="hfacts">
+      <span class="hf y"><b>24/7</b> anche nei festivi</span>
+      <span class="hf t"><b data-count>{NPROD}</b> prodotti in macchina</span>
+      <span class="hf p"><b>4</b> app di consegna</span>
     </div>
     <div class="ctas">
       <a class="btn y" href="consegna-a-domicilio/#app">🛵 Ordina a domicilio</a>
