@@ -518,7 +518,12 @@ def feat_block(r):
 def zones_block(r):
     return '<div class="zones">' + "".join(f'<a href="{r}zona/{k}/">📍 {v["nome"]}</a>' for k, v in ZONE.items()) + f'<a href="{r}consegna-a-domicilio/">🛵 Tutte le zone di consegna</a></div>'
 
-IMG = "https://rs-menus-api.roocdn.com/images/{}/image.jpeg?width=320&height=320&fit=contain&auto=webp&format=webp"
+IMG_ROO = "https://rs-menus-api.roocdn.com/images/{}/image.jpeg?width=320&height=320&fit=contain&auto=webp&format=webp"
+class _Img:
+    """immagini.json: id del menu Deliveroo oppure un indirizzo completo (https://...)."""
+    def format(self, i):
+        return i if str(i).startswith("http") else IMG_ROO.format(i)
+IMG = _Img()
 
 # Le macchine non hanno numeri: si indicano per posizione guardandole di fronte
 POSIZIONE = {1: "1ª macchina da sinistra", 2: "2ª macchina da sinistra", 3: "2ª macchina da destra", 4: "1ª macchina da destra"}
