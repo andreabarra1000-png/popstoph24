@@ -747,3 +747,5 @@ a.popwrap.corsa .playme{top:5%;bottom:auto;right:-3%;font-size:.8rem}
 @keyframes sc-zoom{0%{transform:translateX(0)}40%{transform:translateX(10px)}100%{transform:translateX(0)}}
 @media (max-width:900px){.app .scoot{width:min(124px,86%);margin:4px 0 2px auto}}
 @media (prefers-reduced-motion:reduce){.scoot *,.app:hover .scoot{animation:none!important}}
+.app .go{white-space:nowrap;gap:8px}
+@media (max-width:480px){.app{padding:18px}.app .go{font-size:.95rem}.app .go i{width:36px;height:36px;font-size:1.1rem}}
