@@ -834,3 +834,6 @@ body.gfull .corri.in-corsa .cwrap::after{opacity:.75}
 .minig::-webkit-scrollbar{display:none}
 .minig a{flex:0 0 auto}
 @media (max-width:480px){.minig{gap:3px;justify-content:space-between;width:100%}.minig a{width:41px}.minig i{width:38px;height:38px;font-size:1.1rem;border-radius:11px;border-width:2px;box-shadow:2px 2px 0 rgba(25,214,200,.6)}.minig span{font-size:.58rem}}
+/* Tablet in verticale: POP più grande, testi più ariosi */
+@media (min-width:600px) and (max-width:860px){a.popwrap.corsa{width:min(440px,66vw)}.hero .wrap>div:first-child{max-width:640px;margin:0 auto}}
+@media (min-width:861px){.mg-home{margin-bottom:30px}.minig i{width:48px;height:48px;font-size:1.45rem}.minig a{width:56px}}
