@@ -221,8 +221,8 @@ def scooter(k):
 <circle cx="121" cy="27" r="4.5" fill="#ffd23f" stroke="#061219" stroke-width="2.5"/>
 <path d="M103 66a13 13 0 0 1 26 0" fill="none" stroke="#061219" stroke-width="3.5"/>
 </g>
-<g class="sc-wheel" style="transform-origin:46px 66px"><circle cx="46" cy="66" r="12" fill="#14202b" stroke="#061219" stroke-width="3"/><circle cx="46" cy="66" r="5" fill="#fff"/><path d="M46 56v20M36 66h20" stroke="#fff" stroke-width="2"/></g>
-<g class="sc-wheel" style="transform-origin:116px 66px"><circle cx="116" cy="66" r="12" fill="#14202b" stroke="#061219" stroke-width="3"/><circle cx="116" cy="66" r="5" fill="#fff"/><path d="M116 56v20M106 66h20" stroke="#fff" stroke-width="2"/></g>
+<g class="sc-wheel" style="transform-origin:46px 66px"><circle cx="46" cy="66" r="12" fill="#14202b" stroke="#061219" stroke-width="3"/><circle cx="46" cy="66" r="5" fill="#fff"/><path d="M46 55v22M35 66h22" stroke="{col}" stroke-width="3" stroke-linecap="round"/></g>
+<g class="sc-wheel" style="transform-origin:116px 66px"><circle cx="116" cy="66" r="12" fill="#14202b" stroke="#061219" stroke-width="3"/><circle cx="116" cy="66" r="5" fill="#fff"/><path d="M116 55v22M105 66h22" stroke="{col}" stroke-width="3" stroke-linecap="round"/></g>
 <g class="sc-puff" fill="#fff" stroke="#061219" stroke-width="2" opacity=".9"><circle cx="24" cy="62" r="4"/><circle cx="14" cy="58" r="3"/></g>
 </svg>'''
 

@@ -766,3 +766,23 @@ a.popwrap.corsa .playme{top:5%;bottom:auto;right:-3%;font-size:.8rem}
 .hero .btn.o:hover{box-shadow:7px 7px 0 #061219}
 @media (max-width:520px){.hnow p{font-size:1rem}.hf{font-size:.85rem;padding:7px 11px}.hf b{font-size:1.05rem}}
 @media (prefers-reduced-motion:reduce){.hnow-ic{animation:none}}
+
+/* Motorini: movimento ben visibile */
+.app .scoot{animation:sc-drive 2.8s ease-in-out infinite;transform-origin:70% 90%}
+.scoot .sc-body{animation:sc-bob .32s ease-in-out infinite alternate}
+@keyframes sc-bob{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+.scoot .sc-wheel{animation-duration:.35s}
+@keyframes sc-drive{0%{transform:translateX(-14px) rotate(0)}35%{transform:translateX(10px) rotate(0)}45%{transform:translateX(14px) rotate(-6deg)}60%{transform:translateX(12px) rotate(0)}100%{transform:translateX(-14px) rotate(0)}}
+.app:nth-child(2) .scoot{animation-delay:-.7s}.app:nth-child(3) .scoot{animation-delay:-1.4s}.app:nth-child(4) .scoot{animation-delay:-2.1s}
+.app:hover .scoot{animation:sc-drive 1.2s ease-in-out infinite}
+
+/* Riquadri della home: si muovono un poco */
+@keyframes hfl{0%,100%{translate:0 0}50%{translate:0 -5px}}
+@keyframes hrock{0%,100%{rotate:0deg}50%{rotate:1.2deg}}
+.hsticker{animation:hrock 3.4s ease-in-out infinite}
+.hero .hlead{animation:hfl 4.2s ease-in-out infinite}
+.hnow{animation:hfl 3.6s ease-in-out infinite -1s}
+.hf{animation:hfl 3s ease-in-out infinite}
+.hf.t{animation-delay:-1s}.hf.p{animation-delay:-2s}
+.hf:hover,.hnow:hover{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.hsticker,.hero .hlead,.hnow,.hf{animation:none}}
