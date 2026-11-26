@@ -111,7 +111,7 @@
     if(!sheet)return;
     $("#sh-n",sheet).textContent=nome;
     var bi=$("#sh-i",sheet);bi.innerHTML="";bi.className="pimg big";
-    if(img){var im=document.createElement("img");im.src=CFG.img.replace("{}",img);im.alt=nome;bi.appendChild(im)}else{bi.textContent="🛒";bi.className="pimg big ph"}
+    if(img){var im=document.createElement("img");im.src=/^http/.test(img)?img:CFG.img.replace("{}",img);im.alt=nome;bi.appendChild(im)}else{bi.textContent="🛒";bi.className="pimg big ph"}
     $("#sh-m",sheet).textContent=dove?"📍 Lo trovi in: "+dove:"";
     var so=$("#sh-ord",sheet);
     if(so){var id=(CFG.dr||{})[nome];so.href=CFG.drurl+(id?"?item-id="+id:"");so.textContent=id?"🛵 Ordina "+nome.replace(/\s+\d[\d,.]*\s*(ml|g|pz|x)?\b.*$/i,"")+" a domicilio":"🛵 Ordina a domicilio"}
@@ -158,7 +158,7 @@
           var d=dove(p.m||[]);
           b.type="button";b.className="pc";b.dataset.c=p.c;b.dataset.p=p.n;b.dataset.s=p.s;b.dataset.i=p.i||"";b.dataset.d=d;
           var wi=document.createElement("span");wi.className="pimg";
-          if(p.i){var im=document.createElement("img");im.src=CFG.img.replace("{}",p.i);im.alt=p.n;im.loading="lazy";im.width=160;im.height=160;
+          if(p.i){var im=document.createElement("img");im.src=/^http/.test(p.i)?p.i:CFG.img.replace("{}",p.i);im.alt=p.n;im.loading="lazy";im.width=160;im.height=160;
             im.onerror=function(){var ph=document.createElement("span");ph.className="ph";ph.textContent=ICO[p.c]||"🛒";im.replaceWith(ph)};wi.appendChild(im)}
           else{var ph=document.createElement("span");ph.className="ph";ph.textContent=ICO[p.c]||"🛒";wi.appendChild(ph)}
           var n=document.createElement("span");n.className="pn";n.textContent=p.n;

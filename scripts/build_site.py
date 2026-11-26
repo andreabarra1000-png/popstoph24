@@ -351,7 +351,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
         cur = ' aria-current="page"' if p == active else ""
         nav.append(f'<a href="{href}"{cur}>{n}</a>')
     graph = {"@context": "https://schema.org", "@graph": ld}
-    cfg = {"stock": r + "stock.json", "ordine": ORDINE, "icone": ICONE, "img": IMG, "dr": DR, "drurl": APP["deliveroo"][1], "je": JE_CAT, "jeurl": APP["justeat"][1], "gl": GL, "glurl": APP["glovo"][1]}
+    cfg = {"stock": r + "stock.json", "ordine": ORDINE, "icone": ICONE, "img": IMG_ROO, "dr": DR, "drurl": APP["deliveroo"][1], "je": JE_CAT, "jeurl": APP["justeat"][1], "gl": GL, "glurl": APP["glovo"][1]}
     socials = "".join(f'<a href="{u}" rel="noopener" target="_blank">{n}</a>' for n, u in S["social"].items())
     zone_links = "".join(f'<a href="{r}zona/{k}/">{v["nome"]}</a>' for k, v in ZONE.items())
     return f'''<!DOCTYPE html>
