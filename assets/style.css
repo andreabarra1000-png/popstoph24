@@ -830,3 +830,7 @@ body.gfull .gesci{display:flex;align-items:center;justify-content:center;positio
 @media (orientation:portrait){body.gfull .cwrap::after{content:"🔄 Gira il telefono per giocare più grande";position:absolute;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:700 .8rem var(--fd);color:var(--mut);pointer-events:none}}
 @media (orientation:portrait) and (min-width:700px){body.gfull .cwrap::after{display:none}}
 body.gfull .corri.in-corsa .cwrap::after{opacity:.75}
+.minig{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;max-width:100%;padding:2px 4px 6px}
+.minig::-webkit-scrollbar{display:none}
+.minig a{flex:0 0 auto}
+@media (max-width:480px){.minig{gap:3px;justify-content:space-between;width:100%}.minig a{width:41px}.minig i{width:38px;height:38px;font-size:1.1rem;border-radius:11px;border-width:2px;box-shadow:2px 2px 0 rgba(25,214,200,.6)}.minig span{font-size:.58rem}}

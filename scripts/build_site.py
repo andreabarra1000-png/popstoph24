@@ -1204,7 +1204,7 @@ def giochi_lista():
 
 def minigiochi(r, cur="", cls="minig"):
     voci = "".join(f'<a href="{r}{u}"' + (' aria-current="page"' if u == cur else '') + f'><i aria-hidden="true">{e}</i><span>{n}</span></a>' for u, e, n in giochi_lista())
-    return f'<nav class="{cls}" aria-label="I giochi di POP">{voci}<a class="mg-cl" href="{r}classifiche/"><i aria-hidden="true">🏆</i><span>Classifiche</span></a></nav>'
+    return f'<nav class="{cls}" aria-label="I giochi di POP">{voci}<a class="mg-cl" href="{r}classifiche/"><i aria-hidden="true">🏆</i><span>Top</span></a></nav>'
 
 def gtabs(r, cur):
     return minigiochi(r, cur, "minig gtabs2")
