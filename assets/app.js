@@ -1,3 +1,6 @@
+/* compatibilità con telefoni e browser vecchi */
+(function(E){if(!E)return;if(!E.matches)E.matches=E.msMatchesSelector||E.webkitMatchesSelector;if(!E.closest)E.closest=function(s){var n=this;while(n&&n.nodeType===1){if(n.matches(s))return n;n=n.parentElement||n.parentNode}return null}})(window.Element&&Element.prototype);
+if(window.NodeList&&!NodeList.prototype.forEach)NodeList.prototype.forEach=Array.prototype.forEach;
 (function(){
   "use strict";
   try{var nav0=navigator,cx=nav0.connection||{};if((nav0.deviceMemory&&nav0.deviceMemory<=2)||(nav0.hardwareConcurrency&&nav0.hardwareConcurrency<=2)||cx.saveData)document.documentElement.classList.add("leggero")}catch(e){}
@@ -6,6 +9,15 @@
 
   /* ora di Casavatore */
   function oraRoma(){
+    try{return oraRoma2()}catch(e){
+      /* browser vecchi senza Intl: ora di Roma calcolata a mano (ora legale UE) */
+      var n=new Date(),y=n.getUTCFullYear();
+      function ultDom(m){var d=new Date(Date.UTC(y,m+1,0,1));d.setUTCDate(d.getUTCDate()-d.getUTCDay());return d}
+      var off=(n>=ultDom(2)&&n<ultDom(9))?2:1,r=new Date(n.getTime()+off*3600000),h=r.getUTCHours(),m=r.getUTCMinutes();
+      return {h:h,m:m,s:r.getUTCSeconds(),txt:(h<10?"0":"")+h+":"+(m<10?"0":"")+m};
+    }
+  }
+  function oraRoma2(){
     var p=new Intl.DateTimeFormat("it-IT",{timeZone:"Europe/Rome",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).formatToParts(new Date());
     var o={};p.forEach(function(x){o[x.type]=x.value});
     return {h:+o.hour%24,m:+o.minute,s:+o.second,txt:o.hour+":"+o.minute};
@@ -190,4 +202,15 @@
   /* conteggio prodotti dal vivo (home) */
   var cnt=$("[data-count]");
   if(cnt&&CFG.stock)fetch(CFG.stock+"?"+Date.now()).then(function(r){return r.json()}).then(function(d){cnt.textContent=(d.prodotti||[]).length}).catch(function(){});
+
+  /* giochi che si aprono al volo: precarico la pagina appena il dito tocca l'icona */
+  (function(){
+    var fatti={};
+    function pre(h,as){if(!h||fatti[h])return;fatti[h]=1;var l=document.createElement("link");l.rel="prefetch";l.href=h;if(as)l.as=as;document.head.appendChild(l)}
+    function su(e){var a=e.target&&e.target.closest&&e.target.closest('a[href*="gioco/"],a[href*="classifiche/"]');if(a)pre(a.href,"document")}
+    document.addEventListener("touchstart",su,{passive:true});document.addEventListener("mouseover",su);
+    var mg=$(".mg-home");if(mg){var base=(CFG.stock||"").replace("stock.json","");
+      var idle=window.requestIdleCallback||function(f){setTimeout(f,2500)};
+      idle(function(){["assets/corri.js","assets/film.js","assets/gioco.js","assets/full.js","assets/classifica.js"].forEach(function(f){pre(base+f,"script")})});}
+  })();
 })();

@@ -786,3 +786,47 @@ a.popwrap.corsa .playme{top:5%;bottom:auto;right:-3%;font-size:.8rem}
 .hf.t{animation-delay:-1s}.hf.p{animation-delay:-2s}
 .hf:hover,.hnow:hover{animation-play-state:paused}
 @media (prefers-reduced-motion:reduce){.hsticker,.hero .hlead,.hnow,.hf{animation:none}}
+
+/* ===== Barra mini giochi (home sopra POP e pagine gioco) ===== */
+.popcol{display:flex;flex-direction:column;align-items:center;min-width:0}
+.minig{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:0 0 10px;max-width:440px}
+.minig a{display:flex;flex-direction:column;align-items:center;gap:2px;width:52px;text-decoration:none;color:#fff;-webkit-tap-highlight-color:transparent}
+.minig i{display:flex;align-items:center;justify-content:center;width:44px;height:44px;font-style:normal;font-size:1.35rem;line-height:1;background:#0f2430;border:2.5px solid #061219;border-radius:14px;box-shadow:3px 3px 0 rgba(25,214,200,.6);transition:transform .12s}
+.minig a:nth-child(odd) i{transform:rotate(-3deg)}.minig a:nth-child(even) i{transform:rotate(3deg)}
+.minig a:hover i,.minig a:focus-visible i{transform:translateY(-3px) rotate(0);box-shadow:3px 5px 0 var(--y)}
+.minig a:active i{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(25,214,200,.6)}
+.minig span{font:700 .66rem/1.1 var(--fd);white-space:nowrap;opacity:.9}
+.minig a[aria-current] i{background:var(--y);box-shadow:3px 3px 0 #061219}
+.minig .mg-cl i{background:var(--y)}
+.mg-home{margin:0 0 6px}
+.gtabs2{margin:4px auto 12px;max-width:none}
+@media (max-width:860px){.popcol{order:-1}.hero .wrap>.popcol a.popwrap.corsa{order:0}}
+@media (max-width:400px){.minig{gap:4px}.minig a{width:44px}.minig i{width:38px;height:38px;font-size:1.15rem;border-radius:12px}.minig span{font-size:.6rem}}
+@media (max-width:330px){.minig span{display:none}}
+
+/* ===== Schermata iniziale dei giochi: più pulita ===== */
+.gvia{min-width:220px;font-size:1.25rem;min-height:62px;margin:6px auto 4px}
+.come{max-width:460px;margin:10px auto 0;text-align:left}
+.come summary{cursor:pointer;list-style:none;text-align:center;font:800 .9rem var(--fd);color:var(--t-neon);padding:6px}
+.come summary::-webkit-details-marker{display:none}
+.come summary::after{content:" ▾"}.come[open] summary::after{content:" ▴"}
+.come .how{margin-top:6px}
+.cover.fuori p,.gscreen>p{font-size:.92rem;max-width:30em}
+.cover.fuori .sticker,.gscreen>.sticker{font-size:.8rem}
+
+/* ===== Gioco a schermo intero ===== */
+.gesci{display:none}
+body.gfull{overflow:hidden;overscroll-behavior:none}
+body.gfull header.top,body.gfull footer,body.gfull .dock,body.gfull .gtabs2,body.gfull .cdopo,body.gfull .ticker,body.gfull .sr{display:none!important}
+body.gfull .corri{position:fixed;top:0;right:0;bottom:0;left:0;z-index:900;max-width:none;margin:0;padding:0;background:#061219;display:flex;flex-direction:column}
+body.gfull .cwrap{flex:1;display:flex;align-items:center;justify-content:center;border:0;border-radius:0;box-shadow:none;background:#061219;height:100%}
+body.gfull #c-can{flex:none}
+body.gfull .chud{top:calc(8px + env(safe-area-inset-top,0px));left:calc(58px + env(safe-area-inset-left,0px));right:calc(8px + env(safe-area-inset-right,0px))}
+body.gfull .csalta{right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));width:84px;height:84px}
+body.gfull .gioco{position:fixed;top:0;right:0;bottom:0;left:0;z-index:900;max-width:none;margin:0;padding:10px 12px 20px;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--night,#061219)}
+body.gfull .gioco>*{max-width:900px;margin-left:auto;margin-right:auto}
+body.gfull .ghud{top:0;padding-left:50px}
+body.gfull .gesci{display:flex;align-items:center;justify-content:center;position:fixed;z-index:950;top:calc(8px + env(safe-area-inset-top,0px));left:calc(8px + env(safe-area-inset-left,0px));width:40px;height:40px;border-radius:50%;border:2.5px solid #061219;background:#fff;color:#061219;font:900 1.1rem/1 var(--fd);box-shadow:3px 3px 0 rgba(25,214,200,.6);cursor:pointer}
+@media (orientation:portrait){body.gfull .cwrap::after{content:"🔄 Gira il telefono per giocare più grande";position:absolute;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:700 .8rem var(--fd);color:var(--mut);pointer-events:none}}
+@media (orientation:portrait) and (min-width:700px){body.gfull .cwrap::after{display:none}}
+body.gfull .corri.in-corsa .cwrap::after{opacity:.75}

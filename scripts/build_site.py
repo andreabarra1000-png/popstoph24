@@ -412,6 +412,7 @@ def layout(path, title, desc, body, ld, depth, active=""):
 <link rel="manifest" href="{r}manifest.webmanifest">
 <link rel="preload" href="{r}assets/bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{r}assets/style.css">
+<script type="speculationrules">{{"prefetch":[{{"where":{{"href_matches":"/*"}},"eagerness":"moderate"}}],"prerender":[{{"where":{{"href_matches":"/gioco/*"}},"eagerness":"moderate"}}]}}</script>
 <script type="application/ld+json">{json.dumps(graph, ensure_ascii=False)}</script>
 </head>
 <body{' class="pg-gioco"' if path.startswith("gioco") else ""}>
@@ -631,6 +632,8 @@ def home():
       <a class="btn o" href="prodotti/">🍫 Cosa c'è ora</a>
     </div>
   </div>
+  <div class="popcol">
+  {minigiochi("", "", "minig mg-home")}
   <a class="popwrap corsa" href="gioco/corri/" aria-label="Gioca con POP: Corri, POP, corri!">
     <div class="bubble" data-pop-frasi>Corri, POP, corri! 🏃</div>
     <div class="scena" aria-hidden="true">
@@ -648,6 +651,7 @@ def home():
     <div class="contakm">🏃 POP corre da <b data-giorni>75</b> giorni senza fermarsi · <b data-km>14.400</b> km</div>
     <span class="sticker p playme">🎮 Toccami e gioca!</span>
   </a>
+  </div>
 </div></section>
 
 <section class="s giochisub" id="giochi"><div class="wrap">
@@ -1073,12 +1077,13 @@ def gioco():
     <span class="sticker p">Gioco di POP</span>
     <h1>Riempi le macchine prima delle 6!</h1>
     <p>Sono le 5 del mattino: alle 6 arriva la fila di chi va a lavoro. Aiuta POP a riempire tutti gli scomparti vuoti dei 4 distributori prima che suoni l'ora. Occhio: anche di notte c'è chi ha fame e svuota gli scomparti!</p>
-    <div class="how">
+    <button class="btn y gvia" type="button" data-via>▶ Gioca</button>
+    <details class="come"><summary>Come si gioca</summary><div class="how">
       <div>1️⃣ Tocca un prodotto nel <b>carrello</b> a destra.</div>
       <div>2️⃣ Tocca uno <b>scomparto vuoto</b> dello stesso prodotto: si illumina di giallo.</div>
       <div>3️⃣ Riempi tutto prima delle 6: più sei veloce, più punti fai. Se sbagli perdi tempo!</div>
-    </div>
-    <button class="btn y" type="button" data-via>▶ Gioca</button>
+    </div></details>
+
     <p id="g-best" style="margin-top:14px;font-weight:700;color:var(--y)"></p>
   </section>
 
@@ -1117,6 +1122,7 @@ def gioco():
   <div class="fum" id="g-fumetto" aria-live="polite"></div>
 </div>
 <script src="{r}assets/gioco.js" defer></script>
+<script src="{r}assets/full.js" defer></script>
 <script src="{r}assets/classifica.js" defer></script>'''
     ld = [crumbs_ld([("Home", ""), ("Gioco", "gioco/")]),
           {"@type": "VideoGame", "name": "Riempi le macchine – il gioco di POP", "url": BASE + "gioco/", "inLanguage": "it-IT",
@@ -1141,12 +1147,13 @@ def corri():
       <span class="sticker p">Nuovo gioco di POP</span>
       <h1>Corri, POP, corri!</h1>
       <p>POP ha messo le scarpe da corsa e non si ferma più: dall'Alabama al deserto fino al mare in tempesta. Salta, raccogli i cioccolatini e non cadere!</p>
-      <div class="how">
+      <button class="btn y gvia" type="button" data-via>▶ Corri!</button>
+      <details class="come"><summary>Come si gioca</summary><div class="how">
         <div>👆 <b>Tocca</b> (o barra spaziatrice) per saltare: tieni premuto per saltare più in alto, tocca di nuovo in aria per il <b>doppio salto</b>.</div>
         <div>🍫 Prendi i cioccolatini e colpisci da sotto le <b>scatole</b>: dentro ce ne sono altri.</div>
         <div>🦀 Salta <b>sopra</b> ai granchi per farli fuori. Evita panchine, palloni e buche: hai 3 cuori.</div>
-      </div>
-      <button class="btn y" type="button" data-via>▶ Corri!</button>
+      </div></details>
+
       <p class="crec" id="c-best"></p>
     </section>
   <div class="cwrap">
@@ -1168,6 +1175,7 @@ def corri():
   </div>
 </div>
 <script src="{r}assets/corri.js" defer></script>
+<script src="{r}assets/full.js" defer></script>
 <script src="{r}assets/classifica.js" defer></script>'''
     ld = [crumbs_ld([("Home", ""), ("Gioco", "gioco/"), ("Corri POP", "gioco/corri/")]),
           {"@type": "VideoGame", "name": "Corri POP – il gioco di Pop Stop h24", "url": BASE + "gioco/corri/", "inLanguage": "it-IT",
@@ -1191,9 +1199,15 @@ FILM = [
    ["👆 <b>Tocca</b> i fantasmi quando escono dalle finestre: più ne prendi di fila, più punti.", "✨ I fantasmi <b>luccicanti</b> valgono il triplo.", "🐈‍⬛ Non toccare il <b>gatto nero</b>: ti costa un cuore."], "Arcade", "il gioco dei fantasmi"),
 ]
 
+def giochi_lista():
+    return [("gioco/", "🧃", "Riempi"), ("gioco/corri/", "🏃", "Corri")] + [(f"gioco/{k}/", e, {"squalo":"Pinna","dino":"Dino","spazio":"Spazio","laser":"Laser","fantasmi":"Fantasmi"}[k]) for k, e, *_ in FILM]
+
+def minigiochi(r, cur="", cls="minig"):
+    voci = "".join(f'<a href="{r}{u}"' + (' aria-current="page"' if u == cur else '') + f'><i aria-hidden="true">{e}</i><span>{n}</span></a>' for u, e, n in giochi_lista())
+    return f'<nav class="{cls}" aria-label="I giochi di POP">{voci}<a class="mg-cl" href="{r}classifiche/"><i aria-hidden="true">🏆</i><span>Classifiche</span></a></nav>'
+
 def gtabs(r, cur):
-    voci = [("gioco/", "🧃 Riempi le macchine"), ("gioco/corri/", "🏃 Corri, POP, corri!")] + [(f"gioco/{k}/", f"{e} {t}") for k, e, t, *_ in FILM]
-    return '<nav class="gtabs" aria-label="I giochi di POP">' + "".join(f'<a href="{r}{u}"' + (' aria-current="page"' if u == cur else '') + f'>{t}</a>' for u, t in voci) + '</nav>'
+    return minigiochi(r, cur, "minig gtabs2")
 
 def film():
     r = rel(2)
@@ -1206,8 +1220,8 @@ def film():
       <span class="sticker p">POP al cinema · {E(gen)}</span>
       <h1>{e} {E(tit)}</h1>
       <p>{E(intro)}</p>
-      <div class="how">{"".join(f"<div>{h}</div>" for h in how)}</div>
-      <button class="btn y" type="button" data-via>▶ Gioca</button>
+      <button class="btn y gvia" type="button" data-via>▶ Gioca</button>
+      <details class="come"><summary>Come si gioca</summary><div class="how">{"".join(f"<div>{h}</div>" for h in how)}</div></details>
       <p class="crec" id="c-best"></p>
     </section>
   <div class="cwrap">
@@ -1227,6 +1241,7 @@ def film():
   </div>
 </div>
 <script src="{r}assets/film.js" defer></script>
+<script src="{r}assets/full.js" defer></script>
 <script src="{r}assets/classifica.js" defer></script>'''
         ld = [crumbs_ld([("Home", ""), ("Gioco", "gioco/"), (tit, f"gioco/{k}/")]),
               {"@type": "VideoGame", "name": f"{tit} – il gioco di POP, Pop Stop h24", "url": BASE + f"gioco/{k}/", "inLanguage": "it-IT",

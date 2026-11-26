@@ -17,7 +17,8 @@
   var H=360,W=640,scala=1,dpr=1;
   function misura(){
     var r=can.parentNode.getBoundingClientRect();
-    var cw=r.width, ch=Math.max(cw*0.62,Math.min(cw*0.88,window.innerHeight*0.62));
+    var cw=r.width, ch;
+    if(document.body.classList.contains("gfull")){ch=Math.min(window.innerHeight,cw*H/420)}else ch=Math.max(cw*0.62,Math.min(cw*0.88,window.innerHeight*0.62));
     can.style.width=cw+"px";can.style.height=ch+"px";
     dpr=Math.min(window.devicePixelRatio||1,((navigator.deviceMemory&&navigator.deviceMemory<=2)||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=2))?1:2);
     can.width=Math.round(cw*dpr);can.height=Math.round(ch*dpr);
