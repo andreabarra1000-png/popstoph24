@@ -193,10 +193,43 @@ ZONE = {
 def rel(depth):
     return "../" * depth
 
+# Loghi ufficiali dei partner (vettoriali, in assets/partner/: Glovo, Deliveroo, Just Eat da Simple Icons; Alfonsino dal sito alfonsino.delivery)
+PARTNER = {"glovo": "#00a082", "deliveroo": "#00ccbc", "justeat": "#ff8000", "alfonsino": "#0079ff"}
+def _logo(k):
+    import re as _re
+    svg = open(os.path.join(ROOT, "assets", "partner", f"{k}.svg"), encoding="utf-8").read()
+    vb = _re.search(r'viewBox="([^"]+)"', svg).group(1)
+    paths = "".join(f'<path d="{d}"/>' for d in _re.findall(r'<path[^>]*?d="([^"]+)"', svg))
+    return vb, paths
+
+def scooter(k):
+    vb, paths = _logo(k)
+    col = PARTNER[k]
+    return f'''<svg class="scoot" viewBox="0 0 150 86" aria-hidden="true" focusable="false">
+<g class="sc-wind" stroke="#061219" stroke-width="3" stroke-linecap="round" opacity=".55"><path d="M2 40h16"/><path d="M8 52h20"/><path d="M0 64h14"/></g>
+<ellipse cx="88" cy="81" rx="52" ry="4" fill="#061219" opacity=".18"/>
+<g class="sc-body">
+<path d="M24 50c0-5 4-8 9-8h42c5 0 7 4 6 8l-4 14H38c-8 0-14-6-14-14z" fill="#fff" stroke="#061219" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M30 52h40" stroke="{col}" stroke-width="4" stroke-linecap="round"/>
+<rect x="30" y="4" width="44" height="40" rx="9" fill="#fff" stroke="#061219" stroke-width="3.5"/>
+<svg x="38" y="10" width="28" height="28" viewBox="{vb}" fill="{col}">{paths}</svg>
+<path d="M76 60h26" stroke="#061219" stroke-width="5" stroke-linecap="round"/>
+<path d="M100 62c-3-13 1-27 9-37l9 3c-5 10-6 22-2 34z" fill="#fff" stroke="#061219" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M106 54c-1-8 1-16 5-22" stroke="{col}" stroke-width="4" stroke-linecap="round" fill="none"/>
+<path d="M111 26l3-10" stroke="#061219" stroke-width="4" stroke-linecap="round"/>
+<path d="M106 15h16" stroke="#061219" stroke-width="5" stroke-linecap="round"/>
+<circle cx="121" cy="27" r="4.5" fill="#ffd23f" stroke="#061219" stroke-width="2.5"/>
+<path d="M103 66a13 13 0 0 1 26 0" fill="none" stroke="#061219" stroke-width="3.5"/>
+</g>
+<g class="sc-wheel" style="transform-origin:46px 66px"><circle cx="46" cy="66" r="12" fill="#14202b" stroke="#061219" stroke-width="3"/><circle cx="46" cy="66" r="5" fill="#fff"/><path d="M46 56v20M36 66h20" stroke="#fff" stroke-width="2"/></g>
+<g class="sc-wheel" style="transform-origin:116px 66px"><circle cx="116" cy="66" r="12" fill="#14202b" stroke="#061219" stroke-width="3"/><circle cx="116" cy="66" r="5" fill="#fff"/><path d="M116 56v20M106 66h20" stroke="#fff" stroke-width="2"/></g>
+<g class="sc-puff" fill="#fff" stroke="#061219" stroke-width="2" opacity=".9"><circle cx="24" cy="62" r="4"/><circle cx="14" cy="58" r="3"/></g>
+</svg>'''
+
 def app_cards(cls="apps"):
     out = [f'<div class="{cls}">']
     for k, (nome, url) in APP.items():
-        out.append(f'<a class="app {k}" href="{url}" rel="noopener" target="_blank" data-app="{k}"><div><small>Ordina su</small><h3>{nome}</h3></div><div class="go">Ordina ora <i>→</i></div></a>')
+        out.append(f'<a class="app {k}" href="{url}" rel="noopener" target="_blank" data-app="{k}"><div><small>Ordina su</small><h3>{nome}</h3></div>{scooter(k)}<div class="go">Ordina ora <i>→</i></div></a>')
     out.append("</div>")
     return "".join(out)
 

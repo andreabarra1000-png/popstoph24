@@ -730,3 +730,20 @@ a.popwrap.corsa .playme{top:5%;bottom:auto;right:-3%;font-size:.8rem}
  .gtasto{flex:0 0 46%;scroll-snap-align:start;min-height:0}
 }
 @media (max-width:360px){.gtasto{flex-basis:62%}}
+
+/* Scooter animati con i loghi dei partner nei pulsanti delle app */
+.app .scoot{display:block;width:min(150px,78%);height:auto;margin:6px 0 4px auto;position:relative;z-index:1;overflow:visible}
+.app h3,.app small,.app .go{position:relative;z-index:1}
+.scoot .sc-body{animation:sc-bob .55s ease-in-out infinite alternate}
+.scoot .sc-wheel{animation:sc-spin .6s linear infinite}
+.scoot .sc-wind path{stroke-dasharray:22 40;animation:sc-wind .7s linear infinite}
+.scoot .sc-wind path:nth-child(2){animation-delay:-.25s}.scoot .sc-wind path:nth-child(3){animation-delay:-.45s}
+.scoot .sc-puff{animation:sc-puff 1.1s ease-out infinite;transform-origin:20px 60px}
+.app:hover .scoot{animation:sc-zoom .5s ease-out}
+@keyframes sc-bob{from{transform:translateY(0)}to{transform:translateY(-2.5px)}}
+@keyframes sc-spin{to{transform:rotate(360deg)}}
+@keyframes sc-wind{from{stroke-dashoffset:0}to{stroke-dashoffset:62}}
+@keyframes sc-puff{0%{opacity:.9;transform:translate(0,0) scale(.6)}100%{opacity:0;transform:translate(-14px,-6px) scale(1.4)}}
+@keyframes sc-zoom{0%{transform:translateX(0)}40%{transform:translateX(10px)}100%{transform:translateX(0)}}
+@media (max-width:900px){.app .scoot{width:min(124px,86%);margin:4px 0 2px auto}}
+@media (prefers-reduced-motion:reduce){.scoot *,.app:hover .scoot{animation:none!important}}
