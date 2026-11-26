@@ -1276,7 +1276,9 @@ document.querySelectorAll(".cl-card").forEach(function(c){{
  }}).catch(function(){{c.querySelector("ol").innerHTML="<li class=cl-vuoto>Classifica non raggiungibile ora: riprova tra poco.</li>"}});
 }});}})();
 </script>'''
-    ld = [crumbs_ld([("Home", ""), ("Classifiche dei giochi", "classifiche/")])]
+    ld = [crumbs_ld([("Home", ""), ("Classifiche dei giochi", "classifiche/")]),
+          {"@type": "ItemList", "name": "I giochi gratuiti di POP, la mascotte di Pop Stop h24", "itemListElement": [
+              {"@type": "ListItem", "position": i + 1, "url": BASE + u, "name": t} for i, (k, e, t, u) in enumerate(giochi)]}]
     write("classifiche/index.html", layout("classifiche/", "Classifiche dei giochi di POP | Pop Stop h24",
         "Chi comanda questa settimana a Casavatore? Le classifiche dei 7 giochi gratis di POP: gioca, entra in classifica e sfida gli amici.",
         body, ld, 1, active="gioco/"))
