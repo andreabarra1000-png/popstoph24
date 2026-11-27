@@ -837,3 +837,5 @@ body.gfull .corri.in-corsa .cwrap::after{opacity:.75}
 /* Tablet in verticale: POP più grande, testi più ariosi */
 @media (min-width:600px) and (max-width:860px){a.popwrap.corsa{width:min(440px,66vw)}.hero .wrap>div:first-child{max-width:640px;margin:0 auto}}
 @media (min-width:861px){.mg-home{margin-bottom:30px}.minig i{width:48px;height:48px;font-size:1.45rem}.minig a{width:56px}}
+
+.gal{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;-webkit-overflow-scrolling:touch}.gf{flex:0 0 auto;width:min(46vw,230px);scroll-snap-align:start;border-radius:18px;overflow:hidden;border:3px solid #0d1b2a;box-shadow:4px 4px 0 #0d1b2a;background:#e8f6f8}.gf img{display:block;width:100%;height:auto;aspect-ratio:600/1299;object-fit:cover}@media(min-width:900px){.gf{width:210px}}

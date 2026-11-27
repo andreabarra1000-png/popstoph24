@@ -233,12 +233,31 @@ def app_cards(cls="apps"):
     out.append("</div>")
     return "".join(out)
 
+
+FOTO = [("esterno-1","Ingresso di Pop Stop h24 in viale Marconi 79/81 a Casavatore"),
+ ("interno-1","Sala dei distributori automatici aperta 24 ore"),
+ ("interno-2","I distributori automatici di Pop Stop h24"),
+ ("ingresso-81","Ingresso con bancone e sgabelli"),
+ ("interno-6","Bancone per mangiare sul posto"),
+ ("distributori-1","Distributori con bibite, energy drink e snack"),
+ ("snack-1","Snack, dolci e prodotti utili nel distributore"),
+ ("bibite-1","Bibite, birre e snack nel distributore"),
+ ("interno-3","Macchina del caffè e distributori"),
+ ("esterno-3","Facciata di Pop Stop h24 con le due insegne")]
+def gallery_block(r=""):
+    items="".join(f'<a class="gf" href="{r}assets/foto/popstop-h24-casavatore-{n}.jpg" target="_blank" rel="noopener"><img src="{r}assets/foto/popstop-h24-casavatore-{n}-s.webp" alt="{a}" loading="lazy" decoding="async" width="600" height="1299"></a>' for n,a in FOTO)
+    return f'''<section class="s" id="foto"><div class="wrap">
+  <div class="head reveal"><div><span class="eyebrow">Foto</span><h2>Com'è Pop Stop h24 dentro</h2></div>
+  <p>Due ingressi, 4 distributori, macchina del caffè e un bancone per mangiare sul posto. Scorri le foto.</p></div>
+  <div class="gal">{items}</div>
+</div></section>'''
+
 def store_ld():
     return {
       "@type": "ConvenienceStore", "@id": BASE + "#negozio",
       "name": S["nome"], "alternateName": ["PopStop H24", "Pop Stop h24 Casavatore", "popstoph24"],
       "description": "Punto vendita self-service con distributori automatici aperto 24 ore su 24, 7 giorni su 7, a Casavatore (Napoli nord): energy drink, bibite, acqua, snack dolci e salati, tramezzini, caramelle, snack e bibite dal mondo e beni di prima necessità. Consegna a domicilio con Glovo, Just Eat, Deliveroo e Alfonsino.",
-      "url": BASE, "image": BASE + "assets/og-popstop.jpg", "logo": BASE + "assets/popstop-512.png",
+      "url": BASE, "image": [BASE + "assets/og-popstop.jpg"] + [BASE + f"assets/foto/popstop-h24-casavatore-{n}.jpg" for n, _ in FOTO[:6]], "logo": BASE + "assets/popstop-512.png",
       "telephone": S["telefono"], "vatID": "IT" + S.get("piva", ""),
       "geo": {"@type": "GeoCoordinates", "latitude": S["geo"][0], "longitude": S["geo"][1]},
       "address": {"@type": "PostalAddress", "streetAddress": S["indirizzo"], "addressLocality": S["citta"],
@@ -687,6 +706,7 @@ def home():
   </div>
 </div></section>
 
+{gallery_block(r)}
 {visit_block(r)}
 {help_block()}
 
